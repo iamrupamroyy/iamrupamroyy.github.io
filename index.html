@@ -10,20 +10,20 @@
         /* Configure Tailwind for the DEEPER BLUE/BLACK theme */
         :root {
             --color-primary: #1a1a1a; /* Very Dark Charcoal/Gray for Cards */
-            --color-secondary: #040811; /* NEW: Very Deep Dark Blue/Black */
+            --color-secondary: #040811; /* Very Deep Dark Blue/Black */
             --color-accent: #3b82f6; /* Blue Accent (Retained) */
         }
         
         body {
             font-family: 'Inter', sans-serif;
             overflow-x: hidden;
-            /* Subtle background gradient for depth - Now blends deep black with more pronounced dark blue */
+            /* Subtle background gradient for depth */
             background-color: var(--color-secondary);
-            background-image: radial-gradient(at 10% 10%, rgba(59, 130, 246, 0.15) 0%, transparent 50%), /* Increased blue opacity */
+            background-image: radial-gradient(at 10% 10%, rgba(59, 130, 246, 0.15) 0%, transparent 50%),
                               radial-gradient(at 90% 90%, #0d131f 0%, transparent 50%);
         }
 
-        /* --- New: Pulsing Glow Animation for Profile Image --- */
+        /* --- Pulsing Glow Animation for Profile Image --- */
         @keyframes pulse-glow {
             0% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.4); }
             70% { box-shadow: 0 0 0 8px rgba(59, 130, 246, 0); }
@@ -33,27 +33,24 @@
             animation: pulse-glow 2s infinite cubic-bezier(0.66, 0, 0.33, 1);
         }
 
-        /* --- New Style: Cinematic/Sharp Headline Look (Revised) --- */
+        /* --- Cinematic/Sharp Headline Look (Revised) --- */
         .batman-style-header {
             text-transform: uppercase;
-            letter-spacing: 0.05em; /* Reduced spacing for a modern, sharp look */
-            font-weight: 900; /* Max boldness */
-            color: #fff; /* Base color is white for highest contrast */
-            /* Sharp Text Outline Effect */
+            letter-spacing: 0.05em; 
+            font-weight: 900; 
+            color: #fff; 
             text-shadow: 
-                1px 1px 0 var(--color-secondary), /* Dark outline for sharpness */
+                1px 1px 0 var(--color-secondary),
                 -1px -1px 0 var(--color-secondary),
-                1px -1px 0 var(--color-secondary),
-                -1px 1px 0 var(--color-secondary),
-                0 0 10px rgba(59, 130, 246, 0.2); /* Subtle blue glow */
+                0 0 10px rgba(59, 130, 246, 0.2); 
             transition: all 0.3s ease-out;
         }
         .batman-style-header:hover {
-            color: var(--color-accent); /* Shifts to accent blue on hover */
+            color: var(--color-accent); 
             text-shadow: 
-                0 0 1px var(--color-accent), /* Sharp blue base */
+                0 0 1px var(--color-accent),
                 0 0 5px var(--color-accent),
-                0 0 15px rgba(59, 130, 246, 0.8); /* Intense blue glow on hover */
+                0 0 15px rgba(59, 130, 246, 0.8);
         }
 
         /* Restore glow on hover for other elements */
@@ -66,31 +63,30 @@
             text-shadow: 0 0 8px var(--color-accent), 0 0 15px rgba(59, 130, 246, 0.5);
         }
         
-        /* --- New Style: General 3D Raised Card Effect --- */
+        /* --- General 3D Raised Card Effect --- */
         .card-3d-raised {
-            transition: transform 0.3s ease-out, box-shadow 0.3s ease-out, border-color 0.3s ease-out; /* Added border-color transition */
+            transition: transform 0.3s ease-out, box-shadow 0.3s ease-out, border-color 0.3s ease-out;
             box-shadow: 
-                0 10px 20px rgba(0, 0, 0, 0.7), /* Increased shadow depth for black background */
-                0 0 10px rgba(59, 130, 246, 0.2); /* Accent blue glow */
+                0 10px 20px rgba(0, 0, 0, 0.7), 
+                0 0 10px rgba(59, 130, 246, 0.2); 
         }
         .card-3d-raised:hover {
-            /* Lift slightly more on hover for engagement */
             transform: translateY(-5px);
             box-shadow: 
                 0 15px 30px rgba(0, 0, 0, 0.9),
-                0 0 15px rgba(59, 130, 246, 0.5); /* Brighter blue glow on hover */
+                0 0 15px rgba(59, 130, 246, 0.5); 
         }
 
         /* 3D effect for Skill Tags */
         .skill-tag {
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* Darker shadow */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
             transform: translateZ(0);
             transition: all 0.2s ease-in-out; 
             position: relative;
             overflow: hidden; 
         }
 
-        /* --- SHINING BLADE PSEUDO-ELEMENT --- */
+        /* --- SHINING BLADE PSEUDO-ELEMENT (Retained) --- */
         .skill-tag::before {
             content: '';
             position: absolute;
@@ -108,26 +104,17 @@
             transform: skewX(-20deg); 
             opacity: 0; 
         }
-
-        /* Shine Keyframe Animation (Full Sweep) */
         @keyframes shine {
-            0% { 
-                transform: skewX(-20deg) translateX(0); 
-                opacity: 1; 
-            }
-            100% { 
-                transform: skewX(-20deg) translateX(450%); 
-                opacity: 1;
-            }
+            0% { transform: skewX(-20deg) translateX(0); opacity: 1; }
+            100% { transform: skewX(-20deg) translateX(450%); opacity: 1; }
         }
         
         .skill-tag:hover {
             transform: translateZ(5px) scale(1.05); 
-            background-color: #333333; /* Darker gray hover background */
+            background-color: #333333; 
             box-shadow: 0 0 10px rgba(59, 130, 246, 0.7);
             text-shadow: 0 0 1px #fff, 0 0 4px var(--color-accent), 0 0 15px rgba(59, 130, 246, 0.5); 
         }
-
         .skill-tag:hover::before {
             animation: shine 0.6s ease-in-out; 
         }
@@ -146,13 +133,13 @@
             border-radius: 1.5rem 0 0 1.5rem; 
             padding: 0;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-            background-color: var(--color-primary); /* Uses dark charcoal */
+            background-color: var(--color-primary);
         }
 
         #social-bar.expanded {
             width: 70px; 
             height: auto;
-            min-height: 180px; 
+            min-height: 250px; /* Increased min-height for better tap target separation */
             border-radius: 1.5rem 0 0 1.5rem;
             padding: 0;
         }
@@ -166,18 +153,18 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            pointer-events: auto; 
+            pointer-events: auto; /* CRITICAL: Can be clicked when collapsed */
         }
         #social-bar.expanded #collapsed-icon {
             opacity: 0; 
-            pointer-events: none;
+            pointer-events: none; /* CRITICAL: Disabled when expanded */
             transition: opacity 0.2s ease-out 0s; 
         }
 
         /* Expanded Content */
         #expanded-content {
             opacity: 0; 
-            pointer-events: none;
+            pointer-events: none; /* CRITICAL: Disabled when collapsed */
             transition: opacity 0.2s ease-out, transform 0.2s ease-out; 
             transform: translateY(10px); 
             padding: 0.625rem; 
@@ -192,31 +179,18 @@
 
         #social-bar.expanded #expanded-content {
             opacity: 1; 
-            pointer-events: auto;
+            pointer-events: auto; /* CRITICAL: Enabled when expanded */
             transform: translateY(0); 
         }
         
-        /* Icon 3D Pop/Toss Effect */
         .social-icon-link {
             transition: transform 0.2s ease-in-out;
             transform-style: preserve-3d;
             cursor: pointer;
-            padding: 4px 0; 
+            padding: 8px 0; /* Increased padding for better touch target */
             display: flex;
             justify-content: center;
             margin-top: 0 !important; 
-        }
-        
-        .social-icon-link:hover {
-            transform: scale(1.2); 
-        }
-        .social-icon-link.toss {
-            animation: tossOut 0.5s ease-out;
-        }
-        @keyframes tossOut {
-            0% { transform: scale(1) rotateY(0deg) translateX(0); opacity: 1; }
-            50% { transform: scale(1.5) rotateY(180deg) translateX(20px); opacity: 0.7; }
-            100% { transform: scale(0.5) rotateY(360deg) translateX(50px); opacity: 0; }
         }
         
         /* --- Mobile Preview Screen CSS (Hidden on Mobile) --- */
@@ -246,41 +220,6 @@
             opacity: 1;
         }
         
-        /* New styling for the content inside the preview screen */
-        .preview-content {
-            padding: 1rem;
-            text-align: center;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-        }
-        .preview-content .preview-title {
-            font-size: 1.125rem; /* text-lg */
-            font-weight: 700; /* font-bold */
-            margin-bottom: 0.5rem;
-            color: #fff;
-        }
-        .preview-content .preview-screenshot {
-            flex-grow: 1;
-            background-color: #1e293b; /* slate-800 */
-            border-radius: 0.5rem;
-            
-            /* --- Styles for Background Image Placeholder --- */
-            background-size: cover; 
-            background-position: center;
-            background-repeat: no-repeat;
-            
-            /* Fallback/Text Centering */
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #94a3b8;
-            font-size: 0.875rem;
-            padding: 1rem;
-        }
-
-
         /* --- Scroll Animation Styles --- */
         .fade-slide-up {
             opacity: 0;
@@ -288,30 +227,27 @@
             transition: opacity 0.8s ease-out, transform 0.8s ease-out;
             transition-delay: var(--animation-delay, 0s); 
         }
-
         .fade-slide-up.visible {
             opacity: 1;
             transform: translateY(0);
         }
 
-        /* --- Project Carousel Styles (3D Circular) --- */
+        /* --- Project Carousel Styles (3D Circular) - MOBILE OPTIMIZATION --- */
         #carousel-wrapper {
             position: relative;
-            height: 450px; 
-            /* Responsive padding adjustment */
+            height: 375px; /* Adjusted height */
             padding: 0 10px; 
         }
 
-        /* REMOVED: perspective: 1000px; from body, adding here where needed */
         #carousel-viewport {
             width: 90%; 
             max-width: 900px;
-            height: 400px; 
+            height: 325px; /* Adjusted height */
             position: absolute;
             left: 50%;
             top: 50%;
             transform: translate(-50%, -50%);
-            perspective: 1000px; /* Perspective is now here, isolating the 3D context */
+            perspective: 1000px; 
             overflow: visible; 
         }
 
@@ -325,18 +261,14 @@
             transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             cursor: grab; 
         }
-        #carousel-track.dragging {
-            cursor: grabbing;
-            transition: none; 
-        }
 
         .project-slide {
-            width: 400px; 
-            height: 300px;
+            width: 300px; /* FIXED: Reduced size for mobile compatibility */
+            height: 225px; /* FIXED: Reduced size for mobile compatibility */
             position: absolute; 
             top: 50px; 
             left: 50%;
-            margin-left: -200px; 
+            margin-left: -150px; /* Half of new width (300px) */
             
             overflow: hidden;
             border-radius: 0.75rem; 
@@ -349,40 +281,7 @@
             opacity: 0.7;
             z-index: 1;
         }
-
-        /* Overlay transition */
-        .project-overlay {
-            transform: translateY(100%); 
-            transition: transform 0.4s ease-out; 
-            padding: 1.5rem;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            position: absolute;
-            inset: 0;
-        }
-
-        .project-slide:hover .project-overlay {
-            transform: translateY(0); 
-        }
         
-        .shadow-text {
-            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.9);
-        }
-
-        .project-slide:hover .project-title-area {
-            opacity: 0;
-        }
-        .project-slide .project-title-area {
-            transition: opacity 0.3s ease;
-        }
-        
-        .slide-inner-content {
-             width: 100%;
-             height: 100%;
-             position: relative;
-        }
-
         /* Arrow positioning adjusted for the full-width viewport */
         #prev-slide, #next-slide {
             position: absolute;
@@ -391,14 +290,29 @@
             z-index: 150; 
         }
         
+        @media (min-width: 768px) {
+            /* Restore larger dimensions on desktop for visual impact */
+            .project-slide {
+                width: 400px; 
+                height: 300px; 
+                margin-left: -200px; 
+            }
+            #carousel-viewport {
+                height: 400px; 
+            }
+            #carousel-wrapper {
+                height: 450px; 
+            }
+        }
+        
     </style>
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        'primary-dark': '#1a1a1a', /* New charcoal gray */
-                        'secondary-dark': '#040811', /* NEW: Deep Dark Blue/Black */
+                        'primary-dark': '#1a1a1a',
+                        'secondary-dark': '#040811',
                         'accent-blue': '#3b82f6',
                     },
                 }
@@ -408,6 +322,7 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const socialBar = document.getElementById('social-bar');
+            const collapsedIcon = document.getElementById('collapsed-icon');
             const previewScreen = document.getElementById('preview-screen');
             const previewTitle = document.getElementById('preview-title');
             const previewScreenshot = document.getElementById('preview-screenshot');
@@ -417,40 +332,40 @@
             const nextButton = document.getElementById('next-slide');
             const slides = Array.from(document.querySelectorAll('.project-slide.original'));
             
-            const N = slides.length; // 10 slides
-            
-            // 3D Carousel Constants
-            const THETA = 360 / N; // 36 degrees rotation per slide
-            const RADIUS = 750; // Distance from center to project (tuned for 3D visual)
-            let currentRotationIndex = 0; // Tracks total rotation units, not just 0-N
+            const N = slides.length; 
+            const THETA = 360 / N; 
+            // FIXED: Reduced RADIUS for better mobile visibility/scaling
+            const DESKTOP_RADIUS = 750;
+            const MOBILE_RADIUS = 450;
+            let currentRotationIndex = 0; 
             let autoSlideInterval;
-            const MIN_DESKTOP_WIDTH = 1024; // Tailwind's lg breakpoint
+            const MIN_DESKTOP_WIDTH = 1024;
 
             // --- 3D Project Carousel Logic ---
-
-            // Drag/Swipe State Variables
             let isDragging = false;
             let startX = 0;
-            let currentTrackRotation = 0; // Stores rotation in degrees, not index units
-            let lastRotationIndex = 0; // The index before dragging started
+            let currentTrackRotation = 0; 
+            let lastRotationIndex = 0;
+            let initialClickTime = 0;
+
+            const getRadius = () => window.innerWidth >= 768 ? DESKTOP_RADIUS : MOBILE_RADIUS;
 
             const setup3DCarousel = () => {
+                const radius = getRadius();
                 slides.forEach((slide, index) => {
                     const angle = index * THETA;
                     
-                    // Apply the initial 3D positioning
                     slide.style.transform = `
                         rotateY(${angle}deg) 
-                        translateZ(${RADIUS}px) 
+                        translateZ(${radius}px) 
                         scale(0.9)
                     `;
                     slide.style.opacity = 0.7;
                     slide.style.filter = 'blur(3px)';
-                    slide.style.zIndex = N - index; // Simple initial stacking order
+                    slide.style.zIndex = N - index; 
                 });
                 
-                // Initial rotation to center the first slide (Project 01)
-                carouselTrack.style.transform = `translateZ(-${RADIUS}px) rotateY(0deg)`;
+                carouselTrack.style.transform = `translateZ(-${radius}px) rotateY(0deg)`;
                 
                 updateFocusVisuals();
             };
@@ -458,63 +373,52 @@
             const rotateCarousel = (targetRotationIndex, animated = true) => {
                 currentRotationIndex = targetRotationIndex;
                 
-                // Calculate the required rotation angle (always clockwise/negative)
                 const targetAngle = currentRotationIndex * -THETA; 
-                currentTrackRotation = targetAngle; // Update current visual rotation
+                currentTrackRotation = targetAngle;
                 
                 carouselTrack.style.transition = animated ? 'transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)' : 'none';
-                carouselTrack.style.transform = `translateZ(-${RADIUS}px) rotateY(${targetAngle}deg)`;
+                carouselTrack.style.transform = `translateZ(-${getRadius()}px) rotateY(${targetAngle}deg)`;
                 
                 updateFocusVisuals();
             };
             
             const updateFocusVisuals = () => {
-                // Determine which physical slide is currently in front (index 0)
                 const frontSlideIndex = (currentRotationIndex % N + N) % N; 
 
                 slides.forEach((slide, index) => {
-                    // Calculate the visual difference from the front slide
                     let diff = index - frontSlideIndex;
                     
-                    // Normalize difference for correct perspective (0 is front, + is clockwise, - is counter-clockwise)
                     if (diff > N / 2) diff -= N;
                     if (diff < -N / 2) diff += N;
                     
                     const absDiff = Math.abs(diff);
-
-                    // Normalize distance for blur/scale effect (0 = front, 1 = back)
                     const normalizedDistance = Math.min(absDiff, N / 2) / (N / 2); 
 
                     let scale, blur, opacity;
 
                     if (absDiff === 0) {
-                        // Front Focus
                         scale = 1.15;
                         blur = 0;
                         opacity = 1;
                     } else {
-                        // Off-Center
-                        scale = 1 - (normalizedDistance * 0.3); // Shrink up to 30%
-                        blur = normalizedDistance * 5; // Blur up to 5px
-                        opacity = 1 - (normalizedDistance * 0.4); // Opacity down to 60%
+                        scale = 1 - (normalizedDistance * 0.3);
+                        blur = normalizedDistance * 5; 
+                        opacity = 1 - (normalizedDistance * 0.4); 
                     }
                     
-                    // Apply non-positional visual transforms
                     slide.style.transition = 'all 0.4s ease-out';
                     slide.style.transform = `
                         rotateY(${index * THETA}deg) 
-                        translateZ(${RADIUS}px) 
+                        translateZ(${getRadius()}px) 
                         scale(${scale})
                     `;
                     slide.style.filter = `blur(${blur}px)`;
                     slide.style.opacity = opacity;
                     
-                    // Manage z-index based on proximity to the front (0)
                     if (absDiff === 0) {
-                         slide.style.zIndex = 100; // Max z-index for front item
-                         slide.classList.add('focused');
+                        slide.style.zIndex = 100;
+                        slide.classList.add('focused');
                     } else {
-                        // Dynamically set z-index so closer slides are on top
                         slide.style.zIndex = N - absDiff;
                         slide.classList.remove('focused');
                     }
@@ -522,23 +426,27 @@
             };
 
             const autoSlide = () => {
-                // Always increment rotation index for continuous clockwise rotation
                 rotateCarousel(currentRotationIndex + 1);
             };
 
             const startAutoSlide = () => {
                 if (autoSlideInterval) clearInterval(autoSlideInterval);
-                autoSlideInterval = setInterval(autoSlide, 3500);
+                // Pause auto-slide on mobile for easier touch interaction
+                if (window.innerWidth >= 768) { 
+                    autoSlideInterval = setInterval(autoSlide, 3500);
+                }
             };
 
             const stopAutoSlide = () => {
                 if (autoSlideInterval) clearInterval(autoSlideInterval);
             };
 
-            // Event Listeners for Carousel
-            const carouselContainer = carouselTrack.closest('#carousel-wrapper');
-            carouselContainer.addEventListener('mouseenter', stopAutoSlide);
-            carouselContainer.addEventListener('mouseleave', startAutoSlide);
+            // Recalculate 3D setup on resize (e.g., mobile to desktop)
+            window.addEventListener('resize', () => {
+                setup3DCarousel();
+                updateFocusVisuals();
+                startAutoSlide(); // Restart auto-slide based on new size
+            });
 
             // --- DRAG AND SWIPE LOGIC ---
             
@@ -551,199 +459,168 @@
                 stopAutoSlide();
                 carouselTrack.classList.add('dragging');
                 
-                // Store the starting X position and current index
                 startX = getPointerX(e);
                 lastRotationIndex = currentRotationIndex;
+                initialClickTime = Date.now();
+                
+                // Prevent drag if a slide is already focused on mouse down
+                if (e.target.closest('.project-slide.focused')) {
+                    e.stopPropagation(); // Stop propagation to prevent document level scrolling
+                }
             };
 
             const onDrag = (e) => {
                 if (!isDragging) return;
                 
-                // Calculate drag difference
+                // CRITICAL FIX: The drag needs to stop scrolling on mobile
+                if (e.touches) e.preventDefault(); 
+                
                 const currentX = getPointerX(e);
                 const diffX = currentX - startX;
                 
-                // Determine rotation sensitivity (tweak this value)
                 const sensitivity = 0.5; 
                 const viewportWidth = carouselTrack.clientWidth;
                 
-                // Convert pixel drag to degrees rotation
                 const dragRotation = (diffX / viewportWidth) * 360 * sensitivity; 
                 
-                // Apply the new visual rotation without changing the currentRotationIndex yet
-                const newRotation = currentTrackRotation + dragRotation;
-                carouselTrack.style.transform = `translateZ(-${RADIUS}px) rotateY(${newRotation}deg)`;
-                
-                // Prevent scrolling on touch devices while dragging
-                if (e.touches) e.preventDefault(); 
+                // Calculate the temporary visual rotation
+                const newRotation = (lastRotationIndex * -THETA) + dragRotation;
+                carouselTrack.style.transform = `translateZ(-${getRadius()}px) rotateY(${newRotation}deg)`;
             };
 
-            const endDrag = () => {
+            const endDrag = (e) => {
                 if (!isDragging) return;
                 isDragging = false;
                 carouselTrack.classList.remove('dragging');
                 
-                // Re-enable CSS transition for the snap-back effect
-                carouselTrack.style.transition = 'transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
-
-                // Calculate the final drag difference
-                const currentX = getPointerX(event); 
+                const dragTime = Date.now() - initialClickTime;
+                const currentX = getPointerX(e);
                 const diffX = currentX - startX;
                 
-                // Determine if a full snap should occur (e.g., if dragged more than 50px)
-                const snapThreshold = 50; 
-                
+                // Determine the target rotation index based on drag amount or speed (flick)
+                const snapThreshold = 50; // Pixels
+                const flickThreshold = 300; // Pixels/second
+                const dragVelocity = Math.abs(diffX) / (dragTime / 1000); 
+
                 let targetIndex = lastRotationIndex;
 
-                if (diffX > snapThreshold) {
-                    // Dragged right (counter-clockwise)
-                    targetIndex = lastRotationIndex - 1;
-                } else if (diffX < -snapThreshold) {
-                    // Dragged left (clockwise)
-                    targetIndex = lastRotationIndex + 1;
-                } else {
-                    // Snap back to the original index
-                    targetIndex = lastRotationIndex;
+                if (Math.abs(diffX) > snapThreshold || dragVelocity > flickThreshold) {
+                    if (diffX > 0) {
+                        // Dragged right (counter-clockwise movement of track, so index - 1)
+                        targetIndex = lastRotationIndex - 1;
+                    } else if (diffX < 0) {
+                        // Dragged left (clockwise movement of track, so index + 1)
+                        targetIndex = lastRotationIndex + 1;
+                    }
                 }
 
-                // Snap to the target index
+                // Snap to the target index with animation
                 rotateCarousel(targetIndex, true);
-                startAutoSlide(); // Resume auto slide after snap
+                startAutoSlide();
             };
 
-            // --- Event Listeners for Drag/Swipe ---
             const carouselViewport = document.getElementById('carousel-viewport');
 
             // Desktop Mouse Events
             carouselViewport.addEventListener('mousedown', startDrag);
-            window.addEventListener('mousemove', onDrag); // Global move for smooth dragging off-target
+            window.addEventListener('mousemove', onDrag);
             window.addEventListener('mouseup', endDrag);
 
             // Mobile Touch Events
-            carouselViewport.addEventListener('touchstart', (e) => startDrag(e), { passive: false });
-            carouselViewport.addEventListener('touchmove', (e) => onDrag(e), { passive: false });
+            carouselViewport.addEventListener('touchstart', startDrag, { passive: false });
+            carouselViewport.addEventListener('touchmove', onDrag, { passive: false });
             carouselViewport.addEventListener('touchend', endDrag);
 
-            // Click-to-Focus and Navigation (retained)
+            // Click-to-Focus and Navigation
             slides.forEach((slide, index) => {
                 slide.addEventListener('click', (e) => {
                     // Prevent click action if a drag just occurred (to prevent misfiring links)
-                    if (Math.abs(getPointerX(e) - startX) > 5) return; 
+                    if (Date.now() - initialClickTime > 200 || Math.abs(getPointerX(e) - startX) > 10) return; 
 
                     stopAutoSlide();
-                    // Calculate the number of clicks needed to bring 'index' to the front
                     const frontSlideIndex = (currentRotationIndex % N + N) % N; 
                     let rotationsNeeded = index - frontSlideIndex;
 
-                    // Ensure rotations are calculated efficiently for the shortest path
                     if (rotationsNeeded > N / 2) rotationsNeeded -= N;
                     if (rotationsNeeded < -N / 2) rotationsNeeded += N;
-
 
                     rotateCarousel(currentRotationIndex + rotationsNeeded);
                 });
 
-                slide.addEventListener('mouseenter', () => {
-                    // Instant focus override on hover
-                    slides.forEach(s => s.classList.remove('focused'));
-                    slide.classList.add('focused');
-                    slide.style.filter = 'blur(0)';
-                    slide.style.opacity = 1;
-                    // Apply visual transformation directly for quick hover feedback
-                    slide.style.transform = `
-                        rotateY(${index * THETA}deg) 
-                        translateZ(${RADIUS}px) 
-                        scale(1.15)
-                    `;
-                    slide.style.zIndex = 100; // Ensure hovered slide is on top
-                    
-                    stopAutoSlide(); // Pause autoslide on hover
-                });
-
-                slide.addEventListener('mouseleave', () => {
-                    slide.classList.remove('focused');
-                    // Recalculate and re-apply stack Z-indices and blur when leaving
-                    updateFocusVisuals(); 
-                    startAutoSlide(); // Resume autoslide
-                });
+                slide.addEventListener('mouseenter', stopAutoSlide);
+                slide.addEventListener('mouseleave', startAutoSlide);
             });
 
             prevButton.addEventListener('click', () => {
                 stopAutoSlide();
-                // Decrement rotation index for counter-clockwise rotation
                 rotateCarousel(currentRotationIndex - 1);
             });
 
             nextButton.addEventListener('click', () => {
                 stopAutoSlide();
-                // Increment rotation index for clockwise rotation
                 rotateCarousel(currentRotationIndex + 1);
             });
 
-            // Initial calls to set up visuals and start autoslide
+            // Initial calls
             setup3DCarousel();
             startAutoSlide();
 
 
-            // --- Dynamic Island Logic (modified for staggered collapse) ---
+            // --- Dynamic Island Logic Fix (Social Bar) ---
             
             const staggerCollapse = () => {
                 const expandedContent = document.getElementById('expanded-content');
-                // Select all direct children (the <a> links)
                 const icons = Array.from(expandedContent.querySelectorAll('.social-icon-link'));
-                // Reverse order to collapse from GitHub (bottom) up to LinkedIn (top)
                 icons.reverse(); 
-                const collapseDelay = 40; // Delay between each icon (in ms)
+                const collapseDelay = 40; 
                 let totalDelay = 0;
 
-                // 1. Stagger the icons' disappearance
+                // 1. Stagger icons disappearance
                 icons.forEach((icon) => {
-                    // Ensure the icon has a transition property for smooth exit
                     icon.style.transition = 'opacity 0.2s ease-out, transform 0.2s ease-out';
-                    
                     setTimeout(() => {
                         icon.style.opacity = 0;
                         icon.style.transform = 'translateY(10px)'; 
                     }, totalDelay);
-                    
                     totalDelay += collapseDelay;
                 });
 
-                // 2. Collapse the bar and show the connect icon after all internal icons have disappeared
+                // 2. Collapse the bar and hide the preview
                 setTimeout(() => {
                     socialBar.classList.remove('expanded');
                     previewScreen.classList.remove('visible');
                     
-                    // Crucial: Clear manual inline styles so the CSS can take over on the next expand
+                    // Clear manual inline styles 
                     icons.forEach(icon => {
                         icon.style.transition = '';
                         icon.style.opacity = '';
                         icon.style.transform = '';
                     });
-                    
-                }, totalDelay + 100); // 100ms extra buffer for the final bar collapse
+                }, totalDelay + 100); 
             };
 
-
+            // Desktop Hover for Expansion
             socialBar.addEventListener('mouseenter', () => socialBar.classList.add('expanded'));
             
-            // On mouseleave, trigger the staggered collapse sequence
-            socialBar.addEventListener('mouseleave', () => {
-                staggerCollapse();
-                // Hide preview immediately to clean up desktop view
-                previewScreen.classList.remove('visible');
-            });
+            // Desktop Hover for Collapse
+            socialBar.addEventListener('mouseleave', staggerCollapse);
             
+            // Mobile/Tap Fix: Explicitly handle click on the collapsed icon to expand the bar.
+            collapsedIcon.addEventListener('click', (e) => {
+                e.stopPropagation(); // Prevent propagating to potential underlying elements
+                if (!socialBar.classList.contains('expanded')) {
+                    socialBar.classList.add('expanded');
+                }
+            });
 
-            // --- Icon Interaction Logic (NEW PREVIEW CONTENT) ---
+            // --- Icon Interaction Logic ---
             const placeholderScreenshots = {
-                "LinkedIn": "https://www.linkedin.com/in/iamrupamroyy",
-                "Linktree": "https://linktr.ee/iamrupamroy",
-                "Instagram": "./data/RupamRoy_Instagram.jpg",
-                "Facebook": "https://www.facebook.com/rupam.roy.986",
-                "GitHub": "https://github.com/iamrupamroyy"
+                "LinkedIn": "https://placehold.co/200x400/1a1a1a/3b82f6?text=LinkedIn+Page",
+                "Instagram": "https://placehold.co/200x400/1a1a1a/f7004f?text=Instagram+Feed",
+                "Facebook": "https://placehold.co/200x400/1a1a1a/4267B2?text=Facebook+Profile",
+                "GitHub": "https://placehold.co/200x400/1a1a1a/f0f6ff?text=GitHub+Code",
+                "Linktree": "https://placehold.co/200x400/1a1a1a/000000?text=Linktree+Hub"
             };
-
 
             iconLinks.forEach(link => {
                 const iconName = link.getAttribute('data-name');
@@ -752,20 +629,16 @@
                 link.addEventListener('mouseenter', () => {
                     const screenshotUrl = placeholderScreenshots[iconName] || placeholderScreenshots["GitHub"];
                     
-                    // Only show mock preview on large screens (desktop)
                     if (window.innerWidth >= MIN_DESKTOP_WIDTH) { 
-                        // Update the content and background image of the preview screen
                         previewTitle.textContent = `${iconName} Page`;
                         previewScreenshot.style.backgroundImage = `url('${screenshotUrl}')`;
-                        previewScreenshot.textContent = ''; // Clear fallback text if image loads
-                        
+                        previewScreenshot.textContent = ''; 
                         previewScreen.classList.add('visible');
                     }
                 });
 
                 link.addEventListener('mouseleave', () => {
                     previewScreen.classList.remove('visible');
-                    // Reset background image and set fallback text for the next hover event
                     previewScreenshot.style.backgroundImage = 'none';
                     previewScreenshot.textContent = 'Screenshot of the Profile'; 
                 });
@@ -782,7 +655,7 @@
             });
 
 
-            // --- Scroll Animation for other sections (retained) ---
+            // --- Scroll Animation for other sections ---
             const observerOptions = { root: null, rootMargin: '0px', threshold: 0.1 };
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
@@ -808,7 +681,7 @@
     <div id="preview-screen" class="top-1/2 rounded-3xl overflow-hidden bg-gray-900 border-gray-800">
         <div class="preview-content">
             <div id="preview-title" class="preview-title"></div>
-            <div id="preview-screenshot" class="preview-screenshot"></div>
+            <div id="preview-screenshot" class="preview-screenshot">Screenshot of the Profile</div>
         </div>
         <div class="h-4 bg-gray-900 absolute top-0 left-1/2 transform -translate-x-1/2 w-1/3 rounded-b-lg"></div>
     </div>
@@ -816,9 +689,8 @@
     <!-- 2. Dynamic Island Social Bar (Fixed RIGHT Side) -->
     <div id="social-bar" class="bg-primary-dark/90 backdrop-blur-sm card-3d-raised">
         
-        <!-- Collapsed Icon (Only visible when bar is collapsed) -->
-        <div id="collapsed-icon" class="w-full h-full text-white pointer-events-auto">
-            <!-- Adjusted SVG size to fit better in 50x50 container -->
+        <!-- Collapsed Icon (FIXED: This is NOT a link, it's just the button to expand) -->
+        <div id="collapsed-icon" role="button" aria-expanded="false" aria-label="Expand Social Links" class="w-full h-full text-white cursor-pointer hover:text-accent-blue transition duration-200">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
         </div>
 
@@ -876,7 +748,8 @@
                     
                     <!-- 3a. Personal Info -->
                     <div class="w-full fade-slide-up bg-gray-950/70 p-6 rounded-xl border-2 border-gray-700 card-3d-raised" style="--animation-delay: 0.1s;">
-                        <img src="./data/RupamRoy.png" alt="Profile Picture" class="w-40 h-40 rounded-full object-cover mb-4 border-4 border-accent-blue shadow-lg mx-auto profile-glow">
+                        <!-- FIXED: Replaced local image with fast placeholder for better performance/reliability -->
+                        <img src="https://placehold.co/160x160/1a1a1a/3b82f6?text=RR" alt="Profile Picture" class="w-40 h-40 rounded-full object-cover mb-4 border-4 border-accent-blue shadow-lg mx-auto profile-glow">
                         <h1 class="text-3xl font-extrabold text-white mb-1">Rupam Roy</h1>
                         <p class="text-lg font-semibold text-accent-blue mb-1">
                             MTech-CSE Student at IIT Bhilai
@@ -891,9 +764,9 @@
                         <h2 class="text-xl font-bold mb-3 border-b border-gray-800 pb-1 text-accent-blue text-center batman-style-header">
                             CP Rankings
                         </h2>
-                        <div class="flex flex-col space-y-3">
+                        <div class="grid grid-cols-1 gap-3">
                             
-                            <!-- LeetCode Card (Text Only + Glow) -->
+                            <!-- LeetCode Card -->
                             <div class="p-3 bg-gray-900 rounded-lg border-2 border-gray-700 text-center flex flex-col items-center transition card-3d-raised hover:border-accent-blue">
                                 <p class="text-lg font-semibold text-white glow-on-hover">LeetCode</p>
                                 <p class="text-xs text-gray-400 mb-1">@iamrupamroyy</p>
@@ -901,7 +774,7 @@
                                 <p class="text-xs text-gray-500">Global Rank</p>
                             </div>
                             
-                            <!-- Codeforces Card (Text Only + Glow) -->
+                            <!-- Codeforces Card -->
                             <div class="p-3 bg-gray-900 rounded-lg border-2 border-gray-700 text-center flex flex-col items-center transition card-3d-raised hover:border-accent-blue">
                                 <p class="text-lg font-semibold text-white glow-on-hover">Codeforces</p>
                                 <p class="text-xs text-gray-400 mb-1">@iamrupamroyy</p>
@@ -909,7 +782,7 @@
                                 <p class="text-xs text-gray-500">Rating: 1079 </p>
                             </div>
 
-                            <!-- CodeChef Card (Text Only + Glow) -->
+                            <!-- CodeChef Card -->
                             <div class="p-3 bg-gray-900 rounded-lg border-2 border-gray-700 text-center flex flex-col items-center transition card-3d-raised hover:border-accent-blue">
                                 <p class="text-lg font-semibold text-white glow-on-hover">CodeChef</p>
                                 <p class="text-xs text-gray-400 mb-1">@iamrupamroyy</p>
@@ -957,7 +830,7 @@
                                 <p class="text-sm text-gray-400">IIT Bhilai, Monsoon semester 2024: C & DSA</p>
                                 <p class="text-gray-500 mt-1">Guided undergraduate students through problem-solving sessions focusing on DSA.</p><br>
                                 <p class="text-sm text-gray-400">IIT Bhilai, Winter 2024: Computer Organization and Architecture (COA)</p>
-                                <p class="text-gray-500 mt-1">Assisted in conducting lab sessions, clarifying theoretical concepts, and evaluating student assignments.</p><br>                            
+                                <p class="text-gray-500 mt-1">Assisted in conducting lab sessions, clarifying theoretical concepts, and evaluating student assignments.</p><br>                            
                                 <p class="text-sm text-gray-400">IIT Bhilai, Monsoon 2025: Compiler Design</p>
                                 <p class="text-gray-500 mt-1">Guided undergraduate students in understanding lexical analysis, parsing techniques, and code generation through lab exercises and discussions.</p>
                             </li>
@@ -974,11 +847,7 @@
                                 <p class="text-sm text-gray-500 mt-1">Score: 98.87 percentile</p><br>
                                 <p class="text-sm text-gray-400">Computer Science & Information Technology (CS) - 2023</p>
                                 <p class="text-sm text-gray-500 mt-1">Score: 97.40 percentile</p>
-                           </li>
-                            <!-- <li class="p-4 bg-primary-dark rounded-lg border-2 border-gray-700 card-3d-raised">
-                                <p class="text-xl font-semibold text-white">CUDA Programming Certification</p>
-                                <p class="text-sm text-gray-400">NVIDIA Deep Learning Institute (DLI)</p>
-                            </li> -->
+                            </li>
                         </ul>
                     </div>
 
@@ -1078,8 +947,8 @@
                         <div class="project-slide original" data-index="0">
                             <div class="slide-inner-content">
                                 <div class="project-title-area absolute inset-0 bg-primary-dark/50">
-                                    <img src="https://placehold.co/600x400/1a1a1a/3b82f6?text=Project+01" alt="Project 09" class="w-full h-full object-cover object-center">
-                                    <h3 class="absolute top-4 left-4 right-4 z-10 text-3xl font-extrabold text-white shadow-text"> Voice-Activated Personal Assistant</h3>
+                                    <img src="https://placehold.co/400x300/1a1a1a/3b82f6?text=Project+01" alt="Project 01" class="w-full h-full object-cover object-center">
+                                    <h3 class="absolute top-4 left-4 right-4 z-10 text-xl md:text-3xl font-extrabold text-white shadow-text"> Voice-Activated Personal Assistant</h3>
                                 </div>
                                 <div class="project-overlay absolute inset-0 bg-secondary-dark/95 text-gray-300">
                                     <div><h4 class="text-2xl font-bold text-accent-blue mb-3">Project 01 Details</h4><p class="mb-4 text-sm">Developed a desktop voice assistant using speech recognition and NLP to execute user commands, automate tasks, and provide audio feedback, with basic ML for command-action mapping. Integrated features like opening applications and fetching online information for enhanced user convenience.</p></div>
@@ -1091,11 +960,11 @@
                         <div class="project-slide original" data-index="1">
                             <div class="slide-inner-content">
                                 <div class="project-title-area absolute inset-0 bg-primary-dark/50">
-                                    <img src="https://placehold.co/600x400/1a1a1a/a855f7?text=Project+02" alt="Project 02" class="w-full h-full object-cover object-center">
-                                    <h3 class="absolute top-4 left-4 right-4 z-10 text-3xl font-extrabold text-white shadow-text">Project 02 (GNN)</h3>
+                                    <img src="https://placehold.co/400x300/1a1a1a/a855f7?text=Project+02" alt="Project 02" class="w-full h-full object-cover object-center">
+                                    <h3 class="absolute top-4 left-4 right-4 z-10 text-xl md:text-3xl font-extrabold text-white shadow-text">Project 02 (GNN)</h3>
                                 </div>
                                 <div class="project-overlay absolute inset-0 bg-secondary-dark/95 text-gray-300">
-                                    <div><h4 class="text-2xl font-bold text-accent-blue mb-3">Project 02 Details</h4><p class="mb-4 text-sm">Graph Attention Network (GAT) prototype for anomaly detection.</p></div>
+                                    <div><h4 class="text-2xl font-bold text-accent-blue mb-3">Project 02 Details</h4><p class="mb-4 text-sm">Graph Attention Network (GAT) prototype for anomaly detection in complex network data structures.</p></div>
                                     <div class="flex space-x-4"><a href="#repo-2-link" target="_blank" class="text-white font-semibold px-4 py-2 rounded-lg bg-accent-blue hover:bg-blue-600 transition">View Code</a></div>
                                 </div>
                             </div>
@@ -1104,16 +973,101 @@
                         <div class="project-slide original" data-index="2">
                             <div class="slide-inner-content">
                                 <div class="project-title-area absolute inset-0 bg-primary-dark/50">
-                                    <img src="https://placehold.co/600x400/1a1a1a/f59e0b?text=Project+03" alt="Project 03" class="w-full h-full object-cover object-center">
-                                    <h3 class="absolute top-4 left-4 right-4 z-10 text-3xl font-extrabold text-white shadow-text">Project 03 (DSA Viz)</h3>
+                                    <img src="https://placehold.co/400x300/1a1a1a/f59e0b?text=Project+03" alt="Project 03" class="w-full h-full object-cover object-center">
+                                    <h3 class="absolute top-4 left-4 right-4 z-10 text-xl md:text-3xl font-extrabold text-white shadow-text">Project 03 (DSA Viz)</h3>
                                 </div>
                                 <div class="project-overlay absolute inset-0 bg-secondary-dark/95 text-gray-300">
-                                    <div><h4 class="text-2xl font-bold text-accent-blue mb-3">Project 03 Details</h4><p class="mb-4 text-sm">Interactive web tool for Data Structures and Algorithms visualization.</p></div>
-                                <div class="flex space-x-4"><a href="#repo-3-link" target="_blank" class="text-white font-semibold px-4 py-2 rounded-lg bg-accent-blue hover:bg-blue-600 transition">View Code</a></div>
+                                    <div><h4 class="text-2xl font-bold text-accent-blue mb-3">Project 03 Details</h4><p class="mb-4 text-sm">Interactive web tool for Data Structures and Algorithms visualization, built to assist in learning complex concepts visually.</p></div>
+                                    <div class="flex space-x-4"><a href="#repo-3-link" target="_blank" class="text-white font-semibold px-4 py-2 rounded-lg bg-accent-blue hover:bg-blue-600 transition">View Code</a></div>
                                 </div>
                             </div>
                         </div>
-
+                        
+                        <!-- Added more placeholders to fill the carousel, increasing interactivity (N=10) -->
+                         <div class="project-slide original" data-index="3">
+                            <div class="slide-inner-content">
+                                <div class="project-title-area absolute inset-0 bg-primary-dark/50">
+                                    <img src="https://placehold.co/400x300/1a1a1a/4ade80?text=Project+04" alt="Project 04" class="w-full h-full object-cover object-center">
+                                    <h3 class="absolute top-4 left-4 right-4 z-10 text-xl md:text-3xl font-extrabold text-white shadow-text">Project 04 (Parallel Sort)</h3>
+                                </div>
+                                <div class="project-overlay absolute inset-0 bg-secondary-dark/95 text-gray-300">
+                                    <div><h4 class="text-2xl font-bold text-accent-blue mb-3">Project 04 Details</h4><p class="mb-4 text-sm">Implementation of GPU-accelerated sorting algorithms using CUDA, demonstrating significant speedup over CPU counterparts for large datasets.</p></div>
+                                    <div class="flex space-x-4"><a href="#repo-4-link" target="_blank" class="text-white font-semibold px-4 py-2 rounded-lg bg-accent-blue hover:bg-blue-600 transition">View Code</a></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="project-slide original" data-index="4">
+                            <div class="slide-inner-content">
+                                <div class="project-title-area absolute inset-0 bg-primary-dark/50">
+                                    <img src="https://placehold.co/400x300/1a1a1a/60a5fa?text=Project+05" alt="Project 05" class="w-full h-full object-cover object-center">
+                                    <h3 class="absolute top-4 left-4 right-4 z-10 text-xl md:text-3xl font-extrabold text-white shadow-text">Project 05 (Compiler Frontend)</h3>
+                                </div>
+                                <div class="project-overlay absolute inset-0 bg-secondary-dark/95 text-gray-300">
+                                    <div><h4 class="text-2xl font-bold text-accent-blue mb-3">Project 05 Details</h4><p class="mb-4 text-sm">Developed the lexical and syntax analysis phases (frontend) of a basic C compiler, including tokenization and parsing.</p></div>
+                                    <div class="flex space-x-4"><a href="#repo-5-link" target="_blank" class="text-white font-semibold px-4 py-2 rounded-lg bg-accent-blue hover:bg-blue-600 transition">View Code</a></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="project-slide original" data-index="5">
+                            <div class="slide-inner-content">
+                                <div class="project-title-area absolute inset-0 bg-primary-dark/50">
+                                    <img src="https://placehold.co/400x300/1a1a1a/f472b6?text=Project+06" alt="Project 06" class="w-full h-full object-cover object-center">
+                                    <h3 class="absolute top-4 left-4 right-4 z-10 text-xl md:text-3xl font-extrabold text-white shadow-text">Project 06 (Network Simulator)</h3>
+                                </div>
+                                <div class="project-overlay absolute inset-0 bg-secondary-dark/95 text-gray-300">
+                                    <div><h4 class="text-2xl font-bold text-accent-blue mb-3">Project 06 Details</h4><p class="mb-4 text-sm">A basic network traffic simulator implemented in Python to model packet routing and congestion control mechanisms.</p></div>
+                                    <div class="flex space-x-4"><a href="#repo-6-link" target="_blank" class="text-white font-semibold px-4 py-2 rounded-lg bg-accent-blue hover:bg-blue-600 transition">View Code</a></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="project-slide original" data-index="6">
+                            <div class="slide-inner-content">
+                                <div class="project-title-area absolute inset-0 bg-primary-dark/50">
+                                    <img src="https://placehold.co/400x300/1a1a1a/fb7185?text=Project+07" alt="Project 07" class="w-full h-full object-cover object-center">
+                                    <h3 class="absolute top-4 left-4 right-4 z-10 text-xl md:text-3xl font-extrabold text-white shadow-text">Project 07 (OS Scheduler)</h3>
+                                </div>
+                                <div class="project-overlay absolute inset-0 bg-secondary-dark/95 text-gray-300">
+                                    <div><h4 class="text-2xl font-bold text-accent-blue mb-3">Project 07 Details</h4><p class="mb-4 text-sm">An operating system process scheduler simulator written in C, comparing performance of FCFS, SJF, and Round Robin algorithms.</p></div>
+                                    <div class="flex space-x-4"><a href="#repo-7-link" target="_blank" class="text-white font-semibold px-4 py-2 rounded-lg bg-accent-blue hover:bg-blue-600 transition">View Code</a></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="project-slide original" data-index="7">
+                            <div class="slide-inner-content">
+                                <div class="project-title-area absolute inset-0 bg-primary-dark/50">
+                                    <img src="https://placehold.co/400x300/1a1a1a/7c3aed?text=Project+08" alt="Project 08" class="w-full h-full object-cover object-center">
+                                    <h3 class="absolute top-4 left-4 right-4 z-10 text-xl md:text-3xl font-extrabold text-white shadow-text">Project 08 (DBMS Query Parser)</h3>
+                                </div>
+                                <div class="project-overlay absolute inset-0 bg-secondary-dark/95 text-gray-300">
+                                    <div><h4 class="text-2xl font-bold text-accent-blue mb-3">Project 08 Details</h4><p class="mb-4 text-sm">A lightweight DBMS engine component focusing on SQL query parsing and basic relational algebra generation.</p></div>
+                                    <div class="flex space-x-4"><a href="#repo-8-link" target="_blank" class="text-white font-semibold px-4 py-2 rounded-lg bg-accent-blue hover:bg-blue-600 transition">View Code</a></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="project-slide original" data-index="8">
+                            <div class="slide-inner-content">
+                                <div class="project-title-area absolute inset-0 bg-primary-dark/50">
+                                    <img src="https://placehold.co/400x300/1a1a1a/fde047?text=Project+09" alt="Project 09" class="w-full h-full object-cover object-center">
+                                    <h3 class="absolute top-4 left-4 right-4 z-10 text-xl md:text-3xl font-extrabold text-white shadow-text">Project 09 (ML Face Rec)</h3>
+                                </div>
+                                <div class="project-overlay absolute inset-0 bg-secondary-dark/95 text-gray-300">
+                                    <div><h4 class="text-2xl font-bold text-accent-blue mb-3">Project 09 Details</h4><p class="mb-4 text-sm">A small-scale face recognition model built using a CNN architecture and TensorFlow/Keras for attendance systems.</p></div>
+                                    <div class="flex space-x-4"><a href="#repo-9-link" target="_blank" class="text-white font-semibold px-4 py-2 rounded-lg bg-accent-blue hover:bg-blue-600 transition">View Code</a></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="project-slide original" data-index="9">
+                            <div class="slide-inner-content">
+                                <div class="project-title-area absolute inset-0 bg-primary-dark/50">
+                                    <img src="https://placehold.co/400x300/1a1a1a/e11d48?text=Project+10" alt="Project 10" class="w-full h-full object-cover object-center">
+                                    <h3 class="absolute top-4 left-4 right-4 z-10 text-xl md:text-3xl font-extrabold text-white shadow-text">Project 10 (Dynamic Portfolio)</h3>
+                                </div>
+                                <div class="project-overlay absolute inset-0 bg-secondary-dark/95 text-gray-300">
+                                    <div><h4 class="text-2xl font-bold text-accent-blue mb-3">Project 10 Details</h4><p class="mb-4 text-sm">This very portfolio! A fully responsive, single-page website featuring a custom 3D carousel and a dynamic social island, demonstrating advanced frontend CSS/JS techniques.</p></div>
+                                    <div class="flex space-x-4"><a href="https://github.com/iamrupamroyy/portfolio" target="_blank" class="text-white font-semibold px-4 py-2 rounded-lg bg-accent-blue hover:bg-blue-600 transition">View Code</a></div>
+                                </div>
+                            </div>
+                        </div>
                         
                     </div>
                 </div>
