@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dynamic Dark Portfolio</title>
-    <!-- Load Tailwind CSS -->
+    <title>Rupam Roy - Portfolio Page</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         /* Configure Tailwind for the DEEPER BLUE/BLACK theme */
@@ -14,14 +13,125 @@
             --color-accent: #3b82f6; /* Blue Accent (Retained) */
         }
         
+        /* Enable smooth scrolling across the whole document */
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
             font-family: 'Inter', sans-serif;
-            overflow-x: hidden;
-            /* Subtle background gradient for depth */
+            font-size: 1.05rem; 
+            line-height: 1.6;
+            overflow-x: hidden; 
             background-color: var(--color-secondary);
             background-image: radial-gradient(at 10% 10%, rgba(59, 130, 246, 0.15) 0%, transparent 50%),
-                              radial-gradient(at 90% 90%, #0d131f 0%, transparent 50%);
+                             radial-gradient(at 90% 90%, #0d131f 0%, transparent 50%);
         }
+        
+        /* CRITICAL FIX: Wrapper to eliminate external padding/margins causing overflow */
+        #content-wrapper {
+            margin: 0 auto;
+            padding: 0 1rem; 
+            max-width: 100%;
+            width: 100%;
+            box-sizing: border-box; 
+        }
+        
+        /* Desktop Content Padding Fix for Fixed Header (PERMANENTLY VISIBLE NAV) */
+        @media (min-width: 1024px) {
+            #content-wrapper {
+                padding-top: 60px; 
+                padding-left: 2rem;
+                padding-right: 2rem;
+            }
+        }
+        @media (max-width: 1023px) {
+            /* Keep mobile padding simple */
+            #content-wrapper {
+                 padding-top: 0; 
+                 padding-left: 1rem;
+                 padding-right: 1rem;
+            }
+        }
+
+
+        /* --- Loading Overlay Styles --- */
+        #loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw; 
+            height: 100vh; 
+            background-color: var(--color-secondary);
+            display: grid;
+            place-items: center; 
+            z-index: 200;
+            opacity: 1;
+            transition: opacity 0.5s ease-out;
+        }
+
+        /* Spinner Animation Styles */
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid rgba(255, 255, 255, 0.3); 
+            border-top-color: var(--color-accent); 
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+
+        /* --- Desktop Navigation Index Styles (FIXED TOP) --- */
+        #desktop-nav-index {
+            display: none; 
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 60px; 
+            z-index: 150;
+            background-color: var(--color-primary); 
+            border-bottom: 1px solid rgba(59, 130, 246, 0.2);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+        }
+
+        @media (min-width: 1024px) { /* Show only on large screens (desktop) */
+            #desktop-nav-index {
+                display: block;
+            }
+        }
+        
+        .nav-link-container {
+            display: flex;
+            justify-content: space-around; 
+            align-items: center;
+            height: 100%;
+            padding: 0 1.5rem;
+        }
+
+        .nav-item {
+            font-size: 0.875rem; 
+            font-weight: 500;
+            padding: 0.5rem 0.75rem;
+            color: #ccc;
+            transition: all 0.2s;
+            cursor: pointer;
+            border-bottom: 2px solid transparent; 
+        }
+
+        .nav-item:hover, .nav-item.active {
+            color: white;
+            background-color: transparent; 
+            border-bottom-color: var(--color-accent);
+            text-shadow: 0 0 5px rgba(59, 130, 246, 0.4);
+        }
+        /* --- End Desktop Nav Styles --- */
+
 
         /* --- Pulsing Glow Animation for Profile Image --- */
         @keyframes pulse-glow {
@@ -33,48 +143,42 @@
             animation: pulse-glow 2s infinite cubic-bezier(0.66, 0, 0.33, 1);
         }
 
-        /* --- Cinematic/Sharp Headline Look (Revised) --- */
-        .batman-style-header {
-            text-transform: uppercase;
-            letter-spacing: 0.05em; 
-            font-weight: 900; 
+        /* --- Header Styles --- */
+        .section-main-header {
+            letter-spacing: 0.01em; 
+            font-weight: 700; 
             color: #fff; 
-            text-shadow: 
-                1px 1px 0 var(--color-secondary),
-                -1px -1px 0 var(--color-secondary),
-                0 0 10px rgba(59, 130, 246, 0.2); 
+            text-shadow: none; 
             transition: all 0.3s ease-out;
+            border-bottom: 2px solid var(--color-accent); 
         }
-        .batman-style-header:hover {
+        .section-main-header:hover {
             color: var(--color-accent); 
-            text-shadow: 
-                0 0 1px var(--color-accent),
-                0 0 5px var(--color-accent),
-                0 0 15px rgba(59, 130, 246, 0.8);
-        }
-
-        /* Restore glow on hover for other elements */
-        .glow-on-hover {
-            transition: all 0.3s ease-in-out;
-            box-shadow: none;
-        }
-        .glow-on-hover:hover {
-            color: white; 
-            text-shadow: 0 0 8px var(--color-accent), 0 0 15px rgba(59, 130, 246, 0.5);
+            text-shadow: 0 0 5px rgba(59, 130, 246, 0.5); 
         }
         
+        /* NEW: Enhanced style for tool/skill subtitles - Simplified */
+        .skill-header-shadow {
+            display: inline-block;
+            padding-bottom: 2px;
+            border-bottom: 2px solid var(--color-accent);
+            color: var(--color-accent);
+            font-weight: 700;
+            text-shadow: none; 
+        }
+
         /* --- General 3D Raised Card Effect --- */
         .card-3d-raised {
             transition: transform 0.3s ease-out, box-shadow 0.3s ease-out, border-color 0.3s ease-out;
             box-shadow: 
                 0 10px 20px rgba(0, 0, 0, 0.7), 
-                0 0 10px rgba(59, 130, 246, 0.2); 
+                0 0 10px rgba(59, 130, 246, 0.05); 
         }
         .card-3d-raised:hover {
             transform: translateY(-5px);
             box-shadow: 
                 0 15px 30px rgba(0, 0, 0, 0.9),
-                0 0 15px rgba(59, 130, 246, 0.5); 
+                0 0 15px rgba(59, 130, 246, 0.3); 
         }
 
         /* 3D effect for Skill Tags */
@@ -82,11 +186,13 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
             transform: translateZ(0);
             transition: all 0.2s ease-in-out; 
-            position: relative;
+            position: relative; 
             overflow: hidden; 
+            padding: 0.25rem 0.75rem; 
+            font-size: 0.9rem; 
         }
 
-        /* --- SHINING BLADE PSEUDO-ELEMENT (Retained) --- */
+        /* --- SHINING BLADE PSEUDO-ELEMENT --- */
         .skill-tag::before {
             content: '';
             position: absolute;
@@ -98,7 +204,7 @@
             background: linear-gradient(
                 to right,
                 rgba(255, 255, 255, 0) 0%, 
-                rgba(255, 255, 255, 0.7) 70%, 
+                rgba(255, 255, 255, 0.5) 70%, 
                 rgba(255, 255, 255, 0) 100% 
             );
             transform: skewX(-20deg); 
@@ -109,27 +215,21 @@
             100% { transform: skewX(-20deg) translateX(450%); opacity: 1; }
         }
         
-        .skill-tag:hover {
-            transform: translateZ(5px) scale(1.05); 
-            background-color: #333333; 
-            box-shadow: 0 0 10px rgba(59, 130, 246, 0.7);
-            text-shadow: 0 0 1px #fff, 0 0 4px var(--color-accent), 0 0 15px rgba(59, 130, 246, 0.5); 
-        }
         .skill-tag:hover::before {
             animation: shine 0.6s ease-in-out; 
         }
         
-        /* --- Dynamic Island Bar CSS (Fixed Right Side) --- */
+        /* --- Dynamic Island Social Bar CSS (Optimized) --- */
         #social-bar {
             z-index: 100;
-            transition: width 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94), background-color 0.2s ease-out, border-radius 0.2s ease-out;
+            /* Speed up transition for a snappier feel */
+            transition: width 0.15s ease-out, height 0.15s ease-out, background-color 0.15s ease-out, border-radius 0.15s ease-out;
             width: 50px; 
             height: 50px;
             overflow: hidden;
             position: fixed; 
-            right: 0;
-            top: 50%;
-            transform: translateY(-50%); 
+            top: 30vh; 
+            right: 0; 
             border-radius: 1.5rem 0 0 1.5rem; 
             padding: 0;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
@@ -139,33 +239,31 @@
         #social-bar.expanded {
             width: 70px; 
             height: auto;
-            min-height: 250px; /* Increased min-height for better tap target separation */
-            border-radius: 1.5rem 0 0 1.5rem;
-            padding: 0;
+            min-height: 250px; 
         }
         
-        /* Collapsed Icon */
+        /* Collapsed Icon: Reduce transition delay */
         #collapsed-icon {
             opacity: 1; 
-            transition: opacity 0.2s ease-in 0.2s; 
+            transition: opacity 0.1s ease-in 0.05s; /* Faster opacity change */
             position: absolute; 
             inset: 0;
             display: flex;
             align-items: center;
             justify-content: center;
-            pointer-events: auto; /* CRITICAL: Can be clicked when collapsed */
+            pointer-events: auto;
         }
         #social-bar.expanded #collapsed-icon {
             opacity: 0; 
-            pointer-events: none; /* CRITICAL: Disabled when expanded */
-            transition: opacity 0.2s ease-out 0s; 
+            pointer-events: none; 
+            transition: opacity 0.05s ease-out 0s; /* Much faster collapse fade-out */
         }
 
-        /* Expanded Content */
+        /* Expanded Content: Reduce transform delay */
         #expanded-content {
             opacity: 0; 
-            pointer-events: none; /* CRITICAL: Disabled when collapsed */
-            transition: opacity 0.2s ease-out, transform 0.2s ease-out; 
+            pointer-events: none; 
+            transition: opacity 0.15s ease-out, transform 0.15s ease-out; /* Faster fade and slide */
             transform: translateY(10px); 
             padding: 0.625rem; 
             
@@ -179,7 +277,7 @@
 
         #social-bar.expanded #expanded-content {
             opacity: 1; 
-            pointer-events: auto; /* CRITICAL: Enabled when expanded */
+            pointer-events: auto; 
             transform: translateY(0); 
         }
         
@@ -187,37 +285,10 @@
             transition: transform 0.2s ease-in-out;
             transform-style: preserve-3d;
             cursor: pointer;
-            padding: 8px 0; /* Increased padding for better touch target */
+            padding: 8px 0; 
             display: flex;
             justify-content: center;
             margin-top: 0 !important; 
-        }
-        
-        /* --- Mobile Preview Screen CSS (Hidden on Mobile) --- */
-        #preview-screen {
-            z-index: 99;
-            transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
-            width: 200px; 
-            height: 400px; 
-            position: fixed;
-            right: 70px; 
-            top: 50%;
-            transform: translateY(-50%) translateX(-10px); 
-            opacity: 0;
-            pointer-events: none; 
-            border: 8px solid #333; 
-            box-shadow: 0 0 40px rgba(59, 130, 246, 0.3); 
-            background-color: var(--color-primary);
-        }
-        
-        @media (max-width: 1023px) { 
-            #preview-screen {
-                display: none !important;
-            }
-        }
-        
-        #preview-screen.visible {
-            opacity: 1;
         }
         
         /* --- Scroll Animation Styles --- */
@@ -232,81 +303,55 @@
             transform: translateY(0);
         }
 
-        /* --- Project Carousel Styles (3D Circular) - MOBILE OPTIMIZATION --- */
-        #carousel-wrapper {
-            position: relative;
-            height: 375px; /* Adjusted height */
-            padding: 0 10px; 
+        /* Base project card style */
+        .project-card-simple { 
+            display: flex;
+            align-items: flex-start;
+            padding: 1.5rem;
+            cursor: pointer; 
+            user-select: none; 
+            transition: border-left 0.3s ease-in-out, background-color 0.3s ease-in-out, box-shadow 0.3s ease-out;
+            border-left: 5px solid transparent; /* Initial transparent border */
         }
-
-        #carousel-viewport {
-            width: 90%; 
-            max-width: 900px;
-            height: 325px; /* Adjusted height */
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
-            perspective: 1000px; 
-            overflow: visible; 
+        .project-card-simple:hover {
+            border-left: 5px solid var(--color-accent);
+            background-color: rgba(26, 26, 26, 0.95); /* Slight darkening on hover */
+            transform: translateY(0); 
         }
-
-        #carousel-track {
-            width: 100%;
-            height: 100%;
-            position: absolute;
-            left: 0;
-            top: 0;
-            transform-style: preserve-3d; 
-            transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            cursor: grab; 
-        }
-
-        .project-slide {
-            width: 300px; /* FIXED: Reduced size for mobile compatibility */
-            height: 225px; /* FIXED: Reduced size for mobile compatibility */
-            position: absolute; 
-            top: 50px; 
-            left: 50%;
-            margin-left: -150px; /* Half of new width (300px) */
-            
+        
+        /* Expansion Container Styles */
+        .project-details-expanded {
             overflow: hidden;
-            border-radius: 0.75rem; 
-            border: 1px solid #1f2937;
-            cursor: pointer;
-            
-            transition: all 0.4s ease-out;
-            transform: scale(0.9); 
-            filter: blur(3px);
-            opacity: 0.7;
-            z-index: 1;
+            max-height: 0;
+            transition: max-height 0.4s ease-in-out;
+            padding-left: 3.5rem; 
+            padding-top: 0.5rem;
         }
         
-        /* Arrow positioning adjusted for the full-width viewport */
-        #prev-slide, #next-slide {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            z-index: 150; 
+        .project-details-expanded.open {
+            max-height: 500px; 
+            padding-bottom: 0.5rem; 
         }
         
-        @media (min-width: 768px) {
-            /* Restore larger dimensions on desktop for visual impact */
-            .project-slide {
-                width: 400px; 
-                height: 300px; 
-                margin-left: -200px; 
-            }
-            #carousel-viewport {
-                height: 400px; 
-            }
-            #carousel-wrapper {
-                height: 450px; 
-            }
+        /* Icon Rotation for Accordion Effect */
+        .chevron-icon {
+            transition: transform 0.3s ease-in-out;
+        }
+        .w-full.expanded .chevron-icon { 
+            transform: rotate(90deg);
+        }
+
+        /* FIX for mobile content overflow */
+        .container {
+             max-width: 100% !important;
         }
         
     </style>
     <script>
+        const Date = {
+            now: () => window.performance.now()
+        };
+
         tailwind.config = {
             theme: {
                 extend: {
@@ -315,269 +360,179 @@
                         'secondary-dark': '#040811',
                         'accent-blue': '#3b82f6',
                     },
-                }
-            }
-        }
+                },
+            },
+        };
     </script>
     <script>
+        // Project data (Updated with link property)
+        const projectData = [
+            {
+                title: "Network Science Analysis for Music Artists Collaboration Network",
+                tech: "Python, GAT (Graph Attention Network), graph-tool, Scikit-learn, Network Science",
+                metrics: "Achieved an outstanding 93.87% accuracy in predicting trending, unknown artist collaborations.",
+                details: "Applied Network Science principles and a Graph Attention Network (GAT) to analyze large-scale music artist collaboration graphs. The project successfully predicted trending future collaborations and identified small cultural artist communities for preservation support.",
+                // Project 1: Link is available
+                //link: "https://github.com/iamrupamroyy/Music-Artist-GNN-Project"
+                link: null
+            },
+            {
+                title: "Interactive NLP-Based Voice Assistant",
+                tech: "Python, Supervised Learning, Natural Language Processing (NLP)",
+                metrics: "Validated with 92.5% task execution accuracy in testing, demonstrating reliable interactive communication.",
+                details: "Developed an intelligent voice assistant capable of interactive communication and performing complex user tasks. The solution utilizes a supervised model and advanced NLP techniques, showcasing expertise in conversational AI and speech processing systems.",
+                // Project 2: Link is not available yet (set to null)
+                link: null
+            },
+            {
+                title: "Basic College Management System",
+                tech: "MySQL, PHP, HTML, CSS",
+                metrics: "Provided a centralized solution for tracking student records and resource allocation (e.g., library books).",
+                details: "Implemented a full-stack college management system to centralize student academic profiles and manage essential details like library book issuance, utilizing PHP for backend logic and MySQL for robust database management.",
+                // Project 3: Link is available
+                //link: "https://github.com/iamrupamroyy/College-Mgmt-System-PHP"
+                link: null
+            },
+            {
+                title: "Dynamic Dark Portfolio Website (Current)",
+                tech: "HTML, Tailwind CSS, JavaScript",
+                metrics: "Implemented a fully responsive, single-page application focused on optimal load times and complex interactive components (like the Dynamic Island).",
+                details: "The portfolio you are currently viewing, built from scratch to demonstrate expertise in modern frontend development, clean structure, and interactive design principles.",
+                // Project 4: Link is available
+                link: "https://github.com/iamrupamroyy/dynamic-dark-portfolio"
+            }
+        ];
+
+
         document.addEventListener('DOMContentLoaded', () => {
             const socialBar = document.getElementById('social-bar');
-            const collapsedIcon = document.getElementById('collapsed-icon');
-            const previewScreen = document.getElementById('preview-screen');
-            const previewTitle = document.getElementById('preview-title');
-            const previewScreenshot = document.getElementById('preview-screenshot');
             const iconLinks = document.querySelectorAll('.social-icon-link');
-            const carouselTrack = document.getElementById('carousel-track');
-            const prevButton = document.getElementById('prev-slide');
-            const nextButton = document.getElementById('next-slide');
-            const slides = Array.from(document.querySelectorAll('.project-slide.original'));
+            const loadingOverlay = document.getElementById('loading-overlay');
+            const projectStack = document.getElementById('project-list-stack');
             
-            const N = slides.length; 
-            const THETA = 360 / N; 
-            // FIXED: Reduced RADIUS for better mobile visibility/scaling
-            const DESKTOP_RADIUS = 750;
-            const MOBILE_RADIUS = 450;
-            let currentRotationIndex = 0; 
-            let autoSlideInterval;
-            const MIN_DESKTOP_WIDTH = 1024;
-
-            // --- 3D Project Carousel Logic ---
-            let isDragging = false;
-            let startX = 0;
-            let currentTrackRotation = 0; 
-            let lastRotationIndex = 0;
-            let initialClickTime = 0;
-
-            const getRadius = () => window.innerWidth >= 768 ? DESKTOP_RADIUS : MOBILE_RADIUS;
-
-            const setup3DCarousel = () => {
-                const radius = getRadius();
-                slides.forEach((slide, index) => {
-                    const angle = index * THETA;
-                    
-                    slide.style.transform = `
-                        rotateY(${angle}deg) 
-                        translateZ(${radius}px) 
-                        scale(0.9)
-                    `;
-                    slide.style.opacity = 0.7;
-                    slide.style.filter = 'blur(3px)';
-                    slide.style.zIndex = N - index; 
-                });
-                
-                carouselTrack.style.transform = `translateZ(-${radius}px) rotateY(0deg)`;
-                
-                updateFocusVisuals();
-            };
+            // --- Global State & Timers ---
+            let isBarExpanded = false;
+            let canClickLinks = false; 
+            let collapseTimer;
             
-            const rotateCarousel = (targetRotationIndex, animated = true) => {
-                currentRotationIndex = targetRotationIndex;
-                
-                const targetAngle = currentRotationIndex * -THETA; 
-                currentTrackRotation = targetAngle;
-                
-                carouselTrack.style.transition = animated ? 'transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)' : 'none';
-                carouselTrack.style.transform = `translateZ(-${getRadius()}px) rotateY(${targetAngle}deg)`;
-                
-                updateFocusVisuals();
-            };
+            // OPTIMIZATION: Reduced automatic collapse timeout for a faster feel.
+            const COLLAPSE_TIMEOUT = 3000; 
             
-            const updateFocusVisuals = () => {
-                const frontSlideIndex = (currentRotationIndex % N + N) % N; 
+            // --- Loading Screen Initialization ---
+            setTimeout(() => {
+                loadingOverlay.style.opacity = '0';
+                setTimeout(() => {
+                    loadingOverlay.style.display = 'none';
+                    document.body.style.overflow = '';
+                    document.documentElement.style.scrollBehavior = 'smooth'; 
+                }, 500);
+            }, 1500); 
 
-                slides.forEach((slide, index) => {
-                    let diff = index - frontSlideIndex;
-                    
-                    if (diff > N / 2) diff -= N;
-                    if (diff < -N / 2) diff += N;
-                    
-                    const absDiff = Math.abs(diff);
-                    const normalizedDistance = Math.min(absDiff, N / 2) / (N / 2); 
+            document.body.style.overflow = 'hidden'; 
 
-                    let scale, blur, opacity;
+            // --- Project List Optimization (Single Injection) ---
+            const fragment = document.createDocumentFragment();
+            
+            projectData.forEach((project, index) => {
+                const cardWrapper = document.createElement('div');
+                cardWrapper.className = "w-full fade-slide-up"; 
+                
+                const cardHeader = document.createElement('div');
+                cardHeader.className = "project-card-simple w-full bg-primary-dark rounded-lg border-2 border-gray-700 card-3d-raised flex-col md:flex-row space-y-3 md:space-y-0 relative";
+                cardHeader.setAttribute('data-index', index);
+                
+                const chevron = `<svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 ml-2 text-accent-blue chevron-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>`;
 
-                    if (absDiff === 0) {
-                        scale = 1.15;
-                        blur = 0;
-                        opacity = 1;
+                // NEW LOGIC: Conditionally render the 'View Code' button
+                const viewCodeButton = project.link ? `
+                    <a href="${project.link}" target="_blank" onclick="event.stopPropagation();" class="text-white font-semibold px-4 py-2 rounded-lg bg-accent-blue hover:bg-blue-600 transition text-sm">
+                        View Code
+                    </a>
+                ` : `
+                    <span class="text-gray-500 font-semibold px-4 py-2 rounded-lg bg-gray-700 cursor-not-allowed transition text-sm" title="Repository coming soon">
+                        Code Soon
+                    </span>
+                `;
+
+
+                // Build the main visible part of the card
+                cardHeader.innerHTML = `
+                    <div class="flex items-center flex-grow">
+                        <span class="h-10 w-10 bg-accent-blue rounded-full flex items-center justify-center text-sm font-bold text-white flex-shrink-0">${index + 1}</span>
+                        <div class="flex-grow ml-4">
+                            <h4 class="text-xl font-bold text-white project-title">${project.title}</h4>
+                        </div>
+                    </div>
+                    <div class="flex-shrink-0 flex items-center self-start md:self-center mt-3 md:mt-0 ml-auto space-x-3">
+                        ${viewCodeButton}
+                        ${chevron}
+                    </div>
+                `;
+                
+                // Details Section (Hidden by default)
+                const detailsExpanded = document.createElement('div');
+                detailsExpanded.className = "project-details-expanded bg-gray-900 rounded-b-lg border-x-2 border-b-2 border-gray-700";
+                
+                // Inner details content is created on initial load but hidden
+                detailsExpanded.innerHTML = `
+                    <div class="p-4 pt-1 text-left">
+                        <p class="text-gray-400 text-base mb-3 leading-snug">
+                            <span class="font-extrabold text-accent-blue">Description:</span> ${project.details}
+                        </p>
+                        <p class="text-gray-400 text-base mb-3 flex flex-wrap gap-2 items-center leading-snug">
+                            <span class="font-extrabold text-accent-blue flex-shrink-0">Technology:</span> 
+                            ${project.tech.split(',').map(t => `<span class="bg-gray-700 text-white rounded-full font-medium skill-tag glow-on-hover">${t.trim()}</span>`).join(' ')}
+                        </p>
+                           <p class="text-gray-400 text-base leading-snug">
+                            <span class="font-extrabold text-accent-blue">Metrics/Results:</span> ${project.metrics}
+                        </p>
+                    </div>
+                `;
+                
+                cardWrapper.appendChild(cardHeader);
+                cardWrapper.appendChild(detailsExpanded);
+                fragment.appendChild(cardWrapper);
+
+                cardHeader.addEventListener('click', (e) => {
+                    if (e.target.closest('a') || e.target.closest('span[title="Repository coming soon"]')) return;
+
+                    if (detailsExpanded.classList.contains('open')) {
+                        detailsExpanded.classList.remove('open');
+                        cardWrapper.classList.remove('expanded');
                     } else {
-                        scale = 1 - (normalizedDistance * 0.3);
-                        blur = normalizedDistance * 5; 
-                        opacity = 1 - (normalizedDistance * 0.4); 
-                    }
-                    
-                    slide.style.transition = 'all 0.4s ease-out';
-                    slide.style.transform = `
-                        rotateY(${index * THETA}deg) 
-                        translateZ(${getRadius()}px) 
-                        scale(${scale})
-                    `;
-                    slide.style.filter = `blur(${blur}px)`;
-                    slide.style.opacity = opacity;
-                    
-                    if (absDiff === 0) {
-                        slide.style.zIndex = 100;
-                        slide.classList.add('focused');
-                    } else {
-                        slide.style.zIndex = N - absDiff;
-                        slide.classList.remove('focused');
+                        detailsExpanded.classList.add('open');
+                        cardWrapper.classList.add('expanded');
                     }
                 });
-            };
-
-            const autoSlide = () => {
-                rotateCarousel(currentRotationIndex + 1);
-            };
-
-            const startAutoSlide = () => {
-                if (autoSlideInterval) clearInterval(autoSlideInterval);
-                // Pause auto-slide on mobile for easier touch interaction
-                if (window.innerWidth >= 768) { 
-                    autoSlideInterval = setInterval(autoSlide, 3500);
-                }
-            };
-
-            const stopAutoSlide = () => {
-                if (autoSlideInterval) clearInterval(autoSlideInterval);
-            };
-
-            // Recalculate 3D setup on resize (e.g., mobile to desktop)
-            window.addEventListener('resize', () => {
-                setup3DCarousel();
-                updateFocusVisuals();
-                startAutoSlide(); // Restart auto-slide based on new size
             });
-
-            // --- DRAG AND SWIPE LOGIC ---
             
-            const getPointerX = (e) => {
-                return e.touches ? e.touches[0].clientX : e.clientX;
-            };
+            projectStack.appendChild(fragment);
 
-            const startDrag = (e) => {
-                isDragging = true;
-                stopAutoSlide();
-                carouselTrack.classList.add('dragging');
-                
-                startX = getPointerX(e);
-                lastRotationIndex = currentRotationIndex;
-                initialClickTime = Date.now();
-                
-                // Prevent drag if a slide is already focused on mouse down
-                if (e.target.closest('.project-slide.focused')) {
-                    e.stopPropagation(); // Stop propagation to prevent document level scrolling
+            
+            // --- Dynamic Island Logic (Optimized) ---
+
+            const resetCollapseTimer = () => {
+                if (collapseTimer) clearTimeout(collapseTimer);
+                if (isBarExpanded) {
+                    collapseTimer = setTimeout(staggerCollapse, COLLAPSE_TIMEOUT);
                 }
             };
-
-            const onDrag = (e) => {
-                if (!isDragging) return;
-                
-                // CRITICAL FIX: The drag needs to stop scrolling on mobile
-                if (e.touches) e.preventDefault(); 
-                
-                const currentX = getPointerX(e);
-                const diffX = currentX - startX;
-                
-                const sensitivity = 0.5; 
-                const viewportWidth = carouselTrack.clientWidth;
-                
-                const dragRotation = (diffX / viewportWidth) * 360 * sensitivity; 
-                
-                // Calculate the temporary visual rotation
-                const newRotation = (lastRotationIndex * -THETA) + dragRotation;
-                carouselTrack.style.transform = `translateZ(-${getRadius()}px) rotateY(${newRotation}deg)`;
-            };
-
-            const endDrag = (e) => {
-                if (!isDragging) return;
-                isDragging = false;
-                carouselTrack.classList.remove('dragging');
-                
-                const dragTime = Date.now() - initialClickTime;
-                const currentX = getPointerX(e);
-                const diffX = currentX - startX;
-                
-                // Determine the target rotation index based on drag amount or speed (flick)
-                const snapThreshold = 50; // Pixels
-                const flickThreshold = 300; // Pixels/second
-                const dragVelocity = Math.abs(diffX) / (dragTime / 1000); 
-
-                let targetIndex = lastRotationIndex;
-
-                if (Math.abs(diffX) > snapThreshold || dragVelocity > flickThreshold) {
-                    if (diffX > 0) {
-                        // Dragged right (counter-clockwise movement of track, so index - 1)
-                        targetIndex = lastRotationIndex - 1;
-                    } else if (diffX < 0) {
-                        // Dragged left (clockwise movement of track, so index + 1)
-                        targetIndex = lastRotationIndex + 1;
-                    }
-                }
-
-                // Snap to the target index with animation
-                rotateCarousel(targetIndex, true);
-                startAutoSlide();
-            };
-
-            const carouselViewport = document.getElementById('carousel-viewport');
-
-            // Desktop Mouse Events
-            carouselViewport.addEventListener('mousedown', startDrag);
-            window.addEventListener('mousemove', onDrag);
-            window.addEventListener('mouseup', endDrag);
-
-            // Mobile Touch Events
-            carouselViewport.addEventListener('touchstart', startDrag, { passive: false });
-            carouselViewport.addEventListener('touchmove', onDrag, { passive: false });
-            carouselViewport.addEventListener('touchend', endDrag);
-
-            // Click-to-Focus and Navigation
-            slides.forEach((slide, index) => {
-                slide.addEventListener('click', (e) => {
-                    // Prevent click action if a drag just occurred (to prevent misfiring links)
-                    if (Date.now() - initialClickTime > 200 || Math.abs(getPointerX(e) - startX) > 10) return; 
-
-                    stopAutoSlide();
-                    const frontSlideIndex = (currentRotationIndex % N + N) % N; 
-                    let rotationsNeeded = index - frontSlideIndex;
-
-                    if (rotationsNeeded > N / 2) rotationsNeeded -= N;
-                    if (rotationsNeeded < -N / 2) rotationsNeeded += N;
-
-                    rotateCarousel(currentRotationIndex + rotationsNeeded);
-                });
-
-                slide.addEventListener('mouseenter', stopAutoSlide);
-                slide.addEventListener('mouseleave', startAutoSlide);
-            });
-
-            prevButton.addEventListener('click', () => {
-                stopAutoSlide();
-                rotateCarousel(currentRotationIndex - 1);
-            });
-
-            nextButton.addEventListener('click', () => {
-                stopAutoSlide();
-                rotateCarousel(currentRotationIndex + 1);
-            });
-
-            // Initial calls
-            setup3DCarousel();
-            startAutoSlide();
-
-
-            // --- Dynamic Island Logic Fix (Social Bar) ---
             
             const staggerCollapse = () => {
+                if (!isBarExpanded) return; 
+
+                if (collapseTimer) clearTimeout(collapseTimer);
+
                 const expandedContent = document.getElementById('expanded-content');
                 const icons = Array.from(expandedContent.querySelectorAll('.social-icon-link'));
                 icons.reverse(); 
-                const collapseDelay = 40; 
+                const collapseDelay = 20; 
                 let totalDelay = 0;
 
                 // 1. Stagger icons disappearance
                 icons.forEach((icon) => {
-                    icon.style.transition = 'opacity 0.2s ease-out, transform 0.2s ease-out';
+                    // OPTIMIZATION: Faster icon transition
+                    icon.style.transition = 'opacity 0.1s ease-out, transform 0.1s ease-out';
                     setTimeout(() => {
                         icon.style.opacity = 0;
                         icon.style.transform = 'translateY(10px)'; 
@@ -585,10 +540,11 @@
                     totalDelay += collapseDelay;
                 });
 
-                // 2. Collapse the bar and hide the preview
+                // 2. Collapse the bar 
                 setTimeout(() => {
                     socialBar.classList.remove('expanded');
-                    previewScreen.classList.remove('visible');
+                    isBarExpanded = false; 
+                    canClickLinks = false; 
                     
                     // Clear manual inline styles 
                     icons.forEach(icon => {
@@ -596,66 +552,72 @@
                         icon.style.opacity = '';
                         icon.style.transform = '';
                     });
-                }, totalDelay + 100); 
+                // OPTIMIZATION: Reduced buffer for final collapse transition
+                }, totalDelay + 50); 
+            };
+            
+            // OPTIMIZATION: Simplify to single function for all expansion
+            const expandBar = () => {
+                if (isBarExpanded) return; 
+                socialBar.classList.add('expanded');
+                isBarExpanded = true; 
+                canClickLinks = true; 
+                resetCollapseTimer(); 
             };
 
-            // Desktop Hover for Expansion
-            socialBar.addEventListener('mouseenter', () => socialBar.classList.add('expanded'));
+
+            // Desktop/Large Screen: Hover to Expand/Collapse
+            if (window.innerWidth >= 768) {
+                socialBar.addEventListener('mouseenter', expandBar);
+                socialBar.addEventListener('mouseleave', staggerCollapse);
+            }
             
-            // Desktop Hover for Collapse
-            socialBar.addEventListener('mouseleave', staggerCollapse);
-            
-            // Mobile/Tap Fix: Explicitly handle click on the collapsed icon to expand the bar.
-            collapsedIcon.addEventListener('click', (e) => {
-                e.stopPropagation(); // Prevent propagating to potential underlying elements
-                if (!socialBar.classList.contains('expanded')) {
-                    socialBar.classList.add('expanded');
+            // Mobile/Small Screen: Click to Expand/Collapse
+            socialBar.addEventListener('click', (e) => {
+                const clickedLink = e.target.closest('.social-icon-link');
+
+                if (window.innerWidth < 768) {
+                     if (!isBarExpanded) {
+                        e.preventDefault();
+                        expandBar();
+                    } else if (!clickedLink) {
+                        staggerCollapse();
+                    }
                 }
             });
 
-            // --- Icon Interaction Logic ---
-            const placeholderScreenshots = {
-                "LinkedIn": "https://placehold.co/200x400/1a1a1a/3b82f6?text=LinkedIn+Page",
-                "Instagram": "https://placehold.co/200x400/1a1a1a/f7004f?text=Instagram+Feed",
-                "Facebook": "https://placehold.co/200x400/1a1a1a/4267B2?text=Facebook+Profile",
-                "GitHub": "https://placehold.co/200x400/1a1a1a/f0f6ff?text=GitHub+Code",
-                "Linktree": "https://placehold.co/200x400/1a1a1a/000000?text=Linktree+Hub"
-            };
 
+            // Interaction inside the expanded bar resets the timer
+            socialBar.addEventListener('mousemove', resetCollapseTimer);
+            socialBar.addEventListener('touchmove', resetCollapseTimer);
+            
+            // --- Icon Interaction Logic (Link Clicks) ---
+            
             iconLinks.forEach(link => {
-                const iconName = link.getAttribute('data-name');
                 const linkUrl = link.href;
 
-                link.addEventListener('mouseenter', () => {
-                    const screenshotUrl = placeholderScreenshots[iconName] || placeholderScreenshots["GitHub"];
-                    
-                    if (window.innerWidth >= MIN_DESKTOP_WIDTH) { 
-                        previewTitle.textContent = `${iconName} Page`;
-                        previewScreenshot.style.backgroundImage = `url('${screenshotUrl}')`;
-                        previewScreenshot.textContent = ''; 
-                        previewScreen.classList.add('visible');
-                    }
-                });
-
-                link.addEventListener('mouseleave', () => {
-                    previewScreen.classList.remove('visible');
-                    previewScreenshot.style.backgroundImage = 'none';
-                    previewScreenshot.textContent = 'Screenshot of the Profile'; 
-                });
-
                 link.addEventListener('click', (e) => {
-                    e.preventDefault(); 
-                    link.classList.add('toss');
-                    
-                    setTimeout(() => {
-                        window.open(linkUrl, '_blank');
-                        link.classList.remove('toss');
-                    }, 500); 
+                    if (isBarExpanded && canClickLinks) { 
+                        if (collapseTimer) clearTimeout(collapseTimer); 
+                        
+                        e.preventDefault(); 
+                        link.classList.add('toss');
+                        
+                        // OPTIMIZATION: Faster collapse after click
+                        setTimeout(staggerCollapse, 400); 
+
+                        setTimeout(() => {
+                            window.open(linkUrl, '_blank');
+                            link.classList.remove('toss');
+                        }, 500); 
+                    } else {
+                           e.preventDefault();
+                    }
                 });
             });
 
 
-            // --- Scroll Animation for other sections ---
+            // --- Scroll Animation Setup ---
             const observerOptions = { root: null, rootMargin: '0px', threshold: 0.1 };
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
@@ -667,65 +629,133 @@
 
             const animateElements = document.querySelectorAll('.fade-slide-up');
             animateElements.forEach((element, index) => {
-                let delay = 0.1 + (index * 0.1); 
-                element.style.setProperty('--animation-delay', `${delay}s`);
+                element.style.setProperty('--animation-delay', `${index * 0.05}s`);
                 observer.observe(element);
             });
+            
+            // --- Desktop Navigation Index Logic ---
+            const sections = document.querySelectorAll('#about, #education, #experience, #achievements, #projects, #skills, #interests');
+
+            const groupedSections = [
+                { name: 'Academics & Profile', ids: ['about', 'education', 'achievements', 'experience'] },
+                { name: 'Projects', ids: ['projects'] },
+                { name: 'Skills & Hobbies', ids: ['skills', 'interests'] },
+            ];
+
+            const navMap = {};
+            groupedSections.forEach(group => {
+                group.ids.forEach(id => {
+                    navMap[id] = group.name.replace(/[^a-zA-Z0-9&]/g, ''); 
+                });
+            });
+
+            const combinedNavLinks = document.querySelectorAll('.nav-item');
+            combinedNavLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault(); 
+                    
+                    const targetSectionId = e.currentTarget.getAttribute('href').substring(1); 
+                    const targetElement = document.getElementById(targetSectionId);
+                    
+                    if (targetElement) {
+                        const offset = 60; 
+                        const targetY = targetElement.offsetTop - offset; 
+                        
+                        window.scrollTo({
+                            top: targetY > 0 ? targetY : 0, 
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+            
+            // Intersection Observer for highlighting the active section (Grouped Logic)
+            const sectionObserverOptions = {
+                root: null,
+                rootMargin: '-61px 0px -50% 0px', 
+                threshold: 0
+            };
+
+            const sectionObserver = new IntersectionObserver((entries) => {
+                let activeGroupName = null;
+
+                for (let i = 0; i < entries.length; i++) {
+                    const entry = entries[i];
+                    if (entry.isIntersecting) {
+                        const targetId = entry.target.id;
+                        const currentGroupName = navMap[targetId];
+
+                        if (currentGroupName) {
+                            activeGroupName = currentGroupName;
+                            break; 
+                        }
+                    }
+                }
+
+                combinedNavLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('data-target-group') === activeGroupName) {
+                        link.classList.add('active');
+                    }
+                });
+
+            }, sectionObserverOptions);
+
+            sections.forEach(section => {
+                sectionObserver.observe(section);
+            });
+            
         });
     </script>
 </head>
 
 <body class="bg-secondary-dark text-white min-h-screen">
 
-    <!-- 1. Mobile Preview Screen (Fixed and Hidden by default on mobile) -->
-    <div id="preview-screen" class="top-1/2 rounded-3xl overflow-hidden bg-gray-900 border-gray-800">
-        <div class="preview-content">
-            <div id="preview-title" class="preview-title"></div>
-            <div id="preview-screenshot" class="preview-screenshot">Screenshot of the Profile</div>
+    <nav id="desktop-nav-index">
+        <div class="nav-link-container">
+            <a class="nav-item active" data-target-group="AcademicsProfile" href="#about">Academics & Profile</a>
+            <a class="nav-item" data-target-group="Projects" href="#projects">Projects</a>
+            <a class="nav-item" data-target-group="SkillsHobbies" href="#skills">Skills & Hobbies</a>
         </div>
-        <div class="h-4 bg-gray-900 absolute top-0 left-1/2 transform -translate-x-1/2 w-1/3 rounded-b-lg"></div>
-    </div>
+    </nav>
 
-    <!-- 2. Dynamic Island Social Bar (Fixed RIGHT Side) -->
+
+    <div id="loading-overlay">
+        <div class="spinner" aria-label="Loading content..."></div>
+    </div>
+    
     <div id="social-bar" class="bg-primary-dark/90 backdrop-blur-sm card-3d-raised">
         
-        <!-- Collapsed Icon (FIXED: This is NOT a link, it's just the button to expand) -->
         <div id="collapsed-icon" role="button" aria-expanded="false" aria-label="Expand Social Links" class="w-full h-full text-white cursor-pointer hover:text-accent-blue transition duration-200">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
         </div>
 
-        <!-- Expanded Content (Hidden when bar is collapsed) -->
         <div id="expanded-content" class="flex flex-col space-y-3 pt-3">
             
-            <!-- LinkedIn Link -->
             <a href="https://linkedin.com/in/iamrupamroyy" target="_blank" data-name="LinkedIn" title="LinkedIn Profile" class="social-icon-link" aria-label="LinkedIn Profile">
                 <span class="social-icon-wrapper text-white block w-8 h-8 glow-on-hover" title="LinkedIn">
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-full h-full" viewBox="0 0 24 24" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.528-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.764 7 2.456v6.779z"/></svg>
                 </span>
             </a>
 
-            <!-- Instagram Link -->
             <a href="https://www.instagram.com/iamrupamroyy" target="_blank" data-name="Instagram" title="Instagram Profile" class="social-icon-link" aria-label="Instagram Profile">
                 <span class="social-icon-wrapper text-white block w-8 h-8 glow-on-hover" title="Instagram">
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-full h-full" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4.1 0 1 1 12.63 8 4 4.1 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
                 </span>
             </a>
             
-            <!-- Facebook Link -->
             <a href="https://www.facebook.com/rupam.roy.986" target="_blank" data-name="Facebook" title="Facebook Profile" class="social-icon-link" aria-label="Facebook Profile">
                 <span class="social-icon-wrapper text-white block w-8 h-8 glow-on-hover" title="Facebook">
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-full h-full" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
                 </span>
             </a>
 
-            <!-- GitHub Link -->
             <a href="https://github.com/iamrupamroyy" target="_blank" data-name="GitHub" title="GitHub Code" class="social-icon-link" aria-label="GitHub Profile">
                 <span class="social-icon-wrapper text-white block w-8 h-8 glow-on-hover" title="GitHub">
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-full h-full" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.805 8.207 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.344.726-4.04-1.625-4.04-1.625-.546-1.387-1.334-1.756-1.334-1.756-1.087-.744.084-.693.084-.693 1.205.086 1.838 1.238 1.838 1.238 1.07 1.835 2.809 1.305 3.492.998.108-.77.418-1.305.762-1.604-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.469-2.381 1.236-3.22-.124-.303-.535-1.524.117-3.176 0 0 1-.322 3.296 1.23.957-.265 1.98-.397 3-.397.953 0 1.956.12 3 .397 2.296-1.552 3.296-1.23 3.296-1.23.653 1.652.242 2.873.118 3.176.766.839 1.91 1.235 3.22 0 4.61-2.805 5.624-5.479 5.923.43.372.823 1.102.823 2.222 0 1.604-.015 2.899-.015 3.294 0 .319.215.694.825.576C20.565 21.828 24 17.32 24 12c0-6.627-5.373-12-12-12z"/></svg>
                 </span>
             </a>
             
-            <!-- Linktree Link -->
             <a href="https://linktr.ee/iamrupamroy" target="_blank" data-name="Linktree" title="Linktree Links" class="social-icon-link" aria-label="Linktree Page">
                 <span class="social-icon-wrapper text-white block w-8 h-8 glow-on-hover" title="Linktree">
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-full h-full" viewBox="0 0 24 24" fill="currentColor"><path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12s4.477 10 10 10 10-4.477 10-10zm-12.75-3.5c.69 0 1.25-.56 1.25-1.25s-.56-1.25-1.25-1.25-1.25.56-1.25 1.25.56 1.25 1.25 1.25zm5.5 12h-3v-3h3v3zm-5.5-12c.69 0 1.25-.56 1.25-1.25s-.56-1.25-1.25-1.25-1.25.56-1.25 1.25.56 1.25 1.25 1.25zm5.5 0c.69 0 1.25-.56 1.25-1.25s-.56-1.25-1.25-1.25-1.25.56-1.25 1.25.56 1.25 1.25 1.25zm-5.5 3.5h3v-3h-3v3zm5.5 0h3v-3h-3v3zm-5.5 3.5h3v-3h-3v3zm5.5 0h3v-3h-3v3zm-5.5 3.5h3v-3h-3v3zm5.5 0h3v-3h-3v3z"/></svg>
@@ -734,58 +764,55 @@
         </div>
     </div>
     
-    <!-- 3. Main Content Container -->
-    <div class="container mx-auto px-4 md:px-8 py-12 lg:py-16 max-w-7xl">
+    <div id="content-wrapper" class="mx-auto max-w-7xl">
 
-        <!-- --- HOME / ABOUT SECTION --- -->
         <section id="about" class="mb-10 pt-8">
             
-            <!-- TOP SECTION: Personal Info (Left) and Academic Info (Right) -->
             <div class="flex flex-col md:flex-row items-start space-y-6 md:space-y-0 md:space-x-10">
                 
-                <!-- LEFT COLUMN: Personal Info & Ranks (md:w-1/3) -->
-                <div class="md:w-1/3 flex flex-col items-center text-center space-y-6">
+                <div class="md:w-1/3 flex flex-col items-center text-center space-y-6 order-1 md:order-1"> 
                     
-                    <!-- 3a. Personal Info -->
                     <div class="w-full fade-slide-up bg-gray-950/70 p-6 rounded-xl border-2 border-gray-700 card-3d-raised" style="--animation-delay: 0.1s;">
-                        <!-- FIXED: Replaced local image with fast placeholder for better performance/reliability -->
-                        <img src="https://placehold.co/160x160/1a1a1a/3b82f6?text=RR" alt="Profile Picture" class="w-40 h-40 rounded-full object-cover mb-4 border-4 border-accent-blue shadow-lg mx-auto profile-glow">
+                        <img src="./data/RupamRoy.png" alt="Profile Picture" class="w-40 h-40 rounded-full object-cover mb-4 border-4 border-accent-blue shadow-lg mx-auto profile-glow">
                         <h1 class="text-3xl font-extrabold text-white mb-1">Rupam Roy</h1>
-                        <p class="text-lg font-semibold text-accent-blue mb-1">
-                            MTech-CSE Student at IIT Bhilai
+                        <p class="text-xl font-semibold text-accent-blue mb-1">
+                            MTech CSE | IIT Bhilai
                         </p>
-                        <p class="text-sm text-gray-400">
-                            <a href="iamrupamroyy@gmail.com" class="hover:text-accent-blue transition">iamrupamroyy@gmail.com</a>
+                        <p class="text-base text-gray-400">
+                            <a href="mailto:iamrupamroyy@gmail.com" class="hover:text-accent-blue transition">iamrupamroyy@gmail.com</a>
                         </p>
                     </div>
                     
-                    <!-- 3b. Competitive Programming Ranks (LEFT COLUMN) -->
+                    <div class="w-full text-left fade-slide-up bg-primary-dark rounded-xl border-2 border-gray-700 card-3d-raised p-4" id="about-me-box" style="--animation-delay: 0.2s;"> 
+                        <h2 class="text-2xl font-bold mb-3 border-b border-gray-800 pb-2 text-white">About Me</h2>
+                        <p class="text-gray-400 leading-relaxed text-base">
+                            I am an MTech student in Computer Science & Engineering at IIT Bhilai, specializing in High-Performance Computing. My advanced academic work centers on Parallel GPU Architectures and the application of Graph Neural Networks (GNNs) to accelerate data-intensive research. I leverage a strong foundation in core CS and competitive programming to engineer innovative, scalable solutions for complex computational challenges.
+                        </p>
+                    </div>
+
                     <div id="coding-ranks" class="w-full mt-2 fade-slide-up" style="--animation-delay: 0.3s;">
-                        <h2 class="text-xl font-bold mb-3 border-b border-gray-800 pb-1 text-accent-blue text-center batman-style-header">
-                            CP Rankings
+                        <h2 class="text-3xl font-extrabold mb-3 pb-2 text-accent-blue text-center section-main-header">
+                            Competitive Programming Ranks
                         </h2>
-                        <div class="grid grid-cols-1 gap-3">
+                        <div class="grid grid-cols-2 gap-1">
                             
-                            <!-- LeetCode Card -->
                             <div class="p-3 bg-gray-900 rounded-lg border-2 border-gray-700 text-center flex flex-col items-center transition card-3d-raised hover:border-accent-blue">
                                 <p class="text-lg font-semibold text-white glow-on-hover">LeetCode</p>
-                                <p class="text-xs text-gray-400 mb-1">@iamrupamroyy</p>
+                                <p class="text-sm text-gray-400 mb-1">@iamrupamroyy</p>
                                 <p class="text-2xl font-extrabold text-green-400 mt-1 glow-on-hover">307,778</p>
                                 <p class="text-xs text-gray-500">Global Rank</p>
                             </div>
                             
-                            <!-- Codeforces Card -->
                             <div class="p-3 bg-gray-900 rounded-lg border-2 border-gray-700 text-center flex flex-col items-center transition card-3d-raised hover:border-accent-blue">
                                 <p class="text-lg font-semibold text-white glow-on-hover">Codeforces</p>
-                                <p class="text-xs text-gray-400 mb-1">@iamrupamroyy</p>
+                                <p class="text-sm text-gray-400 mb-1">@iamrupamroyy</p>
                                 <p class="text-2xl font-extrabold text-blue-400 mt-1 glow-on-hover">Newbie</p>
-                                <p class="text-xs text-gray-500">Rating: 1079 </p>
+                                <p class="text-xs text-gray-500">Rating: 948 </p>
                             </div>
 
-                            <!-- CodeChef Card -->
                             <div class="p-3 bg-gray-900 rounded-lg border-2 border-gray-700 text-center flex flex-col items-center transition card-3d-raised hover:border-accent-blue">
                                 <p class="text-lg font-semibold text-white glow-on-hover">CodeChef</p>
-                                <p class="text-xs text-gray-400 mb-1">@iamrupamroyy</p>
+                                <p class="text-sm text-gray-400 mb-1">@iamrupamroyy</p>
                                 <p class="text-2xl font-extrabold text-red-500 mt-1 glow-on-hover">2 Stars</p>
                                 <p class="text-xs text-gray-500">Rating: 1471</p>
                             </div>
@@ -794,300 +821,134 @@
 
                 </div>
 
-                <!-- RIGHT COLUMN: Academic Sections (md:w-2/3) -->
-                <div class="md:w-2/3 space-y-6">
+                <div class="md:w-2/3 space-y-6 order-2 md:order-2">
                     
-                    <!-- About Me -->
-                    <div class="fade-slide-up" style="--animation-delay: 0.2s;">
-                        <h2 class="text-3xl font-bold mb-3 border-b border-gray-800 pb-2 batman-style-header">About Me</h2>
-                        <p class="text-gray-400 leading-relaxed">
-                            I am currently pursuing my **MTech in Computer Science and Engineering** at IIT Bhilai, driven by a deep interest in optimizing complex algorithms. My academic focus centers on **GPU computing** and **Graph Neural Networks (GNNs)**, where I explore parallel processing techniques to accelerate data-intensive research. My goal is to contribute innovative solutions to large-scale computing problems.
-                        </p>
-                    </div>
-                    
-                    <!-- Education Section -->
-                    <div id="education" class="fade-slide-up" style="--animation-delay: 0.4s;">
-                        <h2 class="text-3xl font-bold mb-4 border-b border-gray-800 pb-2 text-accent-blue batman-style-header">Education</h2>
+                    <div id="education" class="fade-slide-up order-2" style="--animation-delay: 0.4s;">
+                        <h2 class="text-3xl font-extrabold mb-4 pb-2 text-accent-blue section-main-header">Education</h2>
                         <ul class="space-y-3">
                             <li class="p-4 bg-primary-dark rounded-lg border-2 border-gray-700 card-3d-raised">
                                 <p class="text-xl font-semibold text-white">MTech, Computer Science and Engineering</p>
-                                <p class="text-sm text-gray-400">IIT Bhilai — CGPA 8.25</p>
-                                <p class="text-sm text-gray-500 mt-1">Specialization: Thesis on GPU-based Graph Algorithms</p>
+                                <p class="text-base text-gray-400">IIT Bhilai — CGPA 8.25</p>
+                                <p class="text-sm text-gray-500 mt-1">Advanced Research: Thesis on GPU-based Graph Algorithms</p>
                             </li>
                             <li class="p-4 bg-primary-dark rounded-lg border-2 border-gray-700 card-3d-raised">
                                 <p class="text-xl font-semibold text-white">BTech, Computer Science and Engineering</p>
-                                <p class="text-sm text-gray-400">MAKAUT — CGPA 9.18</p>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <!-- Experience / Internships Section -->
-                    <div id="experience" class="fade-slide-up" style="--animation-delay: 0.6s;">
-                        <h2 class="text-3xl font-bold mb-4 border-b border-gray-800 pb-2 text-accent-blue batman-style-header">Experience </h2>
-                        <ul class="space-y-3">
-                            <li class="p-4 bg-primary-dark rounded-lg border-2 border-gray-700 card-3d-raised">
-                                <p class="text-xl font-semibold text-white">Teaching Assistantship:</p>
-                                <p class="text-sm text-gray-400">IIT Bhilai, Monsoon semester 2024: C & DSA</p>
-                                <p class="text-gray-500 mt-1">Guided undergraduate students through problem-solving sessions focusing on DSA.</p><br>
-                                <p class="text-sm text-gray-400">IIT Bhilai, Winter 2024: Computer Organization and Architecture (COA)</p>
-                                <p class="text-gray-500 mt-1">Assisted in conducting lab sessions, clarifying theoretical concepts, and evaluating student assignments.</p><br>                            
-                                <p class="text-sm text-gray-400">IIT Bhilai, Monsoon 2025: Compiler Design</p>
-                                <p class="text-gray-500 mt-1">Guided undergraduate students in understanding lexical analysis, parsing techniques, and code generation through lab exercises and discussions.</p>
+                                <p class="text-base text-gray-400">MAKAUT — CGPA 9.18</p>
                             </li>
                         </ul>
                     </div>
                     
-                    <!-- ACHIEVEMENTS / CERTIFICATIONS -->
-                    <div id="achievements" class="fade-slide-up" style="--animation-delay: 0.8s;">
-                        <h2 class="text-3xl font-bold mb-4 border-b border-gray-800 pb-2 text-accent-blue batman-style-header">Achievements & Certifications</h2>
+                    <div id="achievements" class="fade-slide-up order-3" style="--animation-delay: 0.5s;">
+                        <h2 class="text-3xl font-extrabold mb-4 pb-2 text-accent-blue section-main-header">Key Achievements</h2>
                         <ul class="space-y-3">
                             <li class="p-4 bg-primary-dark rounded-lg border-2 border-gray-700 card-3d-raised">
-                                <p class="text-xl font-semibold text-white">Graduate Aptitude Test in Engineering (GATE)</p>
-                                <p class="text-sm text-gray-400">Computer Science & Information Technology (CS) - 2024</p>
-                                <p class="text-sm text-gray-500 mt-1">Score: 98.87 percentile</p><br>
-                                <p class="text-sm text-gray-400">Computer Science & Information Technology (CS) - 2023</p>
-                                <p class="text-sm text-gray-500 mt-1">Score: 97.40 percentile</p>
+                                <p class="text-xl font-semibold text-white">Graduate Aptitude Test in Engineering (GATE) - CS</p>
+                                <p class="text-base text-gray-400">2024 Performance</p>
+                                <p class="text-base text-gray-500 mt-1">Score: 98.87 percentile </p><br>
+                                <p class="text-base text-gray-400">2023 Performance</p>
+                                <p class="text-base text-gray-500 mt-1">Score: 97.40 percentile</p>
                             </li>
                         </ul>
                     </div>
 
+                    <div id="experience" class="fade-slide-up order-4" style="--animation-delay: 0.6s;">
+                        <h2 class="text-3xl font-extrabold mb-4 pb-2 text-accent-blue section-main-header">Academic Experience (Teaching Assistant)</h2>
+                        <ul class="space-y-3">
+                            <li class="p-4 bg-primary-dark rounded-lg border-2 border-gray-700 card-3d-raised">
+                                <p class="text-xl font-semibold text-white">Teaching Assistantship: C & DSA</p>
+                                <p class="text-base text-gray-400">IIT Bhilai, Monsoon 2024</p>
+                                <p class="text-gray-500 mt-1 text-base">Co-led instruction for 300+ novices, delivering targeted C and DSA tutorials, labs, and assessments to accelerate foundational programming and problem-solving skills.</p>
+                            </li>
+                            <li class="p-4 bg-primary-dark rounded-lg border-2 border-gray-700 card-3d-raised">
+                                <p class="text-xl font-semibold text-white">Teaching Assistantship: Computer Organization and Architecture (COA)</p>
+                                <p class="text-base text-gray-400">IIT Bhilai, Winter 2024</p>
+                                <p class="text-gray-500 mt-1 text-base">Managed and delivered laboratory practicals for a cohort of $60$ students, ensuring conceptual clarity in hardware-software interfaces.</p>
+                            </li> 
+                            <li class="p-4 bg-primary-dark rounded-lg border-2 border-gray-700 card-3d-raised">
+                                <p class="text-xl font-semibold text-white">Teaching Assistantship: Compiler Design</p>
+                                <p class="text-base text-gray-400">IIT Bhilai, Monsoon 2025</p>
+                                <p class="text-gray-500 mt-1 text-base">Conducted comprehensive labs for 57 students, covering compiler design topics from basic concepts to advanced techniques like lexical analysis, LALR parsing, and code generation, strengthening their practical and analytical skills.</p>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
             
-            <!-- Full Width Separator for Skills/Interests -->
-            <hr class="border-gray-800 mt-8 mb-6">
-
-            <!-- Skills Section (FULL WIDTH) -->
-            <div id="skills" class="w-full fade-slide-up" style="--animation-delay: 0.9s;">
-                <h2 class="text-3xl font-bold mb-4 border-b border-gray-800 pb-2 text-accent-blue text-center batman-style-header">Technical Skills</h2>
-                <div id="skills-list" class="space-y-4 md:px-12 px-4">
-                    
-                    <div class="fade-slide-up" style="--animation-delay: 1.0s;">
-                        <h3 class="text-xl font-semibold mb-2 text-white text-center">Languages</h3>
-                        <div class="flex flex-wrap gap-3 justify-center">
-                            <span class="bg-gray-700 text-white px-4 py-1 rounded-full text-lg font-medium skill-tag glow-on-hover">C++</span>
-                            <span class="bg-gray-700 text-white px-4 py-1 rounded-full text-lg font-medium skill-tag glow-on-hover">C</span>
-                            <span class="bg-gray-700 text-white px-4 py-1 rounded-full text-lg font-medium skill-tag glow-on-hover">Python</span>
-                            <span class="bg-gray-700 text-white px-4 py-1 rounded-full text-lg font-medium skill-tag glow-on-hover">java</span>
-                            <span class="bg-gray-700 text-white px-4 py-1 rounded-full text-lg font-medium skill-tag glow-on-hover">PHP</span>
-                            <span class="bg-gray-700 text-white px-4 py-1 rounded-full text-lg font-medium skill-tag glow-on-hover">CUDA</span>
-                            <span class="bg-gray-700 text-white px-4 py-1 rounded-full text-lg font-medium skill-tag glow-on-hover">JavaScript</span>
-                            <span class="bg-gray-700 text-white px-4 py-1 rounded-full text-lg font-medium skill-tag glow-on-hover">SQL</span>
-                        </div>
-                    </div>
-
-                    <div class="fade-slide-up" style="--animation-delay: 1.1s;">
-                        <h3 class="text-xl font-semibold mb-2 text-white text-center">Web-technologies</h3>
-                        <div class="flex flex-wrap gap-3 justify-center">
-                            <span class="bg-gray-700 text-white px-4 py-1 rounded-full text-lg font-medium skill-tag glow-on-hover">HTML</span>
-                            <span class="bg-gray-700 text-white px-4 py-1 rounded-full text-lg font-medium skill-tag glow-on-hover">CSS</span>
-                        </div>
-                    </div>
-                    <div class="fade-slide-up" style="--animation-delay: 1.2s;">
-                        <h3 class="text-xl font-semibold mb-2 text-white text-center">Subject Knowledge</h3>
-                        <div class="flex flex-wrap gap-3 justify-center">
-                            <span class="bg-gray-700 text-white px-4 py-1 rounded-full text-lg font-medium skill-tag glow-on-hover">DSA</span>
-                            <span class="bg-gray-700 text-white px-4 py-1 rounded-full text-lg font-medium skill-tag glow-on-hover">OS</span>
-                            <span class="bg-gray-700 text-white px-4 py-1 rounded-full text-lg font-medium skill-tag glow-on-hover">COA</span>
-                            <span class="bg-gray-700 text-white px-4 py-1 rounded-full text-lg font-medium skill-tag glow-on-hover">DBMS</span>
-                            <span class="bg-gray-700 text-white px-4 py-1 rounded-full text-lg font-medium skill-tag glow-on-hover">Computer Networking</span>
-                            <span class="bg-gray-700 text-white px-4 py-1 rounded-full text-lg font-medium skill-tag glow-on-hover">Machine Learning</span>
-                            <span class="bg-gray-700 text-white px-4 py-1 rounded-full text-lg font-medium skill-tag glow-on-hover">Graph Algorithms</span>
-                            <span class="bg-gray-700 text-white px-4 py-1 rounded-full text-lg font-medium skill-tag glow-on-hover">Parallel Programming</span>
-                        </div>
-                    </div>
-                    <div class="fade-slide-up" style="--animation-delay: 1.1s;">
-                        <h3 class="text-xl font-semibold mb-2 text-white text-center"> OS & Cloud stack</h3>
-                        <div class="flex flex-wrap gap-3 justify-center">
-                            <span class="bg-gray-700 text-white px-4 py-1 rounded-full text-lg font-medium skill-tag glow-on-hover">Linux</span>
-                            <span class="bg-gray-700 text-white px-4 py-1 rounded-full text-lg font-medium skill-tag glow-on-hover">Windows</span>
-                        </div>
-                    </div>
-                    <div class="fade-slide-up" style="--animation-delay: 1.1s;">
-                        <h3 class="text-xl font-semibold mb-2 text-white text-center"> Familiar Tools and frameworks</h3>
-                        <div class="flex flex-wrap gap-3 justify-center">
-                            <span class="bg-gray-700 text-white px-4 py-1 rounded-full text-lg font-medium skill-tag glow-on-hover">Git</span>
-                            <span class="bg-gray-700 text-white px-4 py-1 rounded-full text-lg font-medium skill-tag glow-on-hover">VS Code</span>
-                            <span class="bg-gray-700 text-white px-4 py-1 rounded-full text-lg font-medium skill-tag glow-on-hover">Jupyter Notebook</span>
-                        </div>
-                    </div>
+        </section>
+        
+        <hr class="border-gray-800 my-10">
+        
+        <section id="projects" class="pt-10 order-5 md:order-3"> 
+            <h2 class="text-3xl md:text-4xl font-extrabold mb-8 pb-2 fade-slide-up section-main-header" style="--animation-delay: 0.9s;">
+                Featured Technical Projects
+            </h2>
+            
+            <div id="project-list-stack" class="space-y-4">
                 </div>
-            </div>
-
-            <!-- INTERESTS (Hobbies - FULL WIDTH) -->
-            <div id="interests" class="w-full mt-8 fade-slide-up md:px-12 px-4" style="--animation-delay: 1.4s;">
-                <h2 class="text-3xl font-bold mb-4 border-b border-gray-800 pb-2 text-accent-blue text-center batman-style-header">Interests & Extracurricular Activities</h2>
-                <div class="flex flex-wrap gap-3 justify-center">
-                    <span class="bg-gray-700 text-white px-4 py-1 rounded-full text-lg font-medium skill-tag glow-on-hover">Competitive Coding</span>
-                    <span class="bg-gray-700 text-white px-4 py-1 rounded-full text-lg font-medium skill-tag glow-on-hover">Participated in InterIIT Cult-24</span>
-                    <span class="bg-gray-700 text-white px-4 py-1 rounded-full text-lg font-medium skill-tag glow-on-hover">Arts </span>
-                    <span class="bg-gray-700 text-white px-4 py-1 rounded-full text-lg font-medium skill-tag glow-on-hover">Playing Guitar</span>
-                </div>
-            </div>
-
+            
         </section>
         
         <hr class="border-gray-800 my-10">
 
-        <!-- --- PROJECTS 3D CAROUSEL SECTION --- -->
-        <section id="projects" class="pt-10">
-            <h2 class="text-3xl md:text-4xl font-bold mb-8 border-b-2 border-accent-blue pb-2 fade-slide-up batman-style-header">
-                Featured Projects
-            </h2>
-            
-            <div id="carousel-wrapper" class="relative fade-slide-up">
-                
-                <!-- Carousel Viewport - Sets perspective and limited visible area -->
-                <div id="carousel-viewport" class="w-full mx-auto">
+        <div class="flex flex-col md:flex-row md:space-x-6">
+
+            <div id="skills" class="w-full md:w-1/2 fade-slide-up order-6 md:order-4 bg-primary-dark rounded-xl border-2 border-gray-700 card-3d-raised p-6 mb-8 md:mb-0" style="--animation-delay: 1.0s;"> 
+                <h2 class="text-3xl font-extrabold mb-4 pb-2 text-accent-blue text-center section-main-header">Core Technical Expertise</h2>
+                <div id="skills-list" class="space-y-3 max-w-[600px] mx-auto"> 
                     
-                    <!-- Carousel Track - Rotated in 3D space by JS -->
-                    <div id="carousel-track">
-                        
-                        <!-- ORIGINAL SLIDES (N=10) -->
-                        <div class="project-slide original" data-index="0">
-                            <div class="slide-inner-content">
-                                <div class="project-title-area absolute inset-0 bg-primary-dark/50">
-                                    <img src="https://placehold.co/400x300/1a1a1a/3b82f6?text=Project+01" alt="Project 01" class="w-full h-full object-cover object-center">
-                                    <h3 class="absolute top-4 left-4 right-4 z-10 text-xl md:text-3xl font-extrabold text-white shadow-text"> Voice-Activated Personal Assistant</h3>
-                                </div>
-                                <div class="project-overlay absolute inset-0 bg-secondary-dark/95 text-gray-300">
-                                    <div><h4 class="text-2xl font-bold text-accent-blue mb-3">Project 01 Details</h4><p class="mb-4 text-sm">Developed a desktop voice assistant using speech recognition and NLP to execute user commands, automate tasks, and provide audio feedback, with basic ML for command-action mapping. Integrated features like opening applications and fetching online information for enhanced user convenience.</p></div>
-                                    <div class="flex space-x-4"><a href="#repo-1-link" target="_blank" class="text-white font-semibold px-4 py-2 rounded-lg bg-accent-blue hover:bg-blue-600 transition">View Code</a></div>
-                                </div>
-                            </div>
+                    <div class="fade-slide-up" style="--animation-delay: 1.1s;">
+                        <h3 class="text-xl mb-2 text-white text-center skill-header-shadow">Programming Languages</h3>
+                        <div class="flex flex-wrap gap-2 justify-center"> 
+                            <span class="bg-gray-700 text-white rounded-full font-medium skill-tag glow-on-hover">C++ (Expert)</span>
+                            <span class="bg-gray-700 text-white rounded-full font-medium skill-tag glow-on-hover">C</span>
+                            <span class="bg-gray-700 text-white rounded-full font-medium skill-tag glow-on-hover">Python</span>
+                            <span class="bg-gray-700 text-white rounded-full font-medium skill-tag glow-on-hover">Java</span>
+                            <span class="bg-gray-700 text-white rounded-full font-medium skill-tag glow-on-hover">PHP</span>
+                            <span class="bg-gray-700 text-white rounded-full font-medium skill-tag glow-on-hover">CUDA (Parallel Computing)</span>
+                            <span class="bg-gray-700 text-white rounded-full font-medium skill-tag glow-on-hover">JavaScript</span>
+                            <span class="bg-gray-700 text-white rounded-full font-medium skill-tag glow-on-hover">SQL</span>
                         </div>
+                    </div>
 
-                        <div class="project-slide original" data-index="1">
-                            <div class="slide-inner-content">
-                                <div class="project-title-area absolute inset-0 bg-primary-dark/50">
-                                    <img src="https://placehold.co/400x300/1a1a1a/a855f7?text=Project+02" alt="Project 02" class="w-full h-full object-cover object-center">
-                                    <h3 class="absolute top-4 left-4 right-4 z-10 text-xl md:text-3xl font-extrabold text-white shadow-text">Project 02 (GNN)</h3>
-                                </div>
-                                <div class="project-overlay absolute inset-0 bg-secondary-dark/95 text-gray-300">
-                                    <div><h4 class="text-2xl font-bold text-accent-blue mb-3">Project 02 Details</h4><p class="mb-4 text-sm">Graph Attention Network (GAT) prototype for anomaly detection in complex network data structures.</p></div>
-                                    <div class="flex space-x-4"><a href="#repo-2-link" target="_blank" class="text-white font-semibold px-4 py-2 rounded-lg bg-accent-blue hover:bg-blue-600 transition">View Code</a></div>
-                                </div>
-                            </div>
+                    <div class="fade-slide-up" style="--animation-delay: 1.3s;">
+                        <h3 class="text-xl mb-2 text-white text-center skill-header-shadow">Core Computer Science & Research</h3>
+                        <div class="flex flex-wrap gap-2 justify-center"> 	
+                            <span class="bg-gray-700 text-white rounded-full font-medium skill-tag glow-on-hover">Data Structures & Algorithms (DSA)</span>
+                            <span class="bg-gray-700 text-white rounded-full font-medium skill-tag glow-on-hover">Operating Systems (OS)</span>
+                            <span class="bg-gray-700 text-white rounded-full font-medium skill-tag glow-on-hover">Computer Architecture (COA)</span>
+                            <span class="bg-gray-700 text-white rounded-full font-medium skill-tag glow-on-hover">Database Management Systems (DBMS)</span>
+                            <span class="bg-gray-700 text-white rounded-full font-medium skill-tag glow-on-hover">Graph Algorithms</span>
+                            <span class="bg-gray-700 text-white rounded-full font-medium skill-tag glow-on-hover">Parallel Programming</span>
+                            <span class="bg-gray-700 text-white rounded-full font-medium skill-tag glow-on-hover">Machine Learning / GNN</span>
                         </div>
+                    </div>
 
-                        <div class="project-slide original" data-index="2">
-                            <div class="slide-inner-content">
-                                <div class="project-title-area absolute inset-0 bg-primary-dark/50">
-                                    <img src="https://placehold.co/400x300/1a1a1a/f59e0b?text=Project+03" alt="Project 03" class="w-full h-full object-cover object-center">
-                                    <h3 class="absolute top-4 left-4 right-4 z-10 text-xl md:text-3xl font-extrabold text-white shadow-text">Project 03 (DSA Viz)</h3>
-                                </div>
-                                <div class="project-overlay absolute inset-0 bg-secondary-dark/95 text-gray-300">
-                                    <div><h4 class="text-2xl font-bold text-accent-blue mb-3">Project 03 Details</h4><p class="mb-4 text-sm">Interactive web tool for Data Structures and Algorithms visualization, built to assist in learning complex concepts visually.</p></div>
-                                    <div class="flex space-x-4"><a href="#repo-3-link" target="_blank" class="text-white font-semibold px-4 py-2 rounded-lg bg-accent-blue hover:bg-blue-600 transition">View Code</a></div>
-                                </div>
-                            </div>
+                    <div class="fade-slide-up" style="--animation-delay: 1.4s;">
+                        <h3 class="text-xl mb-2 text-white text-center skill-header-shadow">Web & Tools</h3>
+                        <div class="flex flex-wrap gap-2 justify-center"> 
+                            <span class="bg-gray-700 text-white rounded-full font-medium skill-tag glow-on-hover">Git/GitHub</span>
+                            <span class="bg-gray-700 text-white rounded-full font-medium skill-tag glow-on-hover">Linux</span>
+                            <span class="bg-gray-700 text-white rounded-full font-medium skill-tag glow-on-hover">HTML/CSS</span>
+                            <span class="bg-gray-700 text-white rounded-full font-medium skill-tag glow-on-hover">VS Code</span>
                         </div>
-                        
-                        <!-- Added more placeholders to fill the carousel, increasing interactivity (N=10) -->
-                         <div class="project-slide original" data-index="3">
-                            <div class="slide-inner-content">
-                                <div class="project-title-area absolute inset-0 bg-primary-dark/50">
-                                    <img src="https://placehold.co/400x300/1a1a1a/4ade80?text=Project+04" alt="Project 04" class="w-full h-full object-cover object-center">
-                                    <h3 class="absolute top-4 left-4 right-4 z-10 text-xl md:text-3xl font-extrabold text-white shadow-text">Project 04 (Parallel Sort)</h3>
-                                </div>
-                                <div class="project-overlay absolute inset-0 bg-secondary-dark/95 text-gray-300">
-                                    <div><h4 class="text-2xl font-bold text-accent-blue mb-3">Project 04 Details</h4><p class="mb-4 text-sm">Implementation of GPU-accelerated sorting algorithms using CUDA, demonstrating significant speedup over CPU counterparts for large datasets.</p></div>
-                                    <div class="flex space-x-4"><a href="#repo-4-link" target="_blank" class="text-white font-semibold px-4 py-2 rounded-lg bg-accent-blue hover:bg-blue-600 transition">View Code</a></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="project-slide original" data-index="4">
-                            <div class="slide-inner-content">
-                                <div class="project-title-area absolute inset-0 bg-primary-dark/50">
-                                    <img src="https://placehold.co/400x300/1a1a1a/60a5fa?text=Project+05" alt="Project 05" class="w-full h-full object-cover object-center">
-                                    <h3 class="absolute top-4 left-4 right-4 z-10 text-xl md:text-3xl font-extrabold text-white shadow-text">Project 05 (Compiler Frontend)</h3>
-                                </div>
-                                <div class="project-overlay absolute inset-0 bg-secondary-dark/95 text-gray-300">
-                                    <div><h4 class="text-2xl font-bold text-accent-blue mb-3">Project 05 Details</h4><p class="mb-4 text-sm">Developed the lexical and syntax analysis phases (frontend) of a basic C compiler, including tokenization and parsing.</p></div>
-                                    <div class="flex space-x-4"><a href="#repo-5-link" target="_blank" class="text-white font-semibold px-4 py-2 rounded-lg bg-accent-blue hover:bg-blue-600 transition">View Code</a></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="project-slide original" data-index="5">
-                            <div class="slide-inner-content">
-                                <div class="project-title-area absolute inset-0 bg-primary-dark/50">
-                                    <img src="https://placehold.co/400x300/1a1a1a/f472b6?text=Project+06" alt="Project 06" class="w-full h-full object-cover object-center">
-                                    <h3 class="absolute top-4 left-4 right-4 z-10 text-xl md:text-3xl font-extrabold text-white shadow-text">Project 06 (Network Simulator)</h3>
-                                </div>
-                                <div class="project-overlay absolute inset-0 bg-secondary-dark/95 text-gray-300">
-                                    <div><h4 class="text-2xl font-bold text-accent-blue mb-3">Project 06 Details</h4><p class="mb-4 text-sm">A basic network traffic simulator implemented in Python to model packet routing and congestion control mechanisms.</p></div>
-                                    <div class="flex space-x-4"><a href="#repo-6-link" target="_blank" class="text-white font-semibold px-4 py-2 rounded-lg bg-accent-blue hover:bg-blue-600 transition">View Code</a></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="project-slide original" data-index="6">
-                            <div class="slide-inner-content">
-                                <div class="project-title-area absolute inset-0 bg-primary-dark/50">
-                                    <img src="https://placehold.co/400x300/1a1a1a/fb7185?text=Project+07" alt="Project 07" class="w-full h-full object-cover object-center">
-                                    <h3 class="absolute top-4 left-4 right-4 z-10 text-xl md:text-3xl font-extrabold text-white shadow-text">Project 07 (OS Scheduler)</h3>
-                                </div>
-                                <div class="project-overlay absolute inset-0 bg-secondary-dark/95 text-gray-300">
-                                    <div><h4 class="text-2xl font-bold text-accent-blue mb-3">Project 07 Details</h4><p class="mb-4 text-sm">An operating system process scheduler simulator written in C, comparing performance of FCFS, SJF, and Round Robin algorithms.</p></div>
-                                    <div class="flex space-x-4"><a href="#repo-7-link" target="_blank" class="text-white font-semibold px-4 py-2 rounded-lg bg-accent-blue hover:bg-blue-600 transition">View Code</a></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="project-slide original" data-index="7">
-                            <div class="slide-inner-content">
-                                <div class="project-title-area absolute inset-0 bg-primary-dark/50">
-                                    <img src="https://placehold.co/400x300/1a1a1a/7c3aed?text=Project+08" alt="Project 08" class="w-full h-full object-cover object-center">
-                                    <h3 class="absolute top-4 left-4 right-4 z-10 text-xl md:text-3xl font-extrabold text-white shadow-text">Project 08 (DBMS Query Parser)</h3>
-                                </div>
-                                <div class="project-overlay absolute inset-0 bg-secondary-dark/95 text-gray-300">
-                                    <div><h4 class="text-2xl font-bold text-accent-blue mb-3">Project 08 Details</h4><p class="mb-4 text-sm">A lightweight DBMS engine component focusing on SQL query parsing and basic relational algebra generation.</p></div>
-                                    <div class="flex space-x-4"><a href="#repo-8-link" target="_blank" class="text-white font-semibold px-4 py-2 rounded-lg bg-accent-blue hover:bg-blue-600 transition">View Code</a></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="project-slide original" data-index="8">
-                            <div class="slide-inner-content">
-                                <div class="project-title-area absolute inset-0 bg-primary-dark/50">
-                                    <img src="https://placehold.co/400x300/1a1a1a/fde047?text=Project+09" alt="Project 09" class="w-full h-full object-cover object-center">
-                                    <h3 class="absolute top-4 left-4 right-4 z-10 text-xl md:text-3xl font-extrabold text-white shadow-text">Project 09 (ML Face Rec)</h3>
-                                </div>
-                                <div class="project-overlay absolute inset-0 bg-secondary-dark/95 text-gray-300">
-                                    <div><h4 class="text-2xl font-bold text-accent-blue mb-3">Project 09 Details</h4><p class="mb-4 text-sm">A small-scale face recognition model built using a CNN architecture and TensorFlow/Keras for attendance systems.</p></div>
-                                    <div class="flex space-x-4"><a href="#repo-9-link" target="_blank" class="text-white font-semibold px-4 py-2 rounded-lg bg-accent-blue hover:bg-blue-600 transition">View Code</a></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="project-slide original" data-index="9">
-                            <div class="slide-inner-content">
-                                <div class="project-title-area absolute inset-0 bg-primary-dark/50">
-                                    <img src="https://placehold.co/400x300/1a1a1a/e11d48?text=Project+10" alt="Project 10" class="w-full h-full object-cover object-center">
-                                    <h3 class="absolute top-4 left-4 right-4 z-10 text-xl md:text-3xl font-extrabold text-white shadow-text">Project 10 (Dynamic Portfolio)</h3>
-                                </div>
-                                <div class="project-overlay absolute inset-0 bg-secondary-dark/95 text-gray-300">
-                                    <div><h4 class="text-2xl font-bold text-accent-blue mb-3">Project 10 Details</h4><p class="mb-4 text-sm">This very portfolio! A fully responsive, single-page website featuring a custom 3D carousel and a dynamic social island, demonstrating advanced frontend CSS/JS techniques.</p></div>
-                                    <div class="flex space-x-4"><a href="https://github.com/iamrupamroyy/portfolio" target="_blank" class="text-white font-semibold px-4 py-2 rounded-lg bg-accent-blue hover:bg-blue-600 transition">View Code</a></div>
-                                </div>
-                            </div>
-                        </div>
-                        
                     </div>
                 </div>
-                
-                <!-- Navigation Arrows -->
-                <button id="prev-slide" class="absolute left-0 top-1/2 transform -translate-y-1/2 bg-gray-800/80 p-3 rounded-full hover:bg-accent-blue transition duration-300 text-white shadow-lg ml-2 z-30">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
-                </button>
-                <button id="next-slide" class="absolute right-0 top-1/2 transform -translate-y-1/2 bg-gray-800/80 p-3 rounded-full hover:bg-accent-blue transition duration-300 text-white shadow-lg mr-2 z-30">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                </button>
             </div>
-        </section>
 
-        <!-- Footer -->
-        <footer class="mt-20 pt-8 border-t border-gray-800 text-center text-gray-500 fade-slide-up">
-            <p>&copy; 2025 Rupam Roy. All rights reserved. Built with passion.</p>
+            <div id="interests" class="w-full md:w-1/2 mt-8 md:mt-0 fade-slide-up order-7 md:order-5 bg-primary-dark rounded-xl border-2 border-gray-700 card-3d-raised p-6" style="--animation-delay: 1.6s;"> 
+                <h2 class="text-3xl font-extrabold mb-4 pb-2 text-accent-blue text-center section-main-header">Interests & Activities</h2>
+                <div class="flex flex-wrap gap-2 justify-center max-w-[600px] mx-auto"> 
+                    <span class="bg-gray-700 text-white rounded-full font-medium skill-tag glow-on-hover">Advanced Competitive Coding</span>
+                    <span class="bg-gray-700 text-white rounded-full font-medium skill-tag glow-on-hover">Parallel Programming Research</span>
+                    <span class="bg-gray-700 text-white rounded-full font-medium skill-tag glow-on-hover">InterIIT Cultural Contingent (2024)</span>
+                    <span class="bg-gray-700 text-white rounded-full font-medium skill-tag glow-on-hover">Digital Arts & Design</span>
+                    <span class="bg-gray-700 text-white rounded-full font-medium skill-tag glow-on-hover">Playing Guitar</span>
+                </div>
+            </div>
+
+        </div> <footer class="mt-20 pt-8 border-t border-gray-800 text-center text-gray-500 fade-slide-up order-8 md:order-6">
+            <p>&copy; 2025 Rupam Roy. All rights reserved. Built with passion and code.</p>
         </footer>
-
-    </div>
-
-</body>
+        
+    </div> </body>
 </html>
