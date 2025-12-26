@@ -11,6 +11,7 @@ import project2 from "../../assets/images/project-2.jpg";
 import project3 from "../../assets/images/project-3.jpg";
 import project4 from "../../assets/images/project-4.jpg";
 import project5 from "../../assets/images/project-5.jpg";
+import project6 from "../../assets/images/project-6.jpg";
 
 
 const projects = [
@@ -29,6 +30,14 @@ const projects = [
     tags: ["HTML", "CSS", "React", "TypeScript", "Node.js", "Express", "Socket.io"],
     githubUrl: "https://github.com/iamrupamroyy/OpenWindow",
     liveUrl: "https://openwindow-tycn.onrender.com/"
+  },
+  {
+    title: "watch2gether",
+    description: "A full-stack web application that enables users to watch videos with friends online in real time. It provides synchronized playback with minimal delay to ensure a shared viewing experience. Users can create or join rooms and watch videos together through a responsive, real-time system.",
+    image: project6,
+    tags: ["HTML", "CSS", "React", "Node.js", "Express", "Socket.io"],
+    githubUrl: "https://github.com/iamrupamroyy/watch2gether",
+    liveUrl: "https://watch2gether-rho.vercel.app/"
   },
   {
     title: "Interactive NLP-Based Voice Assistant",

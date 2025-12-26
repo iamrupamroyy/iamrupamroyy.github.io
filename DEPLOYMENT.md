@@ -4,7 +4,7 @@ This file contains two sets of instructions for deploying your portfolio website
 
 ---
 
-## Option 1: Deploy to `https://iamrupamroyy.github.io/my-portfolio/` (Recommended & Easiest)
+## Option 1: Deploy to `https://iamrupamroyy.github.io/` (Recommended & Easiest)
 
 This option uses the existing configuration of your project and is the most straightforward way to deploy your website.
 
