@@ -4,7 +4,7 @@ import { ImageWithFallback } from "./ui_components/ImageWithFallback";
 import { motion } from "motion/react";
 // TODO: Replace this with your actual profile picture
 import heroImage from "../../assets/images/hero-image.jpeg";
-import resume from "../../assets/resume/RupamRoy_MTech_CSE_IITBhilai.pdf";
+import resume from "../../assets/resume/Rupam_Roy_Resume.pdf";
 
 export function Hero() {
   return (
