@@ -27,39 +27,37 @@ jobs:
           const fs = require('fs');
           
           async function sync() {
-            console.log('--- STARTING SYNC PROCESS ---');
-            let config;
-            try {
-              config = JSON.parse(fs.readFileSync('src/data/config.json', 'utf8'));
-            } catch (e) {
-              console.error('Error: Could not read config.json');
-              process.exit(1);
-            }
-            
+            const config = JSON.parse(fs.readFileSync('src/data/config.json', 'utf8'));
             const PLATFORMS = config.cpPlatforms;
             const stats = {};
             
             for (const platform of PLATFORMS) {
               const username = platform.username;
               const id = platform.id;
-              console.log(`Syncing platform: ${id} for user: ${username}`);
+              console.log(`>>> SYNCING: ${id}`);
 
               if (id === 'leetcode') {
-                try {
-                  const res = await fetch(`https://alfa-leetcode-api.onrender.com/${username}`);
-                  const data = await res.json();
-                  if (data && data.username) {
-                    const solved = data.matchedUserStats.acSubmissionNum[0].count;
-                    const topPct = data.userRanking?.topPercentage || 12;
-                    stats.leetcode = {
-                      rank: `TOP ${topPct}%`,
-                      percent: 100 - topPct,
-                      lastSolved: `${solved} Problems Solved`,
-                      rating: solved
-                    };
-                    console.log('LeetCode Success');
-                  }
-                } catch (e) { console.error('LeetCode Error:', e.message); }
+                const lcSources = [
+                  `https://alfa-leetcode-api.onrender.com/${username}/solved`,
+                  `https://leetcode-stats-api.herokuapp.com/${username}`
+                ];
+                for (const src of lcSources) {
+                  try {
+                    const res = await fetch(src, { signal: AbortSignal.timeout(10000) });
+                    const data = await res.json();
+                    if (data.solvedProblem || data.totalSolved) {
+                      const solved = data.solvedProblem || data.totalSolved;
+                      stats.leetcode = {
+                        rank: 'KNIGHT_TIER',
+                        percent: data.topPercentage || 12,
+                        lastSolved: `${solved} Problems Solved`,
+                        rating: solved
+                      };
+                      console.log('LC SUCCESS');
+                      break;
+                    }
+                  } catch (e) { console.log('LC Source failed'); }
+                }
               }
 
               if (id === 'codeforces') {
@@ -71,25 +69,23 @@ jobs:
                     stats.codeforces = {
                       rank: (u.rank || 'Newbie').toUpperCase(),
                       percent: Math.min(Math.round((u.rating / 3000) * 100), 100),
-                      lastSolved: `Global_Rank: #${u.maxRating || 'N/A'}`,
+                      lastSolved: `Max_Rating: ${u.maxRating}`,
                       rating: u.rating
                     };
-                    console.log('Codeforces Success');
+                    console.log('CF SUCCESS');
                   }
-                } catch (e) { console.error('Codeforces Error:', e.message); }
+                } catch (e) {}
               }
 
               if (id === 'codechef') {
                 try {
-                  console.log('Attempting CodeChef Direct Scrape...');
-                  const res = await fetch(`https://www.codechef.com/users/${username}`, {
-                    headers: { 'User-Agent': 'Mozilla/5.0' }
-                  });
+                  const res = await fetch(`https://www.codechef.com/users/${username}`);
                   const html = await res.text();
                   
-                  const ratingMatch = html.match(/rating-number">(\d+)</);
+                  const ratingMatch = html.match(/rating-number\">(\d+)</);
                   const starMatch = html.match(/(\d)★/);
-                  const rankMatch = html.match(/global-rank">\s*<span>(\d+)</);
+                  // Refined Rank Match for the inline-list structure
+                  const rankMatch = html.match(/ratings\/all\"><strong>(\d+)<\/strong><\/a>\s*Global Rank/);
                   
                   if (ratingMatch) {
                     const rating = ratingMatch[1];
@@ -101,17 +97,16 @@ jobs:
                       lastSolved: `Global_Rank: #${rank}`,
                       rating: rating
                     };
-                    console.log('CodeChef Success');
-                  } else {
-                    console.log('CodeChef Pattern not found in HTML');
+                    console.log('CC SUCCESS');
                   }
-                } catch (e) { console.error('CodeChef Error:', e.message); }
+                } catch (e) {
+                   console.log('CC SCRAPE FAILED');
+                }
               }
             }
 
             stats.lastUpdated = new Date().toISOString();
             fs.writeFileSync('src/data/stats.json', JSON.stringify(stats, null, 2));
-            console.log('--- SYNC PROCESS COMPLETE ---');
           }
           sync();
           EOF
