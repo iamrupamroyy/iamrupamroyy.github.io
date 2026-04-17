@@ -1,5 +1,5 @@
 import { motion } from 'motion/react';
-import { Activity, ExternalLink, User, Target, CheckCircle2, Shield, BarChart, Clock, AlertCircle, Award } from 'lucide-react';
+import { Activity, ExternalLink, User, Target, CheckCircle2, Shield, BarChart, Clock, Award } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { SectionHeader } from './ui/SectionHeader';
 import portfolioData from '../../data/config.json';
@@ -19,7 +19,7 @@ export const ArenaSection = () => {
       return {
         ...p,
         rank: cached?.rank || p.backupRank,
-        rating: cached?.lastSolved?.replace('Rating: ', '') || p.backupSolved?.replace('Rating: ', ''),
+        rating: cached?.rating || p.backupSolved?.replace('Rating: ', ''),
         lastSolved: cached?.lastSolved || p.backupSolved,
         dataSource: isFallback ? 'FALLBACK_MODE' : 'SYNCED_LIVE',
         isLive: !isFallback
@@ -61,6 +61,20 @@ export const ArenaSection = () => {
 };
 
 const ScoreboardCard = ({ data, index }: { data: any, index: number }) => {
+  // Determine dynamic labels based on platform
+  let metricLabel = "RATING_ID";
+  let metricValue = data.rating || "N/A";
+
+  if (data.id === 'leetcode') {
+    metricLabel = "PROBLEMS_SOLVED";
+  } else if (data.id === 'codeforces') {
+    metricLabel = "MAX_RATING";
+  } else if (data.id === 'codechef') {
+    metricLabel = "GLOBAL_RANK";
+    // For CodeChef, we want to show the Rank # value if possible
+    metricValue = data.lastSolved?.replace('Global_Rank: #', '') || data.rating;
+  }
+
   return (
     <motion.div 
       initial={{ opacity: 0, y: 20 }}
@@ -98,30 +112,29 @@ const ScoreboardCard = ({ data, index }: { data: any, index: number }) => {
             <div className="text-2xl font-heading font-black uppercase tracking-tighter text-center" style={{ color: 'var(--fg)' }}>
                {data.rank.split('(')[0].trim()}
             </div>
-            {data.rank.includes('(') && (
-               <div className="mt-1 font-mono text-sm font-bold" style={{ color: data.color }}>
-                  {data.rank.match(/\(([^)]+)\)/)?.[0]}
-               </div>
-            )}
          </div>
 
          {/* Detailed Metrics */}
          <div className="grid grid-cols-2 gap-4">
             <div className="p-3 border border-white/5 bg-black/20 flex flex-col gap-1">
                <span className="text-[8px] font-mono opacity-30 uppercase">Metric</span>
-               <span className="text-xs font-mono font-bold" style={{ color: 'var(--fg)' }}>RATING_ID</span>
+               <span className="text-[10px] font-mono font-bold leading-none" style={{ color: 'var(--fg)' }}>{metricLabel}</span>
             </div>
             <div className="p-3 border border-white/5 bg-black/20 flex flex-col gap-1 text-right">
                <span className="text-[8px] font-mono opacity-30 uppercase">Value</span>
-               <span className="text-xs font-mono font-bold" style={{ color: data.color }}>{data.rating || 'N/A'}</span>
+               <span className="text-[10px] font-mono font-bold leading-none" style={{ color: data.color }}>{metricValue}</span>
             </div>
          </div>
 
-         {/* Footer Activity */}
-         <div className="mt-auto pt-6 border-t flex items-center justify-between font-mono text-[9px] opacity-40 uppercase tracking-[0.2em]" style={{ borderColor: 'var(--border-color)', color: 'var(--fg)' }}>
-            <div className="flex items-center gap-2">
-               <Activity size={10} className="animate-pulse" />
-               {data.lastSolved}
+         {/* Footer Sync Signal */}
+         <div className="mt-auto pt-6 border-t flex items-center justify-between font-mono text-[9px] opacity-30 uppercase tracking-[0.2em]" style={{ borderColor: 'var(--border-color)', color: 'var(--fg)' }}>
+            <div className="flex items-center gap-3">
+               <div className="flex gap-1">
+                  <motion.div animate={{ height: [4, 10, 4] }} transition={{ repeat: Infinity, duration: 1 }} className="w-0.5 bg-current" />
+                  <motion.div animate={{ height: [10, 4, 10] }} transition={{ repeat: Infinity, duration: 1.2 }} className="w-0.5 bg-current" />
+                  <motion.div animate={{ height: [6, 12, 6] }} transition={{ repeat: Infinity, duration: 0.8 }} className="w-0.5 bg-current" />
+               </div>
+               <span>SIGNAL_STRENGTH_NOMINAL</span>
             </div>
          </div>
       </div>
