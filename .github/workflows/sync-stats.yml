@@ -80,6 +80,7 @@ jobs:
               }
             }
 
+            stats.lastUpdated = new Date().toISOString();
             fs.writeFileSync('src/data/stats.json', JSON.stringify(stats, null, 2));
             console.log('Stats updated successfully');
           }
