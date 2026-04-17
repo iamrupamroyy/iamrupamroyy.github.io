@@ -69,22 +69,29 @@ jobs:
 
               if (id === 'codechef') {
                 try {
-                  console.log('Attempting CC Primary API...');
-                  const ccRes = await fetch('https://codechef-api.vercel.app/' + username, { signal: AbortSignal.timeout(15000) });
-                  let ccData = await ccRes.json();
-                  
-                  // Fallback to Secondary API if primary fails or returns empty
-                  if (!ccData || !ccData.currentRating) {
-                    console.log('Primary CC failed, trying Secondary...');
-                    const ccRes2 = await fetch('https://code-chef-api.vercel.app/details/' + username, { signal: AbortSignal.timeout(15000) });
-                    ccData = await ccRes2.json();
+                  let ccData = null;
+                  const sources = [
+                    'https://codechef-api.vercel.app/' + username,
+                    'https://code-chef-api.vercel.app/details/' + username,
+                    'https://codechef-api--prakhar-doneria.repl.co/' + username
+                  ];
+
+                  for (const src of sources) {
+                    try {
+                      console.log('Trying CC Source: ' + src);
+                      const res = await fetch(src, { signal: AbortSignal.timeout(10000) });
+                      ccData = await res.json();
+                      if (ccData && (ccData.currentRating || ccData.rating)) break;
+                    } catch (e) { continue; }
                   }
 
-                  if (ccData && ccData.currentRating) {
+                  if (ccData) {
+                    const rating = ccData.currentRating || ccData.rating || 0;
+                    const stars = (ccData.stars || ccData.rating_number || '2 Star').toString().replace(/[★\*]/g, '').trim();
                     stats.codechef = {
-                      rank: (ccData.stars || '2 Star').replace('★', ' Star') + ' (' + ccData.currentRating + ')',
-                      percent: Math.min(Math.round((ccData.currentRating / 3000) * 100), 100),
-                      lastSolved: 'Global Rank: #' + (ccData.globalRank || 'N/A')
+                      rank: stars + ' STAR (' + rating + ')',
+                      percent: Math.min(Math.round((rating / 3000) * 100), 100),
+                      lastSolved: 'Global Rank: #' + (ccData.globalRank || ccData.global_rank || 'N/A')
                     };
                     console.log('CC Success: ' + stats.codechef.rank);
                   }
