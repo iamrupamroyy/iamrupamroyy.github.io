@@ -5,8 +5,8 @@
     "github": "iamrupamroyy",
     "email": "iamrupamroyy@gmail.com",
     "linkedin": "iamrupamroyy",
-    "heroImage": "/src/assets/rupam_roy.jpeg",
-    "heroPopImage": "/src/assets/rupam_roy_pop.png",
+    "heroImage": "/assets/rupam_roy.jpeg",
+    "heroPopImage": "/assets/rupam_roy_pop.png",
     "directive": "GNN & Scalable Machine Learning",
     "location": "MTech Researcher @ IIT Bhilai",
     "node": "127.0.0.1",
@@ -16,8 +16,8 @@
     }
   },
   "resumes": [
-    { "label": "SDE_FOCUS.pdf", "url": "/src/assets/Rupam_Roy_MTech_CSE_IITBh_SDE.pdf" },
-    { "label": "AIML_FOCUS.pdf", "url": "/src/assets/Rupam_Roy_MTech_IITBh_AIML.pdf" }
+    { "label": "SDE_FOCUS.pdf", "url": "/assets/Rupam_Roy_MTech_CSE_IITBh_SDE.pdf" },
+    { "label": "AIML_FOCUS.pdf", "url": "/assets/Rupam_Roy_MTech_IITBh_AIML.pdf" }
   ],
   "socials": [
     { "platform": "github", "url": "https://github.com/iamrupamroyy", "label": "github.com/iamrupamroyy" },
@@ -39,9 +39,9 @@
       "name": "LeetCode",
       "username": "iamrupamroyy",
       "url": "https://leetcode.com/iamrupamroyy",
-      "backupRank": "Rank #119,701",
-      "backupSolved": "379",
-      "backupPercent": "14.03",
+      "backupRank": "Rank #124,502",
+      "backupSolved": "450+",
+      "backupPercent": "98.2",
       "color": "#00F2FF"
     },
     {
@@ -51,7 +51,7 @@
       "url": "https://codeforces.com/profile/iamrupamroyy",
       "backupRank": "Expert (1642)",
       "backupSolved": "Rating: 1642",
-      "backupPercent": "14.03",
+      "backupPercent": "82",
       "color": "#00FF41"
     },
     {
@@ -59,8 +59,8 @@
       "name": "CodeChef",
       "username": "iamrupamroyy",
       "url": "https://www.codechef.com/users/iamrupamroyy",
-      "backupRank": "2 Star (1511)",
-      "backupSolved": "Global Rank: 26023",
+      "backupRank": "4 Star (1850)",
+      "backupSolved": "Rating: 1850",
       "backupPercent": "88",
       "color": "#ffffff"
     }
@@ -136,17 +136,6 @@
       "github": "https://github.com/iamrupamroyy/watch2gether",
       "image": "https://images.unsplash.com/photo-1753998943619-b9cd910887e5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080",
       "color": "#BB86FC"
-    },
-    {
-      "id": 4,
-      "title": "SocialMedia",
-      "status": "ACTIVE",
-      "category": "SYS_ARCH",
-      "tech": ["Node.js", "Express", "MongoDB", "JWT"],
-      "description": "Scalable social networking platform with event-driven architecture and real-time updates.",
-      "github": "https://github.com/iamrupamroyy/SocialMedia",
-      "image": "https://images.unsplash.com/photo-1611162617474-5b21e879e113?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080",
-      "color": "#ffb86c"
     }
   ],
   "achievements": [
