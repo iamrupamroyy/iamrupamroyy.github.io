@@ -1,0 +1,95 @@
+name: Daily CP Stats Sync
+
+on:
+  schedule:
+    - cron: '0 0 * * *' # Runs every 24 hours at midnight
+  push:
+    branches: [ main ] # Runs on every push to main
+  workflow_dispatch: # Allows manual trigger
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Fetch Latest Stats
+        run: |
+          node -e "
+          const fs = require('fs');
+          
+          async function sync() {
+            // Load usernames from central config
+            const config = JSON.parse(fs.readFileSync('src/data/config.json', 'utf8'));
+            const PLATFORMS = config.cpPlatforms;
+            const stats = {};
+            
+            for (const platform of PLATFORMS) {
+              const username = platform.username;
+              const id = platform.id;
+              
+              console.log('Syncing ' + id + ' for ' + username + '...');
+
+              if (id === 'codeforces') {
+                try {
+                  const cfRes = await fetch('https://codeforces.com/api/user.info?handles=' + username);
+                  const cfData = await cfRes.json();
+                  if (cfData.status === 'OK') {
+                    const user = cfData.result[0];
+                    stats.codeforces = {
+                      rank: (user.rank || 'Expert').toUpperCase() + ' (' + user.rating + ')',
+                      percent: Math.min(Math.round((user.rating / 3000) * 100), 100),
+                      lastSolved: 'Rating: ' + user.rating
+                    };
+                  }
+                } catch (e) { console.error('CF failed', e); }
+              }
+
+              if (id === 'leetcode') {
+                try {
+                  const lcRes = await fetch('https://alfa-leetcode-api.onrender.com/' + username + '/solved');
+                  const lcData = await lcRes.json();
+                  if (lcData.solvedProblem) {
+                    stats.leetcode = {
+                      rank: 'Solved: ' + lcData.solvedProblem,
+                      percent: Math.min(Math.round((lcData.solvedProblem / 3200) * 100), 100),
+                      lastSolved: lcData.solvedProblem + ' Problems'
+                    };
+                  }
+                } catch (e) { console.error('LC failed', e); }
+              }
+
+              if (id === 'codechef') {
+                try {
+                  const ccRes = await fetch('https://codechef-api.vercel.app/' + username);
+                  const ccData = await ccRes.json();
+                  if (ccData.currentRating) {
+                    stats.codechef = {
+                      rank: (ccData.stars || '4 Star') + ' (' + ccData.currentRating + ')',
+                      percent: Math.min(Math.round((ccData.currentRating / 3000) * 100), 100),
+                      lastSolved: 'Rating: ' + ccData.currentRating
+                    };
+                  }
+                } catch (e) { console.error('CC failed', e); }
+              }
+            }
+
+            fs.writeFileSync('src/data/stats.json', JSON.stringify(stats, null, 2));
+            console.log('Stats updated successfully');
+          }
+          sync();
+          "
+
+      - name: Commit and Push changes
+        run: |
+          git config --global user.name 'GitHub Actions'
+          git config --global user.email 'actions@github.com'
+          git add src/data/stats.json
+          git commit -m \"chore: update daily cp stats [skip ci]\" || echo \"No changes to commit\"
+          git push

@@ -1,0 +1,232 @@
+{
+  "profile": {
+    "name": "Rupam Roy",
+    "handle": "iamrupamroyy",
+    "github": "iamrupamroyy",
+    "email": "iamrupamroyy@gmail.com",
+    "linkedin": "iamrupamroyy",
+    "heroImage": "/src/assets/rupam_roy.jpeg",
+    "heroPopImage": "/src/assets/rupam_roy_pop.png",
+    "directive": "GNN & Scalable Machine Learning",
+    "location": "MTech Researcher @ IIT Bhilai",
+    "node": "127.0.0.1",
+    "coordinates": {
+      "x": "21.17",
+      "y": "81.77"
+    }
+  },
+  "resumes": [
+    { "label": "SDE_FOCUS.pdf", "url": "/src/assets/Rupam_Roy_MTech_CSE_IITBh_SDE.pdf" },
+    { "label": "AIML_FOCUS.pdf", "url": "/src/assets/Rupam_Roy_MTech_IITBh_AIML.pdf" }
+  ],
+  "socials": [
+    { "platform": "github", "url": "https://github.com/iamrupamroyy", "label": "github.com/iamrupamroyy" },
+    { "platform": "linkedin", "url": "https://linkedin.com/in/iamrupamroyy", "label": "linkedin.com/in/iamrupamroyy" },
+    { "platform": "email", "url": "mailto:iamrupamroyy@gmail.com", "label": "iamrupamroyy@gmail.com" }
+  ],
+  "navigation": [
+    { "name": "Arena", "href": "#arena", "icon": "Activity", "detail": "METRICS" },
+    { "name": "Skills", "href": "#skills", "icon": "Cpu", "detail": "BRAIN" },
+    { "name": "Vault", "href": "#projects", "icon": "Shield", "detail": "STORAGE" },
+    { "name": "Honors", "href": "#achievements", "icon": "Award", "detail": "BADGES" },
+    { "name": "Career", "href": "#timeline", "icon": "Terminal", "detail": "HISTORY" },
+    { "name": "Terminal", "href": "#contact", "icon": "Briefcase", "detail": "INBOUND" }
+  ],
+  "formspreeId": "mzdyeqyj",
+  "cpPlatforms": [
+    {
+      "id": "leetcode",
+      "name": "LeetCode",
+      "username": "iamrupamroyy",
+      "url": "https://leetcode.com/iamrupamroyy",
+      "backupRank": "Rank #119,701",
+      "backupSolved": "379",
+      "backupPercent": "14.03",
+      "color": "#00F2FF"
+    },
+    {
+      "id": "codeforces",
+      "name": "Codeforces",
+      "username": "iamrupamroyy",
+      "url": "https://codeforces.com/profile/iamrupamroyy",
+      "backupRank": "Expert (1642)",
+      "backupSolved": "Rating: 1642",
+      "backupPercent": "14.03",
+      "color": "#00FF41"
+    },
+    {
+      "id": "codechef",
+      "name": "CodeChef",
+      "username": "iamrupamroyy",
+      "url": "https://www.codechef.com/users/iamrupamroyy",
+      "backupRank": "2 Star (1511)",
+      "backupSolved": "Global Rank: 26023",
+      "backupPercent": "88",
+      "color": "#ffffff"
+    }
+  ],
+  "techStack": [
+    {
+      "id": "lang",
+      "title": "Languages",
+      "skills": ["C++", "Python", "Java", "JavaScript", "TypeScript"],
+      "color": "var(--cyan)"
+    },
+    {
+      "id": "intelligence",
+      "title": "Intelligence",
+      "skills": ["Agentic AI", "LangGraph", "GNNs", "PyTorch", "RAG (FAISS)", "LLM Orchestration"],
+      "color": "#BB86FC"
+    },
+    {
+      "id": "backend",
+      "title": "Backend",
+      "skills": ["Node.js", "Express", "Microservices", "REST APIs", "Kafka", "WebSockets"],
+      "color": "var(--green)"
+    },
+    {
+      "id": "data",
+      "title": "Data Core",
+      "skills": ["MongoDB", "PostgreSQL", "Redis", "Neo4j", "Cypher", "Spark"],
+      "color": "#FFB86C"
+    },
+    {
+      "id": "systems",
+      "title": "Systems",
+      "skills": ["CUDA", "Distributed Systems", "OS", "DBMS", "System Design"],
+      "color": "#00FF41"
+    },
+    {
+      "id": "infra",
+      "title": "Infrastructure",
+      "skills": ["Docker", "Git", "Linux", "CI/CD", "Playwright", "LaTeX"],
+      "color": "#00F2FF"
+    }
+  ],
+  "projects": [
+    {
+      "id": 1,
+      "title": "AgentCV",
+      "status": "ACTIVE",
+      "category": "AI_AGENT",
+      "tech": ["React", "Node.js", "Gemini API", "LangChain"],
+      "description": "Autonomous Career Optimization Platform with multi-agent LLM orchestration and real-time data pipelines.",
+      "github": "https://github.com/iamrupamroyy/AgentCV",
+      "image": "https://images.unsplash.com/photo-1677442136019-21780ecad995?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080",
+      "color": "var(--cyan)"
+    },
+    {
+      "id": 2,
+      "title": "CodeGenie",
+      "status": "ACTIVE",
+      "category": "AI_ASSISTANT",
+      "tech": ["Python", "LangGraph", "FastAPI", "FAISS"],
+      "description": "Autonomous Multi-Agent Competitive Programming Assistant with self-healing feedback loops.",
+      "github": "https://github.com/iamrupamroyy/CodeGenie",
+      "image": "https://images.unsplash.com/photo-1555066931-4365d14bab8c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080",
+      "color": "var(--green)"
+    },
+    {
+      "id": 3,
+      "title": "watch2gether",
+      "status": "DEPLOYED",
+      "category": "WEBRTC_PROTO",
+      "tech": ["React", "WebRTC", "Node.js", "Socket.io"],
+      "description": "High-fidelity synchronized media engine with sub-100ms drift. Optimized for large-scale p2p clusters.",
+      "github": "https://github.com/iamrupamroyy/watch2gether",
+      "image": "https://images.unsplash.com/photo-1753998943619-b9cd910887e5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080",
+      "color": "#BB86FC"
+    },
+    {
+      "id": 4,
+      "title": "SocialMedia",
+      "status": "ACTIVE",
+      "category": "SYS_ARCH",
+      "tech": ["Node.js", "Express", "MongoDB", "JWT"],
+      "description": "Scalable social networking platform with event-driven architecture and real-time updates.",
+      "github": "https://github.com/iamrupamroyy/SocialMedia",
+      "image": "https://images.unsplash.com/photo-1611162617474-5b21e879e113?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080",
+      "color": "#ffb86c"
+    }
+  ],
+  "achievements": [
+    {
+      "title": "GATE CS 2024",
+      "details": "98.87 percentile (Top 1.1% among 123K participants)",
+      "color": "#00F2FF",
+      "icon": "Trophy"
+    },
+    {
+      "title": "GATE CS 2023",
+      "details": "97.39 percentile (Top 2.6% among 75K participants)",
+      "color": "#00FF41",
+      "icon": "Trophy"
+    },
+    {
+      "title": "LeetCode Global",
+      "details": "Rating 1740+ | Global Ranking 86K (Top 10%) | Solved 350+ DSA",
+      "color": "#FFB86C",
+      "icon": "Zap"
+    }
+  ],
+  "experience": [
+    {
+      "id": "ta",
+      "hash": "feat-ta",
+      "type": "work",
+      "title": "Teaching Assistant",
+      "org": "IIT Bhilai",
+      "date": "Aug 2024 - Present",
+      "details": "Conducting lab sessions and evaluating assignments for core CSE courses.",
+      "color": "#00F2FF"
+    },
+    {
+      "id": "pc",
+      "hash": "feat-pc",
+      "type": "role",
+      "title": "Placement Coordinator",
+      "org": "IIT Bhilai",
+      "date": "June 2025 - April 2026",
+      "details": "Coordinating placements for 150+ students; managed recruiter communication and scheduling.",
+      "color": "#FF79C6"
+    },
+    {
+      "id": "gm",
+      "hash": "feat-gdg",
+      "type": "role",
+      "title": "GDG Mentor",
+      "org": "IIT Bhilai",
+      "date": "July 2025 - April 2026",
+      "details": "Organized technical events and mentored students in competitive programming.",
+      "color": "#BD93F9"
+    },
+    {
+      "id": "mtech",
+      "hash": "mtech-core",
+      "type": "edu",
+      "title": "Master of Technology (CSE)",
+      "org": "IIT Bhilai",
+      "date": "June 2024 - Present",
+      "details": "Specializing in Computer Science & Engineering. GPA: 9.18 / 10 (Thesis on GNNs).",
+      "stats": {
+        "CGPA": "9.18 / 10",
+        "Focus": "GNN Optimization"
+      },
+      "color": "#50FA7B"
+    },
+    {
+      "id": "btech",
+      "hash": "init-node",
+      "type": "edu",
+      "title": "Bachelor of Technology (CSE)",
+      "org": "Calcutta Institute of Technology",
+      "date": "June 2018 - July 2022",
+      "details": "Graduated with Honors. Specialization in Data Structures & AI.",
+      "stats": {
+        "GPA": "9.18 / 10",
+        "Rank": "1st Department"
+      },
+      "color": "#FFB86C"
+    }
+  ]
+}
