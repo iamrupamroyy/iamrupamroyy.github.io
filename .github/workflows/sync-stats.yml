@@ -35,35 +35,24 @@ jobs:
               const username = platform.username;
               const id = platform.id;
               
-              console.log('>>> INITIALIZING SYNC: ' + id);
+              console.log('>>> SYNCING: ' + id);
 
-              // --- LEETCODE STRATEGY ---
               if (id === 'leetcode') {
-                const lcSources = [
-                  'https://alfa-leetcode-api.onrender.com/' + username + '/solved',
-                  'https://leetcode-stats-api.herokuapp.com/' + username
-                ];
-                for (const src of lcSources) {
-                  try {
-                    console.log('LC_TRY: ' + src);
-                    const res = await fetch(src, { signal: AbortSignal.timeout(10000) });
-                    const data = await res.json();
-                    if (data.solvedProblem || data.totalSolved) {
-                      const solved = data.solvedProblem || data.totalSolved;
-                      stats.leetcode = {
-                        rank: 'KNIGHT_TIER',
-                        percent: data.topPercentage || 12,
-                        lastSolved: solved + ' Problems Solved',
-                        rating: solved
-                      };
-                      console.log('LC_SUCCESS: ' + solved);
-                      break;
-                    }
-                  } catch (e) { console.log('LC_FAILED_SOURCE: ' + e.message); }
-                }
+                try {
+                  const res = await fetch('https://alfa-leetcode-api.onrender.com/' + username + '/solved');
+                  const data = await res.json();
+                  if (data.solvedProblem) {
+                    stats.leetcode = {
+                      rank: 'KNIGHT_TIER',
+                      percent: 88, // Approximation
+                      lastSolved: data.solvedProblem + ' Problems Solved',
+                      rating: data.solvedProblem
+                    };
+                    console.log('LC_SUCCESS');
+                  }
+                } catch (e) { console.log('LC_FAILED'); }
               }
 
-              // --- CODEFORCES STRATEGY ---
               if (id === 'codeforces') {
                 try {
                   const res = await fetch('https://codeforces.com/api/user.info?handles=' + username);
@@ -73,38 +62,51 @@ jobs:
                     stats.codeforces = {
                       rank: (u.rank || 'Newbie').toUpperCase(),
                       percent: Math.min(Math.round((u.rating / 3000) * 100), 100),
-                      lastSolved: 'Global_Rank: #' + (u.maxRating || 'N/A'),
+                      lastSolved: 'Max_Rating: ' + u.maxRating,
                       rating: u.rating
                     };
-                    console.log('CF_SUCCESS: ' + u.rating);
+                    console.log('CF_SUCCESS');
                   }
-                } catch (e) { console.log('CF_FAILED: ' + e.message); }
+                } catch (e) { console.log('CF_FAILED'); }
               }
 
-              // --- CODECHEF STRATEGY ---
               if (id === 'codechef') {
-                const ccSources = [
-                  'https://codechef-api.vercel.app/' + username,
-                  'https://code-chef-api.vercel.app/details/' + username
-                ];
-                for (const src of ccSources) {
+                try {
+                  console.log('CC_TRY: Direct Scrape');
+                  const res = await fetch('https://www.codechef.com/users/' + username);
+                  const html = await res.text();
+                  
+                  // Extract Rating using Regex
+                  const ratingMatch = html.match(/<div className=\"rating-number\">(\d+)<\/div>/) || html.match(/\"rating\":(\d+)/) || html.match(/rating-number\">(\d+)</);
+                  const starMatch = html.match(/(\d)★/) || html.match(/rating-star\">\s*<span>([\d])★/);
+                  
+                  if (ratingMatch) {
+                    const rating = ratingMatch[1];
+                    const stars = starMatch ? starMatch[1] : '2';
+                    stats.codechef = {
+                      rank: stars + ' STAR_GRADE',
+                      percent: Math.min(Math.round((parseInt(rating) / 3000) * 100), 100),
+                      lastSolved: 'Global_Rank: Check Profile',
+                      rating: rating
+                    };
+                    console.log('CC_SUCCESS: ' + rating);
+                  } else {
+                    throw new Error('Pattern not found');
+                  }
+                } catch (e) { 
+                  console.log('CC_SCRAPE_FAILED, trying fallback API'); 
                   try {
-                    console.log('CC_TRY: ' + src);
-                    const res = await fetch(src, { signal: AbortSignal.timeout(15000) });
+                    const res = await fetch('https://code-chef-api.vercel.app/details/' + username);
                     const data = await res.json();
-                    const rating = data.currentRating || data.rating || data.current_rating;
-                    if (rating) {
-                      const stars = (data.stars || data.rating_number || '2').toString().replace(/[★\*]/g, '');
-                      stats.codechef = {
-                        rank: stars + ' STAR_GRADE',
-                        percent: Math.min(Math.round((rating / 3000) * 100), 100),
-                        lastSolved: 'Global_Rank: #' + (data.globalRank || data.global_rank || 'N/A'),
-                        rating: rating
+                    if (data.rating) {
+                       stats.codechef = {
+                        rank: (data.stars || '2') + ' STAR_GRADE',
+                        percent: 50,
+                        lastSolved: 'Live_Update',
+                        rating: data.rating
                       };
-                      console.log('CC_SUCCESS: ' + rating);
-                      break;
                     }
-                  } catch (e) { console.log('CC_FAILED_SOURCE: ' + e.message); }
+                  } catch (e2) {}
                 }
               }
             }
