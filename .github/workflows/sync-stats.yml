@@ -35,77 +35,83 @@ jobs:
               const username = platform.username;
               const id = platform.id;
               
-              console.log('--- SYNCING: ' + id + ' ---');
+              console.log('>>> INITIALIZING SYNC: ' + id);
 
+              // --- LEETCODE STRATEGY ---
+              if (id === 'leetcode') {
+                const lcSources = [
+                  'https://alfa-leetcode-api.onrender.com/' + username + '/solved',
+                  'https://leetcode-stats-api.herokuapp.com/' + username
+                ];
+                for (const src of lcSources) {
+                  try {
+                    console.log('LC_TRY: ' + src);
+                    const res = await fetch(src, { signal: AbortSignal.timeout(10000) });
+                    const data = await res.json();
+                    if (data.solvedProblem || data.totalSolved) {
+                      const solved = data.solvedProblem || data.totalSolved;
+                      stats.leetcode = {
+                        rank: 'KNIGHT_TIER',
+                        percent: data.topPercentage || 12,
+                        lastSolved: solved + ' Problems Solved',
+                        rating: solved
+                      };
+                      console.log('LC_SUCCESS: ' + solved);
+                      break;
+                    }
+                  } catch (e) { console.log('LC_FAILED_SOURCE: ' + e.message); }
+                }
+              }
+
+              // --- CODEFORCES STRATEGY ---
               if (id === 'codeforces') {
                 try {
                   const res = await fetch('https://codeforces.com/api/user.info?handles=' + username);
-                  const cfData = await res.json();
-                  if (cfData.status === 'OK') {
-                    const u = cfData.result[0];
+                  const data = await res.json();
+                  if (data.status === 'OK') {
+                    const u = data.result[0];
                     stats.codeforces = {
-                      rank: (u.rank || 'Newbie').toUpperCase() + ' (' + u.rating + ')',
+                      rank: (u.rank || 'Newbie').toUpperCase(),
                       percent: Math.min(Math.round((u.rating / 3000) * 100), 100),
-                      lastSolved: 'Rating: ' + u.rating,
+                      lastSolved: 'Global_Rank: #' + (u.maxRating || 'N/A'),
                       rating: u.rating
                     };
+                    console.log('CF_SUCCESS: ' + u.rating);
                   }
-                } catch (e) { console.log('DEBUG: CF Error'); }
+                } catch (e) { console.log('CF_FAILED: ' + e.message); }
               }
 
-              if (id === 'leetcode') {
-                try {
-                  const res = await fetch('https://alfa-leetcode-api.onrender.com/' + username);
-                  const lcData = await res.json();
-                  if (lcData.username) {
-                    const solved = lcData.matchedUserStats.acSubmissionNum[0].count;
-                    const topPct = lcData.userRanking?.topPercentage || 12;
-                    stats.leetcode = {
-                      rank: 'Top ' + topPct + '%',
-                      percent: 100 - topPct,
-                      lastSolved: solved + ' Problems Solved',
-                      rating: solved
-                    };
-                  }
-                } catch (e) { console.log('DEBUG: LC Error'); }
-              }
-
+              // --- CODECHEF STRATEGY ---
               if (id === 'codechef') {
-                try {
-                  let ccData = null;
-                  const sources = [
-                    'https://codechef-api.vercel.app/' + username,
-                    'https://code-chef-api.vercel.app/details/' + username
-                  ];
-
-                  for (const src of sources) {
-                    try {
-                      console.log('DEBUG: Trying ' + src);
-                      const res = await fetch(src, { signal: AbortSignal.timeout(12000) });
-                      ccData = await res.json();
-                      
-                      // Check for various possible field names
-                      const rating = ccData.currentRating || ccData.rating || ccData.current_rating;
-                      if (rating) {
-                        console.log('DEBUG: Success! Found Rating: ' + rating);
-                        const stars = (ccData.stars || ccData.rating_number || '2').toString().replace(/[★\*]/g, '');
-                        stats.codechef = {
-                          rank: stars + ' STAR (' + rating + ')',
-                          percent: Math.min(Math.round((rating / 3000) * 100), 100),
-                          lastSolved: 'Global Rank: #' + (ccData.globalRank || ccData.global_rank || 'N/A'),
-                          rating: rating
-                        };
-                        break;
-                      }
-                      console.log('DEBUG: JSON received but no rating found. Keys: ' + Object.keys(ccData).join(', '));
-                    } catch (err) { continue; }
-                  }
-                } catch (e) { console.log('DEBUG: CC Exhausted'); }
+                const ccSources = [
+                  'https://codechef-api.vercel.app/' + username,
+                  'https://code-chef-api.vercel.app/details/' + username
+                ];
+                for (const src of ccSources) {
+                  try {
+                    console.log('CC_TRY: ' + src);
+                    const res = await fetch(src, { signal: AbortSignal.timeout(15000) });
+                    const data = await res.json();
+                    const rating = data.currentRating || data.rating || data.current_rating;
+                    if (rating) {
+                      const stars = (data.stars || data.rating_number || '2').toString().replace(/[★\*]/g, '');
+                      stats.codechef = {
+                        rank: stars + ' STAR_GRADE',
+                        percent: Math.min(Math.round((rating / 3000) * 100), 100),
+                        lastSolved: 'Global_Rank: #' + (data.globalRank || data.global_rank || 'N/A'),
+                        rating: rating
+                      };
+                      console.log('CC_SUCCESS: ' + rating);
+                      break;
+                    }
+                  } catch (e) { console.log('CC_FAILED_SOURCE: ' + e.message); }
+                }
               }
             }
 
             stats.lastUpdated = new Date().toISOString();
             fs.writeFileSync('src/data/stats.json', JSON.stringify(stats, null, 2));
+            console.log('>>> SYNC_FINALIZED');
           }
           sync();
           "
