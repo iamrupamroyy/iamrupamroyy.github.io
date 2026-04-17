@@ -10,6 +10,8 @@ on:
 jobs:
   sync:
     runs-on: ubuntu-latest
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
@@ -67,16 +69,26 @@ jobs:
 
               if (id === 'codechef') {
                 try {
-                  const ccRes = await fetch('https://codechef-api.vercel.app/' + username);
-                  const ccData = await ccRes.json();
-                  if (ccData.currentRating) {
-                    stats.codechef = {
-                      rank: (ccData.stars || '4 Star') + ' (' + ccData.currentRating + ')',
-                      percent: Math.min(Math.round((ccData.currentRating / 3000) * 100), 100),
-                      lastSolved: 'Rating: ' + ccData.currentRating
-                    };
+                  console.log('Attempting CC Primary API...');
+                  const ccRes = await fetch('https://codechef-api.vercel.app/' + username, { signal: AbortSignal.timeout(15000) });
+                  let ccData = await ccRes.json();
+                  
+                  // Fallback to Secondary API if primary fails or returns empty
+                  if (!ccData || !ccData.currentRating) {
+                    console.log('Primary CC failed, trying Secondary...');
+                    const ccRes2 = await fetch('https://code-chef-api.vercel.app/details/' + username, { signal: AbortSignal.timeout(15000) });
+                    ccData = await ccRes2.json();
                   }
-                } catch (e) { console.error('CC failed', e); }
+
+                  if (ccData && ccData.currentRating) {
+                    stats.codechef = {
+                      rank: (ccData.stars || '2 Star').replace('★', ' Star') + ' (' + ccData.currentRating + ')',
+                      percent: Math.min(Math.round((ccData.currentRating / 3000) * 100), 100),
+                      lastSolved: 'Global Rank: #' + (ccData.globalRank || 'N/A')
+                    };
+                    console.log('CC Success: ' + stats.codechef.rank);
+                  }
+                } catch (e) { console.error('All CC sources failed', e); }
               }
             }
 
