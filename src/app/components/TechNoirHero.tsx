@@ -1,6 +1,6 @@
 import { motion, AnimatePresence } from 'motion/react';
 import { useState, useRef, useEffect, useContext } from 'react';
-import { Download, FileText, ChevronRight, Activity, Crosshair, Zap } from 'lucide-react';
+import { Download, FileText, ChevronRight, Activity, Crosshair, Zap, Cpu, MapPin } from 'lucide-react';
 import portfolioData from '../../data/config.json';
 import { AppContext } from '../AppRoot';
 
@@ -38,7 +38,7 @@ export const TechNoirHero = () => {
   const { isLoaded } = useContext(AppContext);
 
   return (
-    <section className="relative min-h-[calc(100vh-80px)] flex items-center justify-center px-6 overflow-hidden bg-blueprint pt-12 pb-20">
+    <section className="relative min-h-[calc(100vh-80px)] flex flex-col md:flex-row items-center justify-center px-6 overflow-hidden bg-blueprint pt-12 pb-20">
       <div className="relative z-10 w-full max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-12 lg:gap-24">
         
         {/* Left Side: Text Block */}
@@ -62,7 +62,7 @@ export const TechNoirHero = () => {
             className="text-6xl sm:text-7xl md:text-8xl lg:text-[110px] font-heading font-extrabold tracking-tighter uppercase leading-[0.8]"
             style={{ color: 'var(--fg)' }}
           >
-            <span className="text-transparent block" style={{ WebkitTextStroke: '1px var(--stroke-color)', opacity: 0.4 }}>
+            <span className="block" style={{ WebkitTextStroke: '1px var(--stroke-color)', color: 'var(--fill-dim)' }}>
               RUPAM
             </span>
             ROY.
@@ -135,23 +135,26 @@ export const TechNoirHero = () => {
           </motion.div>
         </div>
 
-        {/* Right Side: Pop-Out Portrait - Optimized for small screen heights */}
+        {/* Right Side: Pop-Out Portrait - Simplified Design */}
         <div className="w-full md:w-1/2 flex items-center justify-center order-1 md:order-2 px-4 md:px-0">
           <div className="relative w-full flex justify-center">
             
+            {/* Background Decorative Rings */}
             <div className="absolute -inset-8 md:-inset-16 border border-white/5 rounded-full pointer-events-none opacity-20" />
+            <motion.div 
+              animate={{ rotate: 360 }}
+              transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
+              className="absolute -inset-4 md:-inset-8 border border-dashed border-white/10 rounded-full pointer-events-none"
+            />
 
             <div 
-              className="relative w-full max-w-[260px] aspect-[3/4] sm:max-w-[320px] md:max-w-[420px] md:h-[560px] group cursor-none"
+              className="relative w-full max-w-[260px] aspect-[3/4] sm:max-w-[320px] md:max-w-[420px] md:h-[560px] group"
               onMouseEnter={() => setIsFocused(true)}
               onMouseLeave={() => setIsFocused(false)}
             >
-              {/* Main Image Container */}
+              {/* Layer 1: Frame */}
               <div className="absolute inset-0 z-0 border overflow-hidden transition-all duration-700 shadow-2xl bg-black" 
                    style={{ borderColor: isFocused ? 'var(--cyan)' : 'var(--border-color)' }}>
-                
-                {!imageLoaded && <div className="absolute inset-0 bg-white/5 animate-pulse" />}
-
                 <img 
                   src={profile.heroImage} 
                   alt="Background" 
@@ -160,51 +163,39 @@ export const TechNoirHero = () => {
                 />
               </div>
 
-              {/* Pop-Out Layer */}
+              {/* Layer 2: Pop-Out - Free Top/Left Expansion */}
               <motion.div 
                 animate={{ 
-                  scale: isFocused ? 1.15 : 1,
-                  opacity: isFocused ? 1 : 0,
-                  y: isFocused ? -15 : 0
+                  scale: isFocused ? 1.33 : 1,
+                  opacity: isFocused ? 1 : 0
                 }}
                 transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
                 className="absolute inset-0 z-20 pointer-events-none"
+                style={{ originX: '100%', originY: '100%' }}
               >
                 <img 
                   src={profile.heroPopImage} 
                   alt="Pop-Out" 
-                  className="w-full h-full object-cover object-top drop-shadow-[0_20px_50px_rgba(0,242,255,0.2)] filter brightness-110"
+                  className="w-full h-full object-cover object-top filter brightness-110 drop-shadow-[-20px_-20px_50px_rgba(0,242,255,0.2)]"
                 />
               </motion.div>
 
-              {/* HUD elements */}
-              <div className="absolute inset-0 z-30 p-6 flex flex-col justify-between pointer-events-none">
-                <div className="flex justify-between font-mono text-[9px] tracking-widest transition-colors duration-500" style={{ color: isFocused ? 'var(--cyan)' : 'var(--fg-muted)' }}>
-                  <span className="flex items-center gap-2 font-bold"><Crosshair size={12} className={isFocused ? 'animate-spin' : ''} /> {isFocused ? 'IDENTITY_LOCKED' : 'SYSTEM_READY'}</span>
-                </div>
-                
-                <div className="space-y-4">
-                  <div className="flex items-end justify-between transition-colors duration-500" style={{ color: isFocused ? 'var(--cyan)' : 'white' }}>
-                     <div className="font-mono text-[8px] tracking-[0.4em] uppercase font-bold opacity-40">Bio_Extraction</div>
-                     <Zap size={14} className={isFocused ? 'animate-pulse' : 'opacity-20'} />
-                  </div>
-                  <div className="h-0.5 w-full bg-white/5 relative overflow-hidden">
-                     <motion.div 
-                      initial={{ x: '-100%' }}
-                      animate={{ x: '100%' }}
-                      transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
-                      className="absolute inset-0 w-1/3 bg-[var(--cyan)]"
-                     />
-                  </div>
-                </div>
-              </div>
-
-              <div className={`absolute -right-4 md:-right-8 top-1/4 z-40 transition-all duration-700 hidden sm:block ${isFocused ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-4'}`}>
-                 <div className="p-3 border backdrop-blur-md font-mono text-[8px] tracking-widest text-white/60 bg-black/40" style={{ borderColor: 'var(--border-color)' }}>
-                    COORD_X: {profile.coordinates.x}<br />
-                    COORD_Y: {profile.coordinates.y}
+              {/* Minimal Coordinate HUD */}
+              <div className={`absolute -right-4 md:-right-8 top-1/3 z-40 transition-all duration-700 hidden sm:block ${isFocused ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-4'}`}>
+                 <div className="p-4 border backdrop-blur-md bg-black/60 border-[var(--cyan)] shadow-[0_0_15px_rgba(0,242,255,0.2)]">
+                    <div className="flex items-center gap-2 mb-2">
+                       <MapPin size={10} className="text-[var(--cyan)] animate-pulse" />
+                       <span className="font-mono text-[8px] tracking-[0.2em] text-white/50 uppercase">Location_Verified</span>
+                    </div>
+                    <div className="font-mono text-[9px] tracking-widest text-[var(--cyan)] font-bold">
+                       LAT: {profile.coordinates.x}<br />
+                       LNG: {profile.coordinates.y}
+                    </div>
                  </div>
               </div>
+
+              {/* Bottom Decorative Line */}
+              <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-[var(--cyan)] to-transparent opacity-20 z-30" />
             </div>
           </div>
         </div>

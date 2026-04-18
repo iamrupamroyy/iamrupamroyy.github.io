@@ -14,7 +14,7 @@ export const SectionHeader = ({ icon: Icon, sectionNum, title, subtitle, color =
     <div className="relative z-10 mb-20">
       <div className="flex items-center gap-3 mb-4">
         <Icon size={16} style={{ color }} className="animate-pulse" />
-        <h2 className="text-xs font-mono tracking-[0.4em] uppercase" style={{ color }}>
+        <h2 className="text-xs font-mono tracking-[0.4em] uppercase" style={{ color: 'var(--stroke-color)' }}>
           {sectionNum}_{subtitle}
         </h2>
       </div>
@@ -26,7 +26,7 @@ export const SectionHeader = ({ icon: Icon, sectionNum, title, subtitle, color =
         style={{ color: 'var(--fg)' }}
       >
         {title}<br />
-        <span className="text-transparent" style={{ WebkitTextStroke: '1px var(--stroke-color)' }}>
+        <span style={{ WebkitTextStroke: '1px var(--stroke-color)', color: 'var(--fill-dim)' }}>
           Archive.
         </span>
       </motion.h3>

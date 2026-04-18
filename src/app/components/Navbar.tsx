@@ -74,7 +74,6 @@ export const Navbar = () => {
         const el = document.querySelector(href);
         if (el) el.scrollIntoView({ behavior: 'smooth' });
       } else {
-        // First navigate home, then wait a tiny bit for mount and scroll
         navigate('/');
         setTimeout(() => {
           const el = document.querySelector(href);
@@ -99,49 +98,46 @@ export const Navbar = () => {
           borderColor: 'var(--border-color)'
         }}
       >
-        <div className="w-full max-w-7xl mx-auto px-6 md:px-12 py-5 flex items-center justify-between">
+        <div className="w-full max-w-7xl mx-auto px-6 py-5 flex items-center justify-between gap-4">
             <Link 
               to="/"
               onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-              className="flex items-center gap-3 text-2xl font-bold tracking-tighter group cursor-pointer"
+              className="flex items-center gap-3 text-2xl font-bold tracking-tighter group cursor-pointer flex-shrink-0"
             >
               <span style={{ color: 'var(--cyan)' }} className="group-hover:animate-pulse">{'//'}</span>
               <span style={{ color: 'var(--fg)' }} className="font-mono uppercase tracking-[0.2em] text-sm">Portfolio</span>
             </Link>
 
-            <div className="flex items-center justify-center gap-4 xl:gap-8 mx-4">
+            <div className="flex-1 flex items-center justify-center gap-1 xl:gap-4 min-w-0">
                 {navLinks.map((link: any) => (
-                  <div key={link.name}>
+                  <div key={link.name} className="flex-shrink-0">
                     {link.href.startsWith('/') ? (
                         <Link
                           to={link.href}
                           className={twMerge(
-                            "relative group flex flex-col items-center px-4 py-2 transition-all",
-                            link.special ? "border border-[var(--cyan)] bg-[var(--cyan-dim)] shadow-[0_0_15px_rgba(0,242,255,0.1)] hover:bg-[var(--cyan)]" : ""
+                            "relative group flex flex-col items-center px-3 py-1 transition-all",
+                            link.special ? "border border-[var(--cyan)] bg-[var(--cyan-dim)] shadow-[0_0_15px_rgba(0,242,255,0.1)] hover:bg-[var(--cyan)] hover:shadow-[0_0_20px_var(--cyan)]" : ""
                           )}
                         >
-                          <div className="flex items-center gap-2 text-[10px] font-mono font-bold tracking-[0.2em] transition-colors" 
+                          <div className="flex items-center gap-1.5 text-[9px] xl:text-[10px] font-mono font-bold tracking-[0.1em] xl:tracking-[0.2em] transition-colors uppercase" 
                               style={{ color: link.special ? (location.pathname === link.href ? 'white' : 'var(--cyan)') : 'var(--fg-muted)' }}>
-                            <span className={twMerge("transition-colors", !link.special && "group-hover:text-[var(--cyan)]")}>
+                            <span className={twMerge("transition-colors", !link.special && "group-hover:text-[var(--cyan)]", link.special && "group-hover:text-white")}>
                               {iconMap[link.icon] || <Activity size={14} />}
                             </span>
-                            <span className={twMerge("transition-colors", !link.special && "group-hover:text-white")}>{link.name.toUpperCase()}</span>
+                            <span className={twMerge("transition-colors", !link.special && "group-hover:text-white", link.special && "group-hover:text-white whitespace-nowrap")}>{link.name}</span>
                           </div>
-                          {!link.special && (
-                            <span className={twMerge("absolute -bottom-1 left-0 h-[1px] bg-[var(--cyan)] transition-all duration-300 group-hover:w-full", location.pathname === link.href ? 'w-full' : 'w-0')} />
-                          )}
                         </Link>
                     ) : (
                         <a
                           href={link.href}
                           onClick={(e) => handleNavClick(e, link.href)}
-                          className="relative group flex flex-col items-center"
+                          className="relative group flex flex-col items-center px-3 py-1"
                         >
-                          <div className="flex items-center gap-2 text-[10px] font-mono font-bold tracking-[0.2em] transition-colors" style={{ color: 'var(--fg-muted)' }}>
+                          <div className="flex items-center gap-1.5 text-[9px] xl:text-[10px] font-mono font-bold tracking-[0.1em] xl:tracking-[0.2em] transition-colors uppercase" style={{ color: 'var(--fg-muted)' }}>
                             <span className="group-hover:text-[var(--cyan)] transition-colors">
                               {iconMap[link.icon] || <Activity size={14} />}
                             </span>
-                            <span className="group-hover:text-white transition-colors">{link.name.toUpperCase()}</span>
+                            <span className="group-hover:text-white transition-colors whitespace-nowrap">{link.name}</span>
                           </div>
                           <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-[var(--cyan)] transition-all duration-300 group-hover:w-full" />
                         </a>
@@ -150,12 +146,12 @@ export const Navbar = () => {
                 ))}
             </div>
               
-            <div className="flex items-center gap-6">
+            <div className="flex items-center gap-4 xl:gap-8 flex-shrink-0">
                 <div className="relative group/social">
                   <button 
                     onMouseEnter={() => setIsSocialMenuOpen(true)}
                     onMouseLeave={() => setIsSocialMenuOpen(false)}
-                    className="flex items-center gap-2 text-[10px] font-mono font-bold tracking-[0.2em]" style={{ color: 'var(--fg-muted)' }}
+                    className="flex items-center gap-2 text-[10px] font-mono font-bold tracking-[0.2em] uppercase" style={{ color: 'var(--fg-muted)' }}
                   >
                     CONNECT <ChevronDown size={10} className="group-hover/social:rotate-180 transition-transform" />
                   </button>
@@ -190,7 +186,7 @@ export const Navbar = () => {
 
                 <button 
                   onClick={triggerSystemReboot}
-                  className="flex items-center gap-2 px-5 py-2 border font-mono text-[10px] font-bold transition-all relative group overflow-hidden"
+                  className="flex items-center gap-2 px-3 xl:px-5 py-2 border font-mono text-[9px] xl:text-[10px] font-bold transition-all relative group overflow-hidden"
                   style={{ borderColor: 'var(--cyan)', color: 'var(--cyan)', backgroundColor: 'var(--cyan-dim)' }}
                 >
                   <div className="absolute inset-0 bg-[var(--cyan)] translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
@@ -201,7 +197,7 @@ export const Navbar = () => {
         </div>
       </motion.nav>
 
-      {/* Mobile & Tablet Header */}
+      {/* Mobile Header stays as is */}
       <div className="lg:hidden fixed top-0 left-0 right-0 z-50 backdrop-blur-md border-b flex justify-between items-center p-4" style={{ backgroundColor: 'var(--bg)', borderColor: 'var(--border-color)' }}>
         <Link 
           to="/"
