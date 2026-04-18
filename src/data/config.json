@@ -5,8 +5,8 @@
     "github": "iamrupamroyy",
     "email": "iamrupamroyy@gmail.com",
     "linkedin": "iamrupamroyy",
-    "heroImage": "/assets/rupam_roy.jpeg",
-    "heroPopImage": "/assets/rupam_roy_pop.png",
+    "heroImage": "/src/assets/rupam_roy.jpeg",
+    "heroPopImage": "/src/assets/rupam_roy_pop.png",
     "directive": "GNN & Scalable Machine Learning",
     "location": "MTech Researcher @ IIT Bhilai",
     "node": "127.0.0.1",
@@ -16,8 +16,8 @@
     }
   },
   "resumes": [
-    { "label": "SDE_FOCUS.pdf", "url": "/assets/Rupam_Roy_MTech_CSE_IITBh_SDE.pdf" },
-    { "label": "AIML_FOCUS.pdf", "url": "/assets/Rupam_Roy_MTech_IITBh_AIML.pdf" }
+    { "label": "SDE_FOCUS.pdf", "url": "/src/assets/Rupam_Roy_MTech_CSE_IITBh_SDE.pdf" },
+    { "label": "AIML_FOCUS.pdf", "url": "/src/assets/Rupam_Roy_MTech_IITBh_AIML.pdf" }
   ],
   "socials": [
     { "platform": "github", "url": "https://github.com/iamrupamroyy", "label": "github.com/iamrupamroyy" },
@@ -30,7 +30,8 @@
     { "name": "Vault", "href": "#projects", "icon": "Shield", "detail": "STORAGE" },
     { "name": "Honors", "href": "#achievements", "icon": "Award", "detail": "BADGES" },
     { "name": "Career", "href": "#timeline", "icon": "Terminal", "detail": "HISTORY" },
-    { "name": "Terminal", "href": "#contact", "icon": "Briefcase", "detail": "INBOUND" }
+    { "name": "Terminal", "href": "#contact", "icon": "Briefcase", "detail": "INBOUND" },
+    { "name": "Signals", "href": "/signals", "icon": "Radio", "detail": "WALL", "special": true }
   ],
   "formspreeId": "mzdyeqyj",
   "cpPlatforms": [

@@ -7,11 +7,10 @@ import { CareerLog } from './components/CareerLog';
 import { BriefcaseContact } from './components/BriefcaseContact';
 import { LoadingScreen } from './components/LoadingScreen';
 import { AchievementArchive } from './components/AchievementArchive';
-import { useEffect, useState, createContext, useContext } from 'react';
-import { Activity, Mail, Github, Linkedin, Award } from 'lucide-react';
+import { useEffect, useState, createContext } from 'react';
+import { Activity, Mail, Github, Linkedin } from 'lucide-react';
 import portfolioData from '../data/config.json';
 
-// Create a context to share the loaded state
 export const AppContext = createContext({ isLoaded: false });
 
 const socialIconMap: Record<string, any> = {
@@ -20,14 +19,14 @@ const socialIconMap: Record<string, any> = {
   email: <Mail size={12} />
 };
 
-export default function AppRoot() {
+export default function AppRoot({ showWall = false }: { showWall?: boolean }) {
   const [isLoaded, setIsLoaded] = useState(false);
   const { socials } = portfolioData;
 
   useEffect(() => {
     document.documentElement.classList.add('dark');
     document.documentElement.classList.remove('light');
-    // We'll let LoadingScreen trigger this, but as a safety:
+    // Global safety timer
     const timer = setTimeout(() => setIsLoaded(true), 3500);
     return () => clearTimeout(timer);
   }, []);
@@ -35,6 +34,7 @@ export default function AppRoot() {
   return (
     <AppContext.Provider value={{ isLoaded }}>
       <div id="top" className="relative min-h-screen selection:bg-[var(--cyan-dim)] selection:text-[var(--cyan)] font-sans overflow-x-hidden">
+        {/* Full Boot sequence for main entry only */}
         <LoadingScreen onComplete={() => setIsLoaded(true)} />
         
         <div className="fixed inset-0 z-0 pointer-events-none opacity-[0.03] bg-blueprint" />
@@ -64,7 +64,7 @@ export default function AppRoot() {
             
             <div className="flex flex-col items-start md:items-end gap-6 font-mono w-full md:w-auto">
               <div className="flex flex-wrap gap-4 md:gap-8 mb-2">
-                {socials.map((social) => (
+                {socials.map((social: any) => (
                   <a 
                     key={social.platform}
                     href={social.url} 

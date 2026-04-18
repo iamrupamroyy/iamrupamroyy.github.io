@@ -74,6 +74,7 @@ export const Navbar = () => {
         const el = document.querySelector(href);
         if (el) el.scrollIntoView({ behavior: 'smooth' });
       } else {
+        // First navigate home, then wait a tiny bit for mount and scroll
         navigate('/');
         setTimeout(() => {
           const el = document.querySelector(href);
@@ -98,17 +99,17 @@ export const Navbar = () => {
           borderColor: 'var(--border-color)'
         }}
       >
-        <div className="w-full max-w-7xl mx-auto px-10 py-5 flex items-center justify-between">
+        <div className="w-full max-w-7xl mx-auto px-6 md:px-12 py-5 flex items-center justify-between">
             <Link 
               to="/"
               onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-              className="flex items-center gap-3 text-2xl font-bold tracking-tighter group cursor-pointer mr-8"
+              className="flex items-center gap-3 text-2xl font-bold tracking-tighter group cursor-pointer"
             >
               <span style={{ color: 'var(--cyan)' }} className="group-hover:animate-pulse">{'//'}</span>
               <span style={{ color: 'var(--fg)' }} className="font-mono uppercase tracking-[0.2em] text-sm">Portfolio</span>
             </Link>
 
-            <div className="flex-1 flex items-center justify-center gap-6 xl:gap-10">
+            <div className="flex items-center justify-center gap-4 xl:gap-8 mx-4">
                 {navLinks.map((link: any) => (
                   <div key={link.name}>
                     {link.href.startsWith('/') ? (
@@ -149,7 +150,7 @@ export const Navbar = () => {
                 ))}
             </div>
               
-            <div className="flex items-center gap-6 ml-8">
+            <div className="flex items-center gap-6">
                 <div className="relative group/social">
                   <button 
                     onMouseEnter={() => setIsSocialMenuOpen(true)}
