@@ -5,8 +5,8 @@
     "github": "iamrupamroyy",
     "email": "iamrupamroyy@gmail.com",
     "linkedin": "iamrupamroyy",
-    "heroImage": "/src/assets/rupam_roy.jpeg",
-    "heroPopImage": "/src/assets/rupam_roy_pop.png",
+    "heroImage": "/assets/rupam_roy.jpeg",
+    "heroPopImage": "/assets/rupam_roy_pop.png",
     "directive": "GNN & Scalable Machine Learning",
     "location": "MTech Researcher @ IIT Bhilai",
     "node": "127.0.0.1",
@@ -16,8 +16,8 @@
     }
   },
   "resumes": [
-    { "label": "SDE_FOCUS.pdf", "url": "/src/assets/Rupam_Roy_MTech_CSE_IITBh_SDE.pdf" },
-    { "label": "AIML_FOCUS.pdf", "url": "/src/assets/Rupam_Roy_MTech_IITBh_AIML.pdf" }
+    { "label": "SDE_FOCUS.pdf", "url": "/assets/Rupam_Roy_MTech_CSE_IITBh_SDE.pdf" },
+    { "label": "AIML_FOCUS.pdf", "url": "/assets/Rupam_Roy_MTech_IITBh_AIML.pdf" }
   ],
   "socials": [
     { "platform": "github", "url": "https://github.com/iamrupamroyy", "label": "github.com/iamrupamroyy" },
@@ -137,6 +137,17 @@
       "github": "https://github.com/iamrupamroyy/watch2gether",
       "image": "https://images.unsplash.com/photo-1753998943619-b9cd910887e5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080",
       "color": "#BB86FC"
+    },
+    {
+      "id": 4,
+      "title": "SocialMedia",
+      "status": "ACTIVE",
+      "category": "SYS_ARCH",
+      "tech": ["Node.js", "Express", "MongoDB", "JWT"],
+      "description": "Scalable social networking platform with event-driven architecture and real-time updates.",
+      "github": "https://github.com/iamrupamroyy/SocialMedia",
+      "image": "https://images.unsplash.com/photo-1611162617474-5b21e879e113?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080",
+      "color": "#ffb86c"
     }
   ],
   "achievements": [
