@@ -23,6 +23,6 @@ dist-ssr
 *.sln
 *.sw?
 
-# Data
-src/data/stats.json
 
+# Ignore stats.json
+src/data/stats.json
