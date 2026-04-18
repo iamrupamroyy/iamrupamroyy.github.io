@@ -24,4 +24,4 @@ dist-ssr
 *.sw?
 
 # Ignore JSON
-stats.json
+src/data/stats.json
