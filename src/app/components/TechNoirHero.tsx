@@ -1,5 +1,5 @@
 import { motion, AnimatePresence } from 'motion/react';
-import { useState, useEffect, useContext } from 'react';
+import { useState, useRef, useEffect, useContext } from 'react';
 import { Download, FileText, ChevronRight, Activity, Crosshair, Zap } from 'lucide-react';
 import portfolioData from '../../data/config.json';
 import { AppContext } from '../AppRoot';
@@ -33,12 +33,13 @@ const TypewriterText = ({ text, delay = 0, speed = 30, start = false }: { text: 
 export const TechNoirHero = () => {
   const [isFocused, setIsFocused] = useState(false);
   const [showResumeMenu, setShowResumeMenu] = useState(false);
+  const [imageLoaded, setImageLoaded] = useState(false);
   const { profile, resumes } = portfolioData;
   const { isLoaded } = useContext(AppContext);
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center px-6 overflow-hidden bg-blueprint py-24 md:py-0">
-      <div className="relative z-10 w-full max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-16 lg:gap-24">
+    <section className="relative min-h-[calc(100vh-80px)] flex items-center justify-center px-6 overflow-hidden bg-blueprint pt-12 pb-20">
+      <div className="relative z-10 w-full max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-12 lg:gap-24">
         
         {/* Left Side: Text Block */}
         <div className="w-full md:w-1/2 flex flex-col justify-center gap-8 order-2 md:order-1">
@@ -58,7 +59,7 @@ export const TechNoirHero = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-7xl md:text-8xl lg:text-[110px] font-heading font-extrabold tracking-tighter uppercase leading-[0.8]"
+            className="text-6xl sm:text-7xl md:text-8xl lg:text-[110px] font-heading font-extrabold tracking-tighter uppercase leading-[0.8]"
             style={{ color: 'var(--fg)' }}
           >
             <span className="text-transparent block" style={{ WebkitTextStroke: '1px var(--stroke-color)', opacity: 0.4 }}>
@@ -134,34 +135,37 @@ export const TechNoirHero = () => {
           </motion.div>
         </div>
 
-        {/* Right Side: High-Impact Pop-Out Portrait */}
+        {/* Right Side: Pop-Out Portrait - Optimized for small screen heights */}
         <div className="w-full md:w-1/2 flex items-center justify-center order-1 md:order-2 px-4 md:px-0">
           <div className="relative w-full flex justify-center">
             
-            {/* Background Static HUD Circle */}
             <div className="absolute -inset-8 md:-inset-16 border border-white/5 rounded-full pointer-events-none opacity-20" />
 
             <div 
-              className="relative w-full max-w-[280px] h-[380px] md:max-w-[420px] md:h-[560px] group cursor-none overflow-visible"
+              className="relative w-full max-w-[260px] aspect-[3/4] sm:max-w-[320px] md:max-w-[420px] md:h-[560px] group cursor-none"
               onMouseEnter={() => setIsFocused(true)}
               onMouseLeave={() => setIsFocused(false)}
             >
-              {/* Layer 1: The Original Vivid Background Image */}
+              {/* Main Image Container */}
               <div className="absolute inset-0 z-0 border overflow-hidden transition-all duration-700 shadow-2xl bg-black" 
                    style={{ borderColor: isFocused ? 'var(--cyan)' : 'var(--border-color)' }}>
+                
+                {!imageLoaded && <div className="absolute inset-0 bg-white/5 animate-pulse" />}
+
                 <img 
                   src={profile.heroImage} 
                   alt="Background" 
-                  className={`w-full h-full object-cover transition-all duration-1000 ${isFocused ? 'grayscale blur-md opacity-30 brightness-50' : 'brightness-110 contrast-110 opacity-100'}`}
+                  onLoad={() => setImageLoaded(true)}
+                  className={`w-full h-full object-cover object-top transition-all duration-1000 ${!imageLoaded ? 'opacity-0' : isFocused ? 'grayscale blur-md opacity-30 brightness-50' : 'brightness-110 contrast-110 opacity-100'}`}
                 />
               </div>
 
-              {/* Layer 2: The Transparent Person (Pop-Out) */}
+              {/* Pop-Out Layer */}
               <motion.div 
                 animate={{ 
                   scale: isFocused ? 1.15 : 1,
                   opacity: isFocused ? 1 : 0,
-                  y: isFocused ? -20 : 0
+                  y: isFocused ? -15 : 0
                 }}
                 transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
                 className="absolute inset-0 z-20 pointer-events-none"
@@ -169,26 +173,19 @@ export const TechNoirHero = () => {
                 <img 
                   src={profile.heroPopImage} 
                   alt="Pop-Out" 
-                  className="w-full h-full object-cover drop-shadow-[0_20px_50px_rgba(0,242,255,0.2)] filter brightness-110"
-                  onError={(e) => {
-                    if (isFocused) (e.target as HTMLImageElement).src = profile.heroImage;
-                  }}
+                  className="w-full h-full object-cover object-top drop-shadow-[0_20px_50px_rgba(0,242,255,0.2)] filter brightness-110"
                 />
               </motion.div>
 
-              {/* Layer 3: Interactive HUD Overlays */}
-              <div className="absolute inset-0 z-30 p-6 md:p-10 flex flex-col justify-between pointer-events-none">
+              {/* HUD elements */}
+              <div className="absolute inset-0 z-30 p-6 flex flex-col justify-between pointer-events-none">
                 <div className="flex justify-between font-mono text-[9px] tracking-widest transition-colors duration-500" style={{ color: isFocused ? 'var(--cyan)' : 'var(--fg-muted)' }}>
-                  <span className="flex items-center gap-2 font-bold">
-                    <Crosshair size={12} className={isFocused ? 'animate-spin' : ''} /> 
-                    {isFocused ? 'IDENTITY_LOCKED' : 'SYSTEM_READY'}
-                  </span>
-                  <span className="opacity-50">V_04.2</span>
+                  <span className="flex items-center gap-2 font-bold"><Crosshair size={12} className={isFocused ? 'animate-spin' : ''} /> {isFocused ? 'IDENTITY_LOCKED' : 'SYSTEM_READY'}</span>
                 </div>
                 
                 <div className="space-y-4">
                   <div className="flex items-end justify-between transition-colors duration-500" style={{ color: isFocused ? 'var(--cyan)' : 'white' }}>
-                     <div className="font-mono text-[8px] tracking-[0.4em] uppercase font-bold opacity-40">Bio_Extraction_Active</div>
+                     <div className="font-mono text-[8px] tracking-[0.4em] uppercase font-bold opacity-40">Bio_Extraction</div>
                      <Zap size={14} className={isFocused ? 'animate-pulse' : 'opacity-20'} />
                   </div>
                   <div className="h-0.5 w-full bg-white/5 relative overflow-hidden">
@@ -202,9 +199,8 @@ export const TechNoirHero = () => {
                 </div>
               </div>
 
-              {/* Floating Meta Data */}
-              <div className={`absolute -right-4 md:-right-8 top-1/4 z-40 transition-all duration-700 ${isFocused ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-4'}`}>
-                 <div className="p-3 border backdrop-blur-md font-mono text-[8px] tracking-widest text-white/60 bg-black/40" style={{ borderColor: 'var(--cyan)' }}>
+              <div className={`absolute -right-4 md:-right-8 top-1/4 z-40 transition-all duration-700 hidden sm:block ${isFocused ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-4'}`}>
+                 <div className="p-3 border backdrop-blur-md font-mono text-[8px] tracking-widest text-white/60 bg-black/40" style={{ borderColor: 'var(--border-color)' }}>
                     COORD_X: {profile.coordinates.x}<br />
                     COORD_Y: {profile.coordinates.y}
                  </div>

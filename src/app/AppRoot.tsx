@@ -41,7 +41,7 @@ export default function AppRoot() {
         
         <Navbar />
         
-        <main className="relative z-10 flex flex-col pb-32">
+        <main className="relative z-10 flex flex-col pb-32 pt-24 md:pt-32">
           <TechNoirHero />
           <ArenaSection />
           <TechStackMatrix />
