@@ -7,8 +7,8 @@
     "linkedin": "iamrupamroyy",
     "heroImage": "/assets/rupam_roy.jpeg",
     "heroPopImage": "/assets/rupam_roy_pop.png",
-    "directive": "GNN & Scalable Machine Learning",
-    "location": "MTech Researcher @ IIT Bhilai",
+    "directive": "Software Engineer | AI Systems Developer",
+    "location": "MTech - CSE Researcher @ IIT Bhilai",
     "node": "127.0.0.1",
     "coordinates": {
       "x": "21.17",
@@ -74,32 +74,38 @@
       "color": "var(--cyan)"
     },
     {
-      "id": "intelligence",
-      "title": "Intelligence",
-      "skills": ["Agentic AI", "LangGraph", "GNNs", "PyTorch", "RAG (FAISS)", "LLM Orchestration"],
-      "color": "#BB86FC"
-    },
-    {
-      "id": "backend",
-      "title": "Backend",
-      "skills": ["Node.js", "Express", "Microservices", "REST APIs", "Kafka", "WebSockets"],
-      "color": "var(--green)"
-    },
-    {
       "id": "data",
       "title": "Data Core",
-      "skills": ["MongoDB", "PostgreSQL", "Redis", "Neo4j", "Cypher", "Spark"],
+      "skills": ["MySQL", "MongoDB", "PostgreSQL", "Redis"],
       "color": "#FFB86C"
     },
     {
+    "id": "frontend",
+    "title": "Frontend",
+    "skills": ["React.js", "Tailwind CSS"],
+    "color": "#FF79C6"
+    },
+    {
+      "id": "backend",
+      "title": "Backend & Systems",
+      "skills": ["Node.js", "Express.js", "Microservices", "REST APIs", "Kafka", "WebSockets", "Server-Sent Events"],
+      "color": "var(--green)"
+    },
+    {
+      "id": "intelligence",
+      "title": "AI & LLM Systems",
+      "skills": ["Multi-Agent Systems", "LangGraph", "GNNs", "PyTorch", "RAG (FAISS)", "LLM Orchestration", "LangChain", "Prompt Engineering", "Gemini API", "Groq", "OpenRouter"],
+      "color": "#BB86FC"
+    },
+    {
       "id": "systems",
-      "title": "Systems",
-      "skills": ["CUDA", "Distributed Systems", "OS", "DBMS", "System Design"],
+      "title": "Systems & Core CS",
+      "skills": ["CUDA", "Distributed Systems", "DSA", "OS", "DBMS", "System Design", "OOP"],
       "color": "#00FF41"
     },
     {
       "id": "infra",
-      "title": "Infrastructure",
+      "title": "Tools",
       "skills": ["Docker", "Git", "Linux", "CI/CD", "Playwright", "LaTeX"],
       "color": "#00F2FF"
     }
@@ -107,47 +113,103 @@
   "projects": [
     {
       "id": 1,
-      "title": "AgentCV",
+      "title": "Efficient Graph Coarsening for GNN",
       "status": "ACTIVE",
-      "category": "AI_AGENT",
-      "tech": ["React", "Node.js", "Gemini API", "LangChain"],
-      "description": "Autonomous Career Optimization Platform with multi-agent LLM orchestration and real-time data pipelines.",
-      "github": "https://github.com/iamrupamroyy/AgentCV",
-      "image": "https://images.unsplash.com/photo-1677442136019-21780ecad995?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080",
+      "type": "THESIS",
+      "date": "May 2025 - Present",
+      "featured": true,
+      "category": "GNN",
+      "tech": ["CUDA", "C++", "Python", "GraphSAGE", "GNN", "DGL", "torch", "ogb", "numpy", "scipy"],
+      "description": "Efficient graph coarsening reduces a large graph into a smaller representation while preserving its structural and spectral properties. It enables faster GNN training with minimal loss in accuracy.",
+      "github": "https://github.com/iamrupamroyy/GraphCoarsening",
+      "image": "/src/assets/Projects/CoarseningGNN.png",
       "color": "var(--cyan)"
     },
     {
       "id": 2,
-      "title": "CodeGenie",
+      "title": "AgentCV",
       "status": "ACTIVE",
-      "category": "AI_ASSISTANT",
-      "tech": ["Python", "LangGraph", "FastAPI", "FAISS"],
-      "description": "Autonomous Multi-Agent Competitive Programming Assistant with self-healing feedback loops.",
-      "github": "https://github.com/iamrupamroyy/CodeGenie",
-      "image": "https://images.unsplash.com/photo-1555066931-4365d14bab8c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080",
-      "color": "var(--green)"
+      "type": "PERSONAL_PROJECT",
+      "date": "March 2026 - Present",
+      "featured": true,
+      "category": "AI_AGENT",
+      "tech": ["React.js", "TypeScript", "Node.js", "Express.js", "Gemini API", "Groq", "Playwright", "LaTeX", "Tailwind CSS", "Axios"],
+      "description": "Autonomous Career Optimization Platform with multi-agent LLM orchestration and real-time data pipelines.",
+      "github": "https://github.com/iamrupamroyy/AgentCV",
+      "image": "/src/assets/Projects/AgentCV.png",
+      "color": "var(--cyan)"
     },
     {
       "id": 3,
-      "title": "watch2gether",
-      "status": "DEPLOYED",
-      "category": "WEBRTC_PROTO",
-      "tech": ["React", "WebRTC", "Node.js", "Socket.io"],
-      "description": "High-fidelity synchronized media engine with sub-100ms drift. Optimized for large-scale p2p clusters.",
-      "github": "https://github.com/iamrupamroyy/watch2gether",
-      "image": "https://images.unsplash.com/photo-1753998943619-b9cd910887e5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080",
-      "color": "#BB86FC"
+      "title": "CodeGenie",
+      "status": "ACTIVE",
+      "type": "PERSONAL_PROJECT",
+      "date": "April 2026 - Present",
+      "featured": true,
+      "category": "AI_ASSISTANT",
+      "tech": [ "Python", "Agentic Workflows", "LangGraph", "LangChain", "RAG (FAISS)", "Prompt Engineering", "Multi-Model Orchestration", "FastAPI", "Multi-threading", "G++", "Javac", "OpenRouter APIs", "Streamlit"],
+      "description": "Autonomous Multi-Agent Competitive Programming Assistant with self-healing feedback loops.",
+      "github": "https://github.com/iamrupamroyy/CodeGenie",
+      "image": "/src/assets/Projects//CodeGenie.png",
+      "color": "var(--green)"
     },
     {
       "id": 4,
-      "title": "SocialMedia",
+      "title": "SocialPedia",
       "status": "ACTIVE",
+      "type": "PERSONAL_PROJECT",
+      "date": "March 2025 - Present",
+      "featured": true,
       "category": "SYS_ARCH",
-      "tech": ["Node.js", "Express", "MongoDB", "JWT"],
-      "description": "Scalable social networking platform with event-driven architecture and real-time updates.",
-      "github": "https://github.com/iamrupamroyy/SocialMedia",
-      "image": "https://images.unsplash.com/photo-1611162617474-5b21e879e113?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080",
+      "tech": [ "React.js", "Node.js", "Express.js", "JWT", "MongoDB", "Mongoose"],
+      "description": "Full-stack social media application featuring real-time messaging, threaded comments, @mentions, and a high-end responsive UI.",
+      "github": "https://github.com/iamrupamroyy/SocialPedia",
+      "url": "https://social-pedia-beta.vercel.app/login",
+      "image": "/src/assets/Projects/SocialPedia.jpg",
       "color": "#ffb86c"
+    },
+    {
+      "id": 5,
+      "title": "watch2gether",
+      "status": "DEPLOYED",
+      "type": "PERSONAL_PROJECT",
+      "date": "December 2025 - Present",
+      "featured": false,
+      "category": "WEBRTC_PROTO",
+      "tech": ["React.js", "Node.js", "Socket.io"],
+      "description": "A web-based synchronized video watch party platform with minimal delay.",
+      "github": "https://github.com/iamrupamroyy/watch2gether",
+      "url": "https://watch2gether-nu.vercel.app",
+      "image": "/src/assets/Projects/watch2gether.jpg",
+      "color": "#BB86FC"
+    },
+    {
+      "id": 6,
+      "title": "OpenWindow",
+      "status": "ACTIVE",
+      "type": "PERSONAL_PROJECT",
+      "date": "November 2025 - Present",
+      "featured": false,
+      "category": "SYS_ARCH",
+      "tech": [ "HTML", "Node.js", "Express"],
+      "description": "A lightweight real-time chat app for creating and joining temporary rooms without authentication.",
+      "github": "https://github.com/iamrupamroyy/OpenWindow",
+      "image": "/src/assets/Projects/OpenWindow.jpg",
+      "color": "#ffb86c"
+    },
+    {
+      "id": 7,
+      "title": "Music-Artist Network Analysis",
+      "status": "COMPLETED",
+      "type": "ACADEMIC_PROJECT",
+      "date": "February 2025 - May 2025",
+      "featured": false,
+      "category": "WEBRTC_PROTO",
+      "tech": ["Python", "NetworkX", "Graph-Tool", "GNN"],
+      "description": "Analyzed a large-scale real-world graph using network analysis techniques to identify key artists and patterns, and built models to predict the likelihood of successful or trending collaborations.",
+      "github": "https://github.com/iamrupamroyy/Music-Artist-Network-Analysis",
+      "image": "/src/assets/Projects/NetworkAnalysis.png",
+      "color": "#BB86FC"
     }
   ],
   "achievements": [
@@ -176,7 +238,7 @@
       "hash": "feat-ta",
       "type": "work",
       "title": "Teaching Assistant",
-      "org": "IIT Bhilai",
+      "org": "Indian Institute of Technology (IIT), Bhilai",
       "date": "Aug 2024 - Present",
       "details": "Conducting lab sessions and evaluating assignments for core CSE courses.",
       "color": "#00F2FF"
@@ -186,7 +248,7 @@
       "hash": "feat-pc",
       "type": "role",
       "title": "Placement Coordinator",
-      "org": "IIT Bhilai",
+      "org": "Indian Institute of Technology (IIT), Bhilai",
       "date": "June 2025 - April 2026",
       "details": "Coordinating placements for 150+ students; managed recruiter communication and scheduling.",
       "color": "#FF79C6"
@@ -196,7 +258,7 @@
       "hash": "feat-gdg",
       "type": "role",
       "title": "GDG Mentor",
-      "org": "IIT Bhilai",
+      "org": "Indian Institute of Technology (IIT), Bhilai",
       "date": "July 2025 - April 2026",
       "details": "Organized technical events and mentored students in competitive programming.",
       "color": "#BD93F9"
@@ -206,26 +268,25 @@
       "hash": "mtech-core",
       "type": "edu",
       "title": "Master of Technology (CSE)",
-      "org": "IIT Bhilai",
+      "org": "Indian Institute of Technology (IIT), Bhilai",
       "date": "June 2024 - Present",
-      "details": "Specializing in Computer Science & Engineering. GPA: 9.18 / 10 (Thesis on GNNs).",
+      "details": "Specializing in Computer Science & Engineering (Thesis on GNNs).",
       "stats": {
-        "CGPA": "9.18 / 10",
         "Focus": "GNN Optimization"
       },
       "color": "#50FA7B"
     },
     {
       "id": "btech",
-      "hash": "init-node",
+      "hash": "btech-core",
       "type": "edu",
       "title": "Bachelor of Technology (CSE)",
-      "org": "Calcutta Institute of Technology",
+      "org": "Calcutta Institute of Technology, Howrah",
       "date": "June 2018 - July 2022",
-      "details": "Graduated with Honors. Specialization in Data Structures & AI.",
+      "details": "Specialization in Computer Science & Engineering.",
       "stats": {
         "GPA": "9.18 / 10",
-        "Rank": "1st Department"
+        "Rank": "3rd Department"
       },
       "color": "#FFB86C"
     }

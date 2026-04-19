@@ -1,196 +1,179 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Database, ExternalLink, Github, Eye, Terminal } from 'lucide-react';
+import { Database, ExternalLink, Github, Eye, Terminal, Layers, Star, Clock } from 'lucide-react';
 import { SectionHeader } from './ui/SectionHeader';
-import { useIsMobile } from './ui/use-mobile';
 import portfolioData from '../../data/config.json';
 
 export const ProjectVault = () => {
+  // Respect original data order and casing
   const projects = portfolioData.projects;
   const [selectedIndex, setSelectedIndex] = useState(0);
-  const isMobile = useIsMobile();
 
   return (
-    <section id="projects" className="relative py-32 px-6 max-w-7xl mx-auto border-t" style={{ borderColor: 'var(--border-color)' }}>
-      <SectionHeader 
-        icon={Database} 
-        sectionNum="03" 
-        title="Vault" 
-        subtitle="ARTIFACT_COLLECTION"
-      />
+    <section id="projects" className="relative py-20 md:py-32 border-t overflow-hidden" style={{ borderColor: 'var(--border-color)' }}>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6">
+        <SectionHeader 
+          icon={Database} 
+          sectionNum="03" 
+          title="Vault" 
+          subtitle="ARTIFACT_COLLECTION"
+        />
 
-      {isMobile ? (
-        <div className="flex flex-col gap-8">
-          {projects.map((project, idx) => (
-            <motion.div
-              key={project.id}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="border flex flex-col overflow-hidden"
-              style={{ borderColor: 'var(--border-color)', backgroundColor: 'var(--card-bg)' }}
-            >
-              <div className="relative h-48 w-full overflow-hidden border-b" style={{ borderColor: 'var(--border-color)' }}>
-                <img src={project.image} className="w-full h-full object-cover opacity-60 grayscale" alt={project.title} />
-                <div className="absolute top-4 left-4 px-2 py-1 bg-black/80 backdrop-blur-md border border-[var(--cyan)] font-mono text-[8px] text-[var(--cyan)] tracking-widest uppercase">
-                  {project.status}
-                </div>
-              </div>
-              <div className="p-6 flex flex-col gap-4">
-                <div className="flex justify-between items-start">
-                  <h4 className="text-xl font-heading font-extrabold uppercase tracking-tight" style={{ color: 'var(--fg)' }}>
-                    {project.title}
-                  </h4>
-                  <span className="font-mono text-[9px] opacity-40 uppercase tracking-widest">#{String(idx + 1).padStart(2, '0')}</span>
-                </div>
-                <p className="text-gray-400 font-mono text-xs leading-relaxed">
-                  {project.description}
-                </p>
-                <div className="flex flex-wrap gap-2">
-                  {project.tech.map(t => (
-                    <span key={t} className="text-[9px] font-mono border px-2 py-0.5 opacity-50 uppercase tracking-tighter" style={{ borderColor: 'var(--border-color)', color: 'var(--fg)' }}>
-                      {t}
-                    </span>
-                  ))}
-                </div>
-                <div className="flex gap-3 pt-2">
-                  {project.github && (
-                    <a href={project.github} target="_blank" rel="noreferrer" className="flex-1 flex items-center justify-center gap-2 p-3 border font-mono text-[10px] uppercase tracking-widest hover:bg-white/5 transition-all" style={{ borderColor: 'var(--border-color)', color: 'var(--fg)' }}>
-                      <Github size={12} /> Source
-                    </a>
-                  )}
-                  {project.external && (
-                    <a href={project.external} target="_blank" rel="noreferrer" className="flex-1 flex items-center justify-center gap-2 p-3 border font-mono text-[10px] uppercase tracking-widest transition-all" style={{ borderColor: project.color, color: project.color, backgroundColor: `${project.color}11` }}>
-                      <ExternalLink size={12} /> Live
-                    </a>
-                  )}
-                </div>
-              </div>
-            </motion.div>
-          ))}
-        </div>
-      ) : (
-        <div className="flex flex-col lg:flex-row gap-8 h-[700px]">
-          <div className="w-full lg:w-1/3 flex flex-col border overflow-hidden" style={{ borderColor: 'var(--border-color)' }}>
-            <div className="p-4 border-b bg-black/40 font-mono text-[10px] tracking-widest flex items-center justify-between" style={{ borderColor: 'var(--border-color)' }}>
-              <span style={{ color: 'var(--fg)' }}>PROJECT_ROOT/ARTIFACTS</span>
+        <div className="flex flex-col lg:flex-row gap-6 md:gap-8 items-stretch lg:h-[650px]">
+          
+          {/* Project Navigation List */}
+          <div className="w-full lg:w-72 flex flex-col border flex-shrink-0 bg-black/20" style={{ borderColor: 'var(--border-color)' }}>
+            <div className="p-3 border-b bg-black/40 font-mono text-[9px] tracking-widest flex items-center justify-between" style={{ borderColor: 'var(--border-color)' }}>
+              <span className="opacity-50">INDEX_MANIFEST</span>
               <span style={{ color: 'var(--cyan)' }}>[{projects.length}]</span>
             </div>
             
-            <div className="flex-1 overflow-y-auto hide-scrollbar p-2 flex flex-col gap-2">
+            <div className="flex lg:flex-col overflow-x-auto lg:overflow-y-auto flex-nowrap hide-scrollbar p-2 gap-2 max-w-full lg:h-full">
               {projects.map((project, idx) => (
                 <button
                   key={project.id}
                   onClick={() => setSelectedIndex(idx)}
-                  className={`relative p-5 text-left border transition-all duration-300 group overflow-hidden ${selectedIndex === idx ? 'bg-[var(--card-bg)]' : 'border-transparent hover:bg-white/5'}`}
+                  className={`relative p-3 md:p-4 text-left border transition-all duration-300 group flex-shrink-0 w-32 sm:w-40 lg:w-full ${selectedIndex === idx ? 'bg-[var(--card-bg)] shadow-[inset_0_0_20px_rgba(0,0,0,0.4)]' : 'border-transparent hover:bg-white/5'}`}
                   style={{ borderColor: selectedIndex === idx ? project.color : 'transparent' }}
                 >
                   <div className="relative z-10 flex flex-col gap-1">
-                    <div className="flex justify-between items-center mb-1">
-                      <span className="font-mono text-[8px] tracking-[0.2em] opacity-40" style={{ color: 'var(--fg)' }}>#{String(idx + 1).padStart(2, '0')}</span>
-                      {selectedIndex === idx && <Eye size={12} style={{ color: project.color }} className="animate-pulse" />}
+                    <div className="flex justify-between items-center">
+                       <span className="font-mono text-[7px] opacity-30" style={{ color: 'var(--fg)' }}>#{String(idx + 1).padStart(2, '0')}</span>
+                       {project.featured && <Star size={8} style={{ color: project.color }} className="fill-current animate-pulse" />}
                     </div>
+                    {/* Casing preserved: Removed 'uppercase' class */}
                     <h4 
-                      className="text-lg font-heading font-bold uppercase tracking-tight transition-colors duration-300"
+                      className="text-[10px] md:text-xs font-heading font-bold tracking-wider truncate"
                       style={{ color: selectedIndex === idx ? 'var(--fg)' : 'gray' }}
                     >
                       {project.title}
                     </h4>
-                    <div className="flex gap-2 opacity-30">
-                       {project.tech.slice(0, 2).map(t => <span key={t} className="text-[8px] font-mono" style={{ color: 'var(--fg)' }}>{t}</span>)}
-                    </div>
+                    <span className="font-mono text-[6px] opacity-20 uppercase tracking-widest truncate">{project.date?.split('-')[0]}</span>
                   </div>
+                  {selectedIndex === idx && (
+                    <motion.div layoutId="vault-active" className="absolute left-0 top-0 bottom-0 w-0.5 bg-current" style={{ color: project.color }} />
+                  )}
                 </button>
               ))}
             </div>
-            
-            <div className="p-4 border-t bg-black/40 font-mono text-[8px] opacity-30 uppercase tracking-[0.4em]" style={{ borderColor: 'var(--border-color)', color: 'var(--fg)' }}>
-              Explorer_Status: READY
-            </div>
           </div>
 
-          <div className="flex-1 border relative overflow-hidden flex flex-col" style={{ borderColor: 'var(--border-color)', backgroundColor: 'var(--card-bg)' }}>
+          {/* Detailed View */}
+          <div className="flex-1 border flex flex-col bg-[var(--card-bg)] min-w-0 lg:h-full" style={{ borderColor: 'var(--border-color)' }}>
             <AnimatePresence mode="wait">
               <motion.div
                 key={selectedIndex}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                className="flex-1 flex flex-col"
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -20 }}
+                className="flex flex-col w-full h-full"
               >
-                <div className="relative h-64 md:h-80 w-full overflow-hidden border-b" style={{ borderColor: 'var(--border-color)' }}>
-                  <img src={projects[selectedIndex].image} className="w-full h-full object-cover opacity-60 grayscale brightness-50" alt={projects[selectedIndex].title} />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[var(--bg)] to-transparent opacity-60" />
+                {/* Visual Header */}
+                <div className="relative aspect-video sm:aspect-[21/9] lg:aspect-auto lg:h-64 w-full overflow-hidden border-b flex-shrink-0" style={{ borderColor: 'var(--border-color)' }}>
+                  <img 
+                    src={projects[selectedIndex].image} 
+                    className="w-full h-full object-cover opacity-40 grayscale" 
+                    alt={projects[selectedIndex].title} 
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[var(--bg)] via-transparent to-transparent opacity-90" />
                   
-                  <div className="absolute inset-0 p-6 flex flex-col justify-between pointer-events-none">
-                    <div className="flex justify-between font-mono text-[9px] tracking-widest opacity-40" style={{ color: 'var(--fg)' }}>
-                      <span className="flex items-center gap-2"><Terminal size={10} /> ACCESS_MODE: READ_ONLY</span>
-                      <span>TIMESTAMP: 2026.04.17</span>
+                  <div className="absolute inset-0 p-4 md:p-6 flex flex-col justify-between pointer-events-none">
+                    <div className="flex justify-between font-mono text-[7px] md:text-[9px] tracking-[0.2em] opacity-30" style={{ color: 'var(--fg)' }}>
+                      <div className="flex items-center gap-2"><Terminal size={10} /> SYS_DATA_READY</div>
+                      <span>ENCRYPT_STABLE</span>
                     </div>
                     
                     <div className="flex items-end justify-between">
-                      <div className="flex flex-col gap-1">
-                        <div className="h-[1px] w-48 bg-white/10 relative overflow-hidden">
-                          <motion.div 
-                            initial={{ x: '-100%' }}
-                            animate={{ x: '100%' }}
-                            transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
-                            className="absolute inset-0 w-1/3"
-                            style={{ backgroundColor: projects[selectedIndex].color }}
-                          />
-                        </div>
-                        <span className="font-mono text-[8px] tracking-[0.3em] opacity-40 uppercase" style={{ color: 'var(--fg)' }}>Scanning_Logic_Gates...</span>
-                      </div>
-                      <div className="text-[var(--cyan)] font-mono text-xl font-bold opacity-20">0{selectedIndex + 1}</div>
+                       <div className="flex flex-col gap-2">
+                          <div className="h-[1px] w-24 md:w-40 bg-white/10 relative overflow-hidden">
+                             <motion.div 
+                              initial={{ x: '-100%' }}
+                              animate={{ x: '100%' }}
+                              transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+                              className="absolute inset-0 w-1/3"
+                              style={{ backgroundColor: projects[selectedIndex].color }}
+                             />
+                          </div>
+                          <span className="font-mono text-[6px] md:text-[8px] tracking-widest opacity-30 uppercase">Build_Date: {projects[selectedIndex].date}</span>
+                       </div>
+                       <div className="text-[var(--cyan)] font-mono text-xl md:text-3xl font-black opacity-10">0{selectedIndex + 1}</div>
                     </div>
                   </div>
                 </div>
 
-                <div className="p-8 flex-1 flex flex-col gap-8">
+                {/* Content Body */}
+                <div className="p-4 sm:p-6 md:p-10 flex flex-col gap-6 md:gap-8 overflow-y-auto hide-scrollbar flex-1">
                   <div className="flex flex-col md:flex-row justify-between items-start gap-8">
-                    <div className="flex-1">
-                      <div className="flex flex-wrap gap-2 mb-6">
-                        <span className="px-3 py-1 border font-mono text-[9px] tracking-[0.2em] bg-white/5" style={{ color: projects[selectedIndex].color, borderColor: `${projects[selectedIndex].color}44` }}>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex flex-wrap gap-1.5 mb-6">
+                        {projects[selectedIndex].featured && (
+                           <span className="px-3 py-1 border font-mono text-[8px] md:text-[9px] tracking-[0.3em] bg-white/10 flex items-center gap-2" style={{ color: projects[selectedIndex].color, borderColor: projects[selectedIndex].color }}>
+                              <Star size={10} className="fill-current" /> CORE_ARTIFACT
+                           </span>
+                        )}
+                        <span className="px-3 py-1 border font-mono text-[8px] md:text-[9px] tracking-[0.2em] bg-white/5 uppercase" 
+                              style={{ 
+                                color: projects[selectedIndex].status === 'ACTIVE' ? 'var(--green)' : 
+                                       projects[selectedIndex].status === 'DEPLOYED' ? 'var(--cyan)' : 
+                                       projects[selectedIndex].status === 'COMPLETED' ? '#FFB86C' : 'var(--fg-muted)', 
+                                borderColor: projects[selectedIndex].status === 'ACTIVE' ? 'var(--green-dim)' : 
+                                             projects[selectedIndex].status === 'DEPLOYED' ? 'var(--cyan-dim)' : 
+                                             projects[selectedIndex].status === 'COMPLETED' ? 'rgba(255, 184, 108, 0.2)' : 'var(--border-color)' 
+                              }}>
                           {projects[selectedIndex].status}
                         </span>
+                        <span className="px-3 py-1 border font-mono text-[8px] md:text-[9px] tracking-[0.2em] bg-[var(--cyan-dim)] uppercase" style={{ color: 'var(--cyan)', borderColor: 'var(--cyan)' }}>
+                          {projects[selectedIndex].type}
+                        </span>
                         {projects[selectedIndex].tech.map(t => (
-                          <span key={t} className="text-[10px] font-mono border px-2 py-1 opacity-50 uppercase tracking-tighter" style={{ borderColor: 'var(--border-color)', color: 'var(--fg)' }}>
+                          <span key={t} className="text-[7px] md:text-[9px] font-mono border px-2 py-0.5 opacity-40 uppercase tracking-tighter" style={{ borderColor: 'var(--border-color)', color: 'var(--fg)' }}>
                             {t}
                           </span>
                         ))}
                       </div>
-                      <p className="font-mono text-sm leading-relaxed max-w-2xl border-l-2 pl-6 py-2" style={{ borderColor: projects[selectedIndex].color, color: 'var(--fg-muted)' }}>
+                      
+                      {/* Casing preserved: Removed 'uppercase' class */}
+                      <h4 className="text-xl sm:text-3xl lg:text-4xl font-heading font-black mb-4 tracking-tighter" style={{ color: 'var(--fg)' }}>
+                        {projects[selectedIndex].title}
+                      </h4>
+                      
+                      <p className="font-mono text-xs sm:text-sm leading-relaxed opacity-70 border-l-2 pl-4 md:pl-8 py-1 max-w-full" style={{ borderColor: projects[selectedIndex].color, color: 'var(--fg)' }}>
                         {projects[selectedIndex].description}
                       </p>
                     </div>
                     
-                    <div className="flex flex-col gap-3 min-w-[200px] w-full md:w-auto">
+                    {/* Responsive Actions */}
+                    <div className="flex flex-col gap-2 w-full md:w-52 flex-shrink-0">
                       {projects[selectedIndex].github && (
-                        <a href={projects[selectedIndex].github} target="_blank" rel="noreferrer" className="flex items-center justify-between px-4 py-3 border font-mono text-[10px] uppercase tracking-widest hover:bg-white/5 transition-all" style={{ borderColor: 'var(--border-color)', color: 'var(--fg)' }}>
-                          <Github size={14} /> View Source
+                        <a href={projects[selectedIndex].github} target="_blank" rel="noreferrer" className="flex items-center justify-between px-4 py-3 border font-mono text-[8px] md:text-[10px] uppercase tracking-widest hover:bg-white/5 transition-all group" style={{ borderColor: 'var(--border-color)', color: 'var(--fg)' }}>
+                          <Github size={14} /> 
+                          <span>Source_File</span>
+                          <ExternalLink size={10} className="opacity-20" />
                         </a>
                       )}
-                      {projects[selectedIndex].external && (
-                        <a href={projects[selectedIndex].external} target="_blank" rel="noreferrer" className="flex items-center justify-between px-4 py-3 border font-mono text-[10px] uppercase tracking-widest transition-all shadow-[0_0_15px_rgba(0,0,0,0.5)]" style={{ borderColor: projects[selectedIndex].color, backgroundColor: `${projects[selectedIndex].color}11`, color: projects[selectedIndex].color }}>
-                          <ExternalLink size={14} /> View Live
+                      {projects[selectedIndex].url && (
+                        <a href={projects[selectedIndex].url} target="_blank" rel="noreferrer" className="flex items-center justify-between px-4 py-3 border font-mono text-[8px] md:text-[10px] uppercase tracking-widest transition-all group" style={{ borderColor: projects[selectedIndex].color, backgroundColor: `${projects[selectedIndex].color}11`, color: projects[selectedIndex].color }}>
+                          <Layers size={14} /> 
+                          <span>Live_Uplink</span>
+                          <ExternalLink size={10} className="opacity-40" />
                         </a>
                       )}
                     </div>
                   </div>
 
-                  <div className="mt-auto border-t pt-8 flex items-center justify-between font-mono text-[8px] opacity-30 uppercase tracking-[0.5em]" style={{ color: 'var(--fg)' }}>
-                    <span>V_NODE: {projects[selectedIndex].category}</span>
-                    <div className="flex gap-4">
-                      <span>SECTOR_7</span>
-                      <span>ARCHIVE_404</span>
+                  <div className="mt-auto pt-6 border-t flex flex-col sm:flex-row items-center justify-between gap-4 font-mono text-[7px] md:text-[9px] opacity-20 uppercase tracking-[0.4em]" style={{ borderColor: 'var(--border-color)', color: 'var(--fg)' }}>
+                    <div className="flex items-center gap-2">
+                      <Clock size={10} />
+                      <span>TIMELINE: {projects[selectedIndex].date}</span>
                     </div>
+                    <span>SYNC_STABLE_V4</span>
                   </div>
                 </div>
               </motion.div>
             </AnimatePresence>
           </div>
         </div>
-      )}
+      </div>
     </section>
   );
 };
