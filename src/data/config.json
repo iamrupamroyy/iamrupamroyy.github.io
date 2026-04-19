@@ -122,7 +122,7 @@
       "tech": ["CUDA", "C++", "Python", "GraphSAGE", "GNN", "DGL", "torch", "ogb", "numpy", "scipy"],
       "description": "Efficient graph coarsening reduces a large graph into a smaller representation while preserving its structural and spectral properties. It enables faster GNN training with minimal loss in accuracy.",
       "github": "https://github.com/iamrupamroyy/GraphCoarsening",
-      "image": "/src/assets/Projects/CoarseningGNN.png",
+      "image": "/assets/Projects/CoarseningGNN.png",
       "color": "var(--cyan)"
     },
     {
@@ -136,7 +136,7 @@
       "tech": ["React.js", "TypeScript", "Node.js", "Express.js", "Gemini API", "Groq", "Playwright", "LaTeX", "Tailwind CSS", "Axios"],
       "description": "Autonomous Career Optimization Platform with multi-agent LLM orchestration and real-time data pipelines.",
       "github": "https://github.com/iamrupamroyy/AgentCV",
-      "image": "/src/assets/Projects/AgentCV.png",
+      "image": "/assets/Projects/AgentCV.png",
       "color": "var(--cyan)"
     },
     {
@@ -150,7 +150,7 @@
       "tech": [ "Python", "Agentic Workflows", "LangGraph", "LangChain", "RAG (FAISS)", "Prompt Engineering", "Multi-Model Orchestration", "FastAPI", "Multi-threading", "G++", "Javac", "OpenRouter APIs", "Streamlit"],
       "description": "Autonomous Multi-Agent Competitive Programming Assistant with self-healing feedback loops.",
       "github": "https://github.com/iamrupamroyy/CodeGenie",
-      "image": "/src/assets/Projects//CodeGenie.png",
+      "image": "/assets/Projects/CodeGenie.png",
       "color": "var(--green)"
     },
     {
@@ -165,7 +165,7 @@
       "description": "Full-stack social media application featuring real-time messaging, threaded comments, @mentions, and a high-end responsive UI.",
       "github": "https://github.com/iamrupamroyy/SocialPedia",
       "url": "https://social-pedia-beta.vercel.app/login",
-      "image": "/src/assets/Projects/SocialPedia.jpg",
+      "image": "/assets/Projects/SocialPedia.jpg",
       "color": "#ffb86c"
     },
     {
@@ -180,7 +180,7 @@
       "description": "A web-based synchronized video watch party platform with minimal delay.",
       "github": "https://github.com/iamrupamroyy/watch2gether",
       "url": "https://watch2gether-nu.vercel.app",
-      "image": "/src/assets/Projects/watch2gether.jpg",
+      "image": "/assets/Projects/watch2gether.jpg",
       "color": "#BB86FC"
     },
     {
@@ -194,7 +194,7 @@
       "tech": [ "HTML", "Node.js", "Express"],
       "description": "A lightweight real-time chat app for creating and joining temporary rooms without authentication.",
       "github": "https://github.com/iamrupamroyy/OpenWindow",
-      "image": "/src/assets/Projects/OpenWindow.jpg",
+      "image": "/assets/Projects/OpenWindow.jpg",
       "color": "#ffb86c"
     },
     {
@@ -208,7 +208,7 @@
       "tech": ["Python", "NetworkX", "Graph-Tool", "GNN"],
       "description": "Analyzed a large-scale real-world graph using network analysis techniques to identify key artists and patterns, and built models to predict the likelihood of successful or trending collaborations.",
       "github": "https://github.com/iamrupamroyy/Music-Artist-Network-Analysis",
-      "image": "/src/assets/Projects/NetworkAnalysis.png",
+      "image": "/assets/Projects/NetworkAnalysis.png",
       "color": "#BB86FC"
     }
   ],
