@@ -123,7 +123,7 @@
       "description": "Efficient graph coarsening reduces a large graph into a smaller representation while preserving its structural and spectral properties. It enables faster GNN training with minimal loss in accuracy.",
       "github": "https://github.com/iamrupamroyy/GraphCoarsening",
       "image": "/assets/Projects/CoarseningGNN.png",
-      "color": "var(--cyan)"
+      "color": "#a16216"
     },
     {
       "id": 2,
@@ -156,7 +156,7 @@
     {
       "id": 4,
       "title": "SocialPedia",
-      "status": "ACTIVE",
+      "status": "DEPLOYED",
       "type": "PERSONAL_PROJECT",
       "date": "March 2025 - Present",
       "featured": true,
@@ -185,20 +185,36 @@
     },
     {
       "id": 6,
+      "title": "Eventify",
+      "status": "DEPLOYED",
+      "type": "PERSONAL_PROJECT",
+      "date": "April 2026 - Present",
+      "featured": false,
+      "category": "SYS_ARCH",
+      "tech": [ "HTML", "Node.js", "Express", "Tailwind CSS", "Event-Driven Architecture", "MongoDB", "RabbitMQ", "Node-Cron", "Socket.io", "JWT"],
+      "description": "Eventify is a production-ready, full-stack web application designed for high-performance event management. It combines precise scheduling, automated multi-recipient notifications.",
+      "github": "https://github.com/iamrupamroyy/Eventify",
+      "url": "https://eventify-sigma-eight.vercel.app/",
+      "image": "/assets/Projects/Eventify.png",
+      "color": "#a37f1c"
+    },
+    {
+      "id": 7,
       "title": "OpenWindow",
-      "status": "ACTIVE",
+      "status": "DEPLOYED",
       "type": "PERSONAL_PROJECT",
       "date": "November 2025 - Present",
       "featured": false,
       "category": "SYS_ARCH",
       "tech": [ "HTML", "Node.js", "Express"],
       "description": "A lightweight real-time chat app for creating and joining temporary rooms without authentication.",
+      "url":"https://eventify-sigma-eight.vercel.app/login",
       "github": "https://github.com/iamrupamroyy/OpenWindow",
       "image": "/assets/Projects/OpenWindow.jpg",
-      "color": "#ffb86c"
+      "color": "#169ca1"
     },
     {
-      "id": 7,
+      "id": 100,
       "title": "Music-Artist Network Analysis",
       "status": "COMPLETED",
       "type": "ACADEMIC_PROJECT",
