@@ -25,4 +25,4 @@ dist-ssr
 
 
 # Ignore stats.json
-src/data/stats.json
+stats.json
