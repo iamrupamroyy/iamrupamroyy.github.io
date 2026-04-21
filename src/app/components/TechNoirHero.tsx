@@ -117,16 +117,25 @@ export const TechNoirHero = () => {
                   >
                     <div className="text-[8px] font-mono opacity-40 p-2 uppercase tracking-widest border-b mb-2" style={{ borderColor: 'var(--border-color)' }}>Select_Focus</div>
                     {resumes.map((res: any, i: number) => (
-                      <a 
-                        key={i}
-                        href={res.url}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="flex items-center justify-between p-3 hover:bg-[var(--cyan)] hover:text-[var(--bg)] transition-colors group font-mono text-[10px] uppercase tracking-tighter"
-                      >
-                        {res.label}
-                        <Download size={12} className="opacity-0 group-hover:opacity-100" />
-                      </a>
+                      <div key={i} className="flex items-center group border-b last:border-0" style={{ borderColor: 'var(--border-color)' }}>
+                        <a 
+                          href={res.url}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="flex-1 p-3 hover:bg-[var(--cyan)] hover:text-[var(--bg)] transition-colors font-mono text-[10px] uppercase tracking-tighter"
+                        >
+                          {res.label}
+                        </a>
+                        <a 
+                          href={res.url}
+                          download
+                          className="p-3 border-l hover:bg-[var(--cyan)] hover:text-[var(--bg)] transition-colors"
+                          style={{ borderColor: 'var(--border-color)' }}
+                          title="Download"
+                        >
+                          <Download size={14} />
+                        </a>
+                      </div>
                     ))}
                   </motion.div>
                 )}
@@ -181,7 +190,7 @@ export const TechNoirHero = () => {
               </motion.div>
 
               {/* Minimal Coordinate HUD */}
-              <div className={`absolute -right-4 md:-right-8 top-1/3 z-40 transition-all duration-700 hidden sm:block ${isFocused ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-4'}`}>
+              <div className={`absolute -right-2 md:-right-8 top-1/3 z-40 transition-all duration-700 ${isFocused ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-4'}`}>
                  <div className="p-4 border backdrop-blur-md bg-black/60 border-[var(--cyan)] shadow-[0_0_15px_rgba(0,242,255,0.2)]">
                     <div className="flex items-center gap-2 mb-2">
                        <MapPin size={10} className="text-[var(--cyan)] animate-pulse" />

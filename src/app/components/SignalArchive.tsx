@@ -142,7 +142,7 @@ export const SignalArchive = () => {
                             value={formData.name}
                             onChange={(e) => setFormData({...formData, name: e.target.value})}
                             placeholder="USER_NAME"
-                            className="bg-white/5 border border-white/10 p-2 font-mono text-[10px] outline-none focus:border-[var(--cyan)] text-white uppercase"
+                            className="bg-white/5 border border-white/10 p-2 font-mono text-[10px] outline-none focus:border-[var(--cyan)] text-white"
                           />
                         </div>
                         <div className="flex flex-col gap-1.5">
@@ -209,7 +209,7 @@ export const SignalArchive = () => {
                   <div className="flex flex-col gap-5">
                     <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 border-b pb-4" style={{ borderColor: 'var(--border-color)' }}>
                       <div className="flex flex-col">
-                        <span className="text-base font-heading font-black uppercase tracking-tight" style={{ color: 'var(--fg)' }}>
+                        <span className="text-base font-heading font-black tracking-tight" style={{ color: 'var(--fg)' }}>
                           {signal.name}
                         </span>
                         {signal.url ? (
