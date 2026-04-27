@@ -82,14 +82,13 @@ jobs:
                   const res = await fetch(`https://www.codechef.com/users/${username}`);
                   const html = await res.text();
                   
-                  const ratingMatch = html.match(/rating-number\">(\d+)</);
-                  const starMatch = html.match(/(\d)★/);
-                  // Refined Rank Match for the inline-list structure
-                  const rankMatch = html.match(/ratings\/all\"><strong>(\d+)<\/strong><\/a>\s*Global Rank/);
+                  const ratingMatch = html.match(/class=\"rating-number\">\s*(\d+)/);
+                  const starBlock = html.match(/<div class=\"rating-star\">([\s\S]*?)<\/div>/);
+                  const stars = starBlock ? (starBlock[1].match(/&#9733;/g) || []).length : 0;
+                  const rankMatch = html.match(/<a href=\"\/ratings\/all\">\s*<strong>\s*(\d+)\s*<\/strong>\s*<\/a>\s*Global Rank/);
                   
                   if (ratingMatch) {
                     const rating = ratingMatch[1];
-                    const stars = starMatch ? starMatch[1] : '2';
                     const rank = rankMatch ? rankMatch[1] : 'N/A';
                     stats.codechef = {
                       rank: `${stars} ★ GRADE`,
