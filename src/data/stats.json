@@ -1,4 +1,10 @@
 {
+  "leetcode": {
+    "rank": "KNIGHT_TIER",
+    "percent": 12,
+    "lastSolved": "409 Problems Solved",
+    "rating": 409
+  },
   "codeforces": {
     "rank": "NEWBIE",
     "percent": 33,
@@ -11,5 +17,5 @@
     "lastSolved": "Global_Rank: #24572",
     "rating": "1511"
   },
-  "lastUpdated": "2026-09-05T01:28:42.444Z"
+  "lastUpdated": "2026-09-06T01:23:15.278Z"
 }
